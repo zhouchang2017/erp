@@ -2,29 +2,28 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
-class Brand extends Resource
+class Attribute extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\\Modules\\Product\\Models\\Brand';
+    public static $model = \App\Modules\Product\Models\Attribute::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -46,18 +45,21 @@ class Brand extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
+            Text::make('Value')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Textarea::make('Description')->hideFromIndex(),
 
-//            MorphToMany::make('Avatars')
-//                ->fields(function () {
-//                    return [
-//                        Image::make('Assets'),
-//                    ];
-//                })
+
+            new Panel('BelongsTo Attribute Group', $this->belongsToGroup()),
+        ];
+    }
+
+    protected function belongsToGroup(){
+        return [
+            BelongsTo::make('AttributeGroup','group')->displayUsing(function($group){
+                return $group->name;
+            })
         ];
     }
 

@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+// let mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,13 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+// mix.js('resources/assets/js/app.js', 'public/js')
+//    .sass('resources/assets/sass/app.scss', 'public/css');
+const mix = require('mix');
+const novaWatcher = require('nova-watcher');
+
+/*
+* All your mix stuff here.
+*/
+
+new novaWatcher(mix); // Create a new instance of nova-watcher and bind your mix instance.

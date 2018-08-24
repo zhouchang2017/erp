@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Chang\CreateProduct\CreateProduct;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
@@ -67,7 +68,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+        ];
     }
 
     /**

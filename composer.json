@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -12,7 +15,10 @@
         "kalnoy/nestedset": "^4.3",
         "laravel/framework": "5.6.*",
         "laravel/nova": "dev-master",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "chang/create-product": "*",
+        "chang/product-attributes": "*",
+        "chang/attribute-group-attributes": "*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
@@ -25,6 +31,18 @@
         {
             "type": "vcs",
             "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/CreateProduct"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/ProductAttributes"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/AttributeGroupAttributes"
         }
     ],
     "autoload": {
@@ -43,8 +61,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {

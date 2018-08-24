@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "04b9e8d6439bd8d580b07055a4dd60b3",
+    "content-hash": "84e5440a73388f51e023472e6b271e86",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -184,6 +184,108 @@
                 "time"
             ],
             "time": "2018-07-11T18:51:56+00:00"
+        },
+        {
+            "name": "chang/attribute-group-attributes",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/AttributeGroupAttributes",
+                "reference": "31d487393d12f6e681abec78c75cef4e8b3d63ee",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\AttributeGroupAttributes\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\AttributeGroupAttributes\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/create-product",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/CreateProduct",
+                "reference": "37f2b48f0ca127111f7e17aa0e556fb4745142c5",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\CreateProduct\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\CreateProduct\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova resource tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/product-attributes",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/ProductAttributes",
+                "reference": "79fbf369618dd260c70df73f0708b4e72b107104",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\ProductAttributes\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\ProductAttributes\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -971,7 +1073,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "5ee42c79b13e60544e82625a6f2cc9382556938e"
+                "reference": "6d5a9d9fe0291cb6d677e27ee272627b1c0ddbf8"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -1026,7 +1128,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-08-23T08:44:43+00:00"
+            "time": "2018-08-24T01:53:44+00:00"
         },
         {
             "name": "laravel/tinker",

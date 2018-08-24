@@ -2,22 +2,21 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
-class Brand extends Resource
+class ProductType extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\\Modules\\Product\\Models\\Brand';
+    public static $model = \App\Modules\Product\Models\ProductType::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,16 +47,18 @@ class Brand extends Resource
 
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required','max:255')
+                ->creationRules('unique:product_types,name')
+                ->updateRules('unique:product_types,name,{{resourceId}}'),
 
-            Textarea::make('Description')->hideFromIndex(),
+            new Panel('Attributes', $this->belongsToManyAttributeGroups()),
+        ];
+    }
 
-//            MorphToMany::make('Avatars')
-//                ->fields(function () {
-//                    return [
-//                        Image::make('Assets'),
-//                    ];
-//                })
+    private function belongsToManyAttributeGroups()
+    {
+        return [
+            BelongsToMany::make('AttributeGroups','attributeGroups'),
         ];
     }
 

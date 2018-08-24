@@ -7,7 +7,13 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "build-create-product": "cd nova-components/CreateProduct && npm run dev",
+        "build-create-product-prod": "cd nova-components/CreateProduct && npm run prod",
+        "build-product-attributes": "cd nova-components/ProductAttributes && npm run dev",
+        "build-product-attributes-prod": "cd nova-components/ProductAttributes && npm run prod",
+        "build-attribute-group-attributes": "cd nova-components/AttributeGroupAttributes && npm run dev",
+        "build-attribute-group-attributes-prod": "cd nova-components/AttributeGroupAttributes && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.18",
@@ -18,5 +24,8 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "nova-watcher": "^1.0.1"
     }
 }
