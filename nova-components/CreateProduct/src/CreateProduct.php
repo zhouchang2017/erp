@@ -13,7 +13,7 @@ class CreateProduct extends ResourceTool
      */
     public function name()
     {
-        return 'Create Product';
+        return 'Edit Product Attributes';
     }
 
     /**
@@ -25,4 +25,5 @@ class CreateProduct extends ResourceTool
     {
         return 'create-product';
     }
+
 }

@@ -1,16 +1,47 @@
 <template>
     <div>
-        Create Product
+        <attribute-form v-bind="$props" v-model="attributes" ref="attributeForm"></attribute-form>
+
+        <div class=" flex px-8 py-4">
+            <button type="button" class="ml-auto btn btn-default btn-primary mr-3" @click="submit">
+                Submit
+            </button>
+        </div>
     </div>
 </template>
 
 <script>
-    export default {
-        props: ['resourceName', 'resourceId', 'field'],
+  export default {
+    props: ['resourceName', 'resourceId', 'field'],
 
-        mounted() {
-            console.log('create product mounted!!')
-            console.log(this.resourceName)
+    components: {
+      'attribute-form': require('./AttributeForm'),
+    },
+
+    data () {
+      return {
+        attributes: [],
+      }
+    },
+
+    methods: {
+      getFormData () {
+        const attributes = this.attributes
+        const variants = this.$refs.attributeForm.variants
+        return {attributes, variants}
+      },
+
+      async submit () {
+        try {
+          let res = await axios.put(`/api/products/${this.resourceId}/update-attributes`, this.getFormData())
+          this.$toasted.show('It worked!', {type: 'success'})
+          console.log(res)
+        } catch (e) {
+          console.error(e)
+          this.$toasted.show('error!', {type: 'error'})
         }
+
+      }
     }
+  }
 </script>

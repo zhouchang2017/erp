@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware([])->group(function () {
+    Route::get('/product-types/{id}', 'ProductTypeController@show');
+    Route::put('/products/{id}/update-attributes', 'ProductController@updateAttribute');
+});

@@ -51,16 +51,11 @@ class ProductType extends Resource
                 ->creationRules('unique:product_types,name')
                 ->updateRules('unique:product_types,name,{{resourceId}}'),
 
-            new Panel('Attributes', $this->belongsToManyAttributeGroups()),
+            BelongsToMany::make('AttributeGroups'),
         ];
     }
 
-    private function belongsToManyAttributeGroups()
-    {
-        return [
-            BelongsToMany::make('AttributeGroups','attributeGroups'),
-        ];
-    }
+
 
     /**
      * Get the cards available for the request.

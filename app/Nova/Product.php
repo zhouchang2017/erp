@@ -3,13 +3,11 @@
 namespace App\Nova;
 
 use Chang\CreateProduct\CreateProduct;
-use Chang\ProductAttributes\ProductAttributes;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Markdown;
-use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -78,6 +76,8 @@ class Product extends Resource
             Boolean::make('Enabled')
                 ->sortable()
                 ->rules('required'),
+
+            CreateProduct::make()->withMeta(['typeId'=>$this->model()->type_id])
 
         ];
     }
