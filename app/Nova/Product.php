@@ -5,6 +5,8 @@ namespace App\Nova;
 use Chang\CreateProduct\CreateProduct;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Markdown;
@@ -51,12 +53,12 @@ class Product extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('NameCn','name_cn')
+            Text::make('NameCn', 'name_cn')
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
 
-            Text::make('NameEn','name_en')
+            Text::make('NameEn', 'name_en')
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
@@ -67,9 +69,9 @@ class Product extends Resource
                 ->creationRules('unique:products,code')
                 ->updateRules('unique:products,code,{{resourceId}}'),
 
-            BelongsTo::make('ProductType','type'),
+            BelongsTo::make('ProductType', 'type'),
 
-            BelongsTo::make('Brand','brand'),
+            BelongsTo::make('Brand', 'brand'),
 
             Markdown::make('Body'),
 
@@ -77,9 +79,25 @@ class Product extends Resource
                 ->sortable()
                 ->rules('required'),
 
-            CreateProduct::make()->withMeta(['typeId'=>$this->model()->type_id])
+            CreateProduct::make()
+                ->withMeta(['typeId' => $this->model()->type_id, 'origin' => $this->getProductAttributes()]),
+
+            HasOne::make('ProductType', 'type'),
+
+            HasMany::make('ProductVariant', 'variants'),
+
+            HasOne::make('Brand', 'brand'),
 
         ];
+    }
+
+    protected function getProductAttributes()
+    {
+        return $this->model()->with([
+            'variants',
+            'attributes.group',
+            'attributes.attributeValue',
+        ])->find($this->model()->id);
     }
 
     /**

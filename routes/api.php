@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware([])->group(function () {
     Route::get('/product-types/{id}', 'ProductTypeController@show');
-    Route::put('/products/{id}/update-attributes', 'ProductController@updateAttribute');
+    // Update Or Create Product Attributes & Product Variants
+    Route::put('/products/{id}/update-attributes', 'ProductController@updateOrCreateAttributes');
 });

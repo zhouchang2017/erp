@@ -6,7 +6,6 @@ namespace App\Modules\Product\Models;
 //use App\Observers\ProductAttributeObserver;
 use App\Modules\Scaffold\BaseModel as Model;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ProductAttribute
@@ -14,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ProductAttribute extends Model
 {
-    use SoftDeletes;
     /**
      * @var array
      */

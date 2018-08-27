@@ -8,6 +8,13 @@
                     :name="field.name"
                     :checked="checked"
             />
+            <!--<input-->
+                    <!--class="py-2 leading-tight"-->
+                    <!--type="checkbox"-->
+                    <!--:id="field.name"-->
+                    <!--:name="field.name"-->
+                    <!--v-model="field.value"-->
+            <!--/>-->
         </template>
     </default-field-col>
 </template>

@@ -15,9 +15,9 @@ class ProductController extends Controller
         $this->service = $service;
     }
 
-    public function updateAttribute($id, Request $request)
+    public function updateOrCreateAttributes($id, Request $request)
     {
-        $res = $this->service->update($id, $request->all());
+        $res = $this->service->updateOrCreateAttributes($id, $request->all());
         return response()->json(['data' => $res]);
     }
 }

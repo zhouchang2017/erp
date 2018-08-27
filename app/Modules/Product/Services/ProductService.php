@@ -2,15 +2,10 @@
 
 namespace App\Modules\Product\Services;
 
-use App\Modules\Product\Models\Attribute;
-use App\Modules\Product\Models\AttributeGroup;
-use App\Modules\Product\Models\Brand;
-use App\Modules\Product\Models\Category;
+
 use App\Modules\Product\Models\Product;
 use App\Modules\Product\Models\ProductAttribute;
-use App\Modules\Product\Models\ProductType;
 use App\Modules\Product\Models\ProductVariant;
-use App\Modules\Product\Models\ProductVariantInfo;
 use App\Modules\Scaffold\BaseService;
 use Illuminate\Support\Collection;
 use DB;
@@ -52,127 +47,61 @@ class ProductService extends BaseService
     }
 
 
-    public function create(
-        array $attributes
-    ) {
-
-        try {
-            DB::beginTransaction();
-            /** @var Product $product */
-            $this->setProduct($this->product::create($attributes));
-
-            /*
-             * Create Product Attribute
-             * */
-            request()->has('attributes')
-            && $this->createProductAttribute(request()->input('attributes'));
-
-            /*
-             * Create Product Variants
-             * */
-            request()->has('variants')
-            && $this->createProductVariant(request('variants'));
-
-            DB::commit();
-            return $this->product;
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            dd($exception);
-            Log::error('创建产品失败: ' . $exception->getMessage() . '');
-        }
-
-    }
-
-    /**
-     * 创建产品属性
-     * @param $attributes
-     * @return mixed
-     */
-    private
-    function createProductAttribute(
-        $attributes
-    ) {
-        $attributes = collect($attributes);
-        return $attributes->reduce(function ($res, $attribute) {
-            if (array_key_exists('comment', $attribute) && !is_null($attribute['comment'])) {
-
-                $res->push($this->product->attributes()->create($attribute));
-
-            } else {
-                $groupId = $attribute['attribute_group_id'];
-
-                collect($attribute['attribute_id'])->map(function ($attributeId) use ($groupId, $res) {
-
-                    $res->push($this->product->attributes()->create([
-                        'attribute_group_id' => $groupId,
-                        'attribute_id' => $attributeId,
-                    ]));
-
-                });
-            }
-            return $res;
-        }, new Collection());
-    }
-
-
     /**
      * 创建变体
      * @param array|Collection $attributes
-     * @return Collection
      */
-    private function createProductVariant(
-        $attributes
-    ) {
-        $attributes = collect($attributes);
-        return $attributes->map(function ($variant) {
-            /** @var ProductVariant $variantInstance */
-            $variantInstance = $this->product->variants()->create(array_only($variant,
+    private function createProductVariant($attributes)
+    {
+        $attributes->each(function ($attribute) {
+            /**
+             * @var ProductVariant $variantInstance
+             * Create Product Variant
+             */
+            $variantInstance = $this->product->variants()->create(array_only($attribute,
                 ['price', 'sku', 'attribute_key']));
-            // 关联供应商
-//            if (array_key_exists('providers', $variant)) {
-//                $variantInstance->providers()->sync($variant['providers']);
-//            }
-//            if (array_key_exists('info', $variant)) {
-//                $variantInstance->createInfo($variant['info']);
-//            }
-            // 同步多对多关联产品属性值
+
+            /*
+             * Sync ProductVariant Relation as ProductAttribute
+             * */
             $variantInstance->attributes()->sync(
-                $this->findProductAttributePrimaryKeys(array_get($variant, 'attributes'))
+                $this->findProductAttributePrimaryKeys(array_get($attribute, 'attributes'))
             );
-            return $variantInstance->id;
         });
     }
 
-    private function findProductAttributePrimaryKeys(
-        $keys,
-        $primaryKey = 'id'
-    ) {
+    /**
+     * 通过 attributes id 获取productAttribute表 主键
+     * @param $keys
+     * @param string $primaryKey
+     * @return Collection
+     */
+    private function findProductAttributePrimaryKeys($keys, $primaryKey = 'id')
+    {
         return $this->product->attributes()->whereIn('attribute_id', $keys)->pluck($primaryKey);
     }
 
 
-    public function update($id, array $attributes)
+    public function updateOrCreateAttributes($id, array $attributes)
     {
         try {
             DB::beginTransaction();
             /** @var Product $product */
             $product = $this->product::findOrFail($id);
-            if ($product) {
-                $this->setProduct($product);
-            }
-//            $this->product->update($attributes);
 
+            $this->setProduct($product);
+//            $this->product->update($attributes);
             /*
              * Create Product Attribute
              * */
             request()->has('attributes')
-            && $this->updateAttributes(request()->input('attributes'));
+            && $this->updateOrCreateProductAttribute(request()->input('attributes'));
 
             /*
              * Create Product Variants
              * */
             request()->has('variants')
-            && $this->updateVariant(request('variants'));
+            && $this->updateOrCreateVariant(request('variants'));
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -185,96 +114,57 @@ class ProductService extends BaseService
     }
 
     /**
-     * 更新属性
+     * 更新/创建属性
      * @param array $attributes
      * @return array|mixed
      */
-    private function updateAttributes(
-        array $attributes
-    ) {
-        $update = [];
+    private function updateOrCreateProductAttribute(array $attributes)
+    {
         $changes = $this->attributesMapWithKeys($attributes);
-        $update = $this->product->attributes()->get()->reduce(function ($res, $attribute) use ($changes) {
+        /*
+         * Update or delete ProductAttribute
+         * */
+        $this->product->attributes()->get()->each(function ($attribute) use ($changes) {
             /** @var ProductAttribute $attribute */
-            if (is_null($changes->get($attribute->id))) {
-                $attribute->delete();
-                $res['deleted'][] = $attribute->id;
-            } else {
-                $attribute->update($changes->get($attribute->id));
-                if (count($attribute->getChanges()) > 0) {
-                    $res['updated'][] = $attribute->id;
-                }
-            }
-            return $res;
-        }, $update);
+            is_null($changes->get($attribute->id)) ? $attribute->delete() : $attribute->update($changes->get($attribute->id));
+        });
 
-        $update['created'] = $this->product->createAttributes($this->findAddAttributes($attributes))->pluck('id')->toArray();
-        Log::info('updateAttributes:', $update);
-
-
-        return $update;
+        /*
+         * Create New ProductAttributes
+         * */
+        $this->product->attributes()->createMany($this->findAddAttributes($attributes)->toArray());
     }
 
 
     /**
      * @param array $attributes
-     * @return array
      */
-    private function updateVariant(
-        array $attributes
-    ) {
-        $update = ['updated' => [], 'deleted' => []];
+    private function updateOrCreateVariant(array $attributes)
+    {
         // 1.有id    更新（库存，价格，info)
         $changes = $this->attributesMapWithKeys($attributes);
-        $update = $this->product->variants->reduce(function ($res, $variant) use ($changes) {
+        $this->product->variants->each(function ($variant) use ($changes) {
             /** @var ProductVariant $variant */
             if (is_null($changes->get($variant->id))) {
                 $variant->delete();
-                $res['deleted'][] = $variant->id;
             } else {
                 $updateAttribute = $changes->get($variant->id);
 
                 $variant->update($updateAttribute);
 
-                $variant->attributes()->sync($this->getAttributesIdBy('attribute_id', $updateAttribute['attributes']));
-
-
-                // 关联供应商
-                if (array_key_exists('providers', $updateAttribute)) {
-                    $variant->providers()->sync($updateAttribute['providers']);
-                }
-
-                if (count($variant->getChanges()) > 0) {
-                    $res['updated'][] = $variant->id;
-                }
-
+                $variant->attributes()->sync(
+                    $this->findProductAttributePrimaryKeys($updateAttribute['attributes'])
+                );
             }
-            return $res;
-        }, $update);
+        });
 
         // 2.无id    创建
-        $update['created'] = $this->createProductVariant($this->findAddAttributes($attributes))->toArray();
-        Log::info('updateVariant:', $update);
-        return $update;
+        $this->createProductVariant($this->findAddAttributes($attributes));
     }
 
-    /**
-     * 通过字段获取product_attribute 表id
-     * @param $field
-     * @param $fieldId
-     * @return Collection
-     */
-    public function getAttributesIdBy(
-        $field,
-        $fieldId
-    ) {
-        return $this->product->attributes()->whereIn($field, $fieldId)->pluck('id');
-    }
 
-    public function attributesMapWithKeys(
-        iterable $attributes,
-        $key = 'id'
-    ): Collection {
+    public function attributesMapWithKeys(iterable $attributes, $key = 'id'): Collection
+    {
         $attributes = $this->takeCollect($attributes);
         // 过滤不存在$key的元素
         $attributes = $attributes->filter(function ($value) use ($key) {
@@ -290,9 +180,8 @@ class ProductService extends BaseService
      * @param array $attributes
      * @return \Illuminate\Support\Collection
      */
-    public function takeCollect(
-        $attributes
-    ): Collection {
+    public function takeCollect($attributes): Collection
+    {
         if ( !$attributes instanceof Collection) {
             return collect($attributes);
         }
@@ -305,10 +194,8 @@ class ProductService extends BaseService
      * @param string $key
      * @return Collection
      */
-    private function findAddAttributes(
-        $attributes,
-        $key = 'id'
-    ): Collection {
+    private function findAddAttributes($attributes, $key = 'id'): Collection
+    {
         $attributes = $this->takeCollect($attributes);
         return $attributes->reduce(function ($res, $attribute) use ($key) {
             if ( !array_key_exists('id', $attribute) || is_null($attribute['id'])) {
