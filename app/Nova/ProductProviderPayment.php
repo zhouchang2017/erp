@@ -3,19 +3,20 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attribute extends Resource
+class ProductProviderPayment extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Product\Models\Attribute::class;
+    public static $model = \App\Modules\ProductProvider\Models\ProductProviderPayment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -45,16 +46,13 @@ class Attribute extends Resource
     {
         return [
             ID::make()->sortable(),
-
-            Text::make('Value')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-
-            BelongsTo::make('Attribute Group', 'group', AttributeGroup::class),
+            BelongsTo::make('Product Provider', 'productProvider', ProductProvider::class),
+            BelongsTo::make('Balance'),
+            Textarea::make('Description'),
+            BelongsTo::make('Payment'),
+//            Code::make('Options')->json()
         ];
     }
-
 
     /**
      * Get the cards available for the request.

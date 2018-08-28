@@ -4,10 +4,17 @@ namespace App\Modules\Product\Models;
 
 use App\Modules\Product\Observers\AttributeGroupObserver;
 use App\Modules\Scaffold\BaseModel as Model;
+
 class AttributeGroup extends Model
 {
     protected $fillable = [
-        'name','variant','variant','type','required','customized','can_upload'
+        'name',
+        'variant',
+        'variant',
+        'type',
+        'required',
+        'customized',
+        'can_upload',
     ];
 
     /**
@@ -51,7 +58,12 @@ class AttributeGroup extends Model
 
     public function types()
     {
-        return $this->belongsToMany(ProductType::class,'product_type_attribute_group','group_id','type_id');
+        return $this->belongsToMany(ProductType::class, 'product_type_attribute_group', 'group_id', 'type_id');
+    }
+
+    public function productTypes()
+    {
+        return $this->belongsToMany(ProductType::class, 'product_type_attribute_group', 'group_id', 'type_id');
     }
 
     public function values()

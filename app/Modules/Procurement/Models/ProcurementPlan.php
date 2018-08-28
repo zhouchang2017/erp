@@ -85,17 +85,15 @@ class ProcurementPlan extends Model
 
     /**
      * 采购单关联的产品变体
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function variants()
     {
-//        return $this->belongsToMany(ProductVariant::class)->using(ProcurementPlanProductVariant::class)
-//            ->as('plan_info')
-//            ->withPivot(
-//            'id','price','pcs','arrived_pcs','offer_price','product_id','product_provider_id','user_id','good','bad','lost'
-//            )
-//            ->withTimestamps();
-        return $this->hasMany(ProcurementPlanProductVariant::class);
+        return $this->belongsToMany(ProductVariant::class)->using(ProcurementPlanProductVariant::class)
+            ->withPivot(
+            'id','price','pcs','arrived_pcs','offer_price','product_id','product_provider_id','user_id','good','bad','lost'
+            )
+            ->withTimestamps();
+//        return $this->hasMany(ProcurementPlanProductVariant::class);
     }
 
     public function procurement()

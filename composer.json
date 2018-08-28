@@ -18,7 +18,8 @@
         "laravel/tinker": "^1.0",
         "chang/create-product": "*",
         "chang/product-attributes": "*",
-        "chang/attribute-group-attributes": "*"
+        "chang/attribute-group-attributes": "*",
+        "zhouchang/create-procurement-plan": "*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
@@ -43,6 +44,10 @@
         {
             "type": "path",
             "url": "./nova-components/AttributeGroupAttributes"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/CreateProcurementPlan"
         }
     ],
     "autoload": {

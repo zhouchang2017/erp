@@ -2,27 +2,29 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attribute extends Resource
+class WarehouseType extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Product\Models\Attribute::class;
+    public static $model = \App\Modules\Warehouse\Models\WarehouseType::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -33,33 +35,30 @@ class Attribute extends Resource
         'id',
     ];
 
-    public static $displayInNavigation = false;
-
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function fields(Request $request)
     {
         return [
             ID::make()->sortable(),
-
-            Text::make('Value')
+            Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
+            Textarea::make('Description')->hideFromIndex(),
 
-            BelongsTo::make('Attribute Group', 'group', AttributeGroup::class),
+            Boolean::make('Enabled'),
         ];
     }
-
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function cards(Request $request)
@@ -70,7 +69,7 @@ class Attribute extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function filters(Request $request)
@@ -81,7 +80,7 @@ class Attribute extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function lenses(Request $request)
@@ -92,11 +91,12 @@ class Attribute extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function actions(Request $request)
     {
         return [];
     }
+
 }

@@ -13,7 +13,9 @@
         "build-product-attributes": "cd nova-components/ProductAttributes && npm run dev",
         "build-product-attributes-prod": "cd nova-components/ProductAttributes && npm run prod",
         "build-attribute-group-attributes": "cd nova-components/AttributeGroupAttributes && npm run dev",
-        "build-attribute-group-attributes-prod": "cd nova-components/AttributeGroupAttributes && npm run prod"
+        "build-attribute-group-attributes-prod": "cd nova-components/AttributeGroupAttributes && npm run prod",
+        "build-create-procurement-plan": "cd nova-components/CreateProcurementPlan && npm run dev",
+        "build-create-procurement-plan-prod": "cd nova-components/CreateProcurementPlan && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.18",

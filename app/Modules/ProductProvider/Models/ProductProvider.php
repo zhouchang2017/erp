@@ -5,7 +5,7 @@ namespace App\Modules\ProductProvider\Models;
 use App\Modules\Product\Models\ProductVariant;
 use App\Modules\ProductProvider\Observers\ProductProviderObserver;
 use App\Modules\Scaffold\BaseModel as Model;
-use App\Modules\Scaffold\Models\Address;
+use App\Modules\Scaffold\Traits\AddressTrait;
 
 /**
  * @property mixed providerPayment
@@ -15,6 +15,8 @@ use App\Modules\Scaffold\Models\Address;
  */
 class ProductProvider extends Model
 {
+    use AddressTrait;
+
     protected $fillable = [
         'name',
         'code',
@@ -38,11 +40,6 @@ class ProductProvider extends Model
         return $this->hasOne(ProductProviderInfo::class);
     }
 
-    public function addresses()
-    {
-        return $this->morphMany(Address::class,'addressable');
-    }
-
     public function providerPayment()
     {
         return $this->hasOne(ProductProviderPayment::class);
@@ -50,6 +47,12 @@ class ProductProvider extends Model
 
     public function products()
     {
-        return $this->belongsToMany(ProductVariant::class,'variant_provider')->withPivot('price')->withTimestamps();
+        return $this->belongsToMany(ProductVariant::class, 'variant_provider')->withPivot('price')->withTimestamps();
     }
+
+    public function productVariants()
+    {
+        return $this->belongsToMany(ProductVariant::class, 'variant_provider')->withPivot('price')->withTimestamps();
+    }
+
 }

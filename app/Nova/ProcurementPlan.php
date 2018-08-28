@@ -3,19 +3,22 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attribute extends Resource
+class ProcurementPlan extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Product\Models\Attribute::class;
+    public static $model = \App\Modules\Procurement\Models\ProcurementPlan::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -33,8 +36,6 @@ class Attribute extends Resource
         'id',
     ];
 
-    public static $displayInNavigation = false;
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -45,16 +46,23 @@ class Attribute extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('Code')->exceptOnForms(),
+            BelongsTo::make('Warehouse'),
 
-            Text::make('Value')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            BelongsTo::make('User'),
 
+            Textarea::make('Description'),
 
-            BelongsTo::make('Attribute Group', 'group', AttributeGroup::class),
+            Textarea::make('Comment'),
+
+            BelongsToMany::make('Product Variant', 'variants', ProductVariant::class)
+            ->fields(function(){
+                return [
+
+                ];
+            })
         ];
     }
-
 
     /**
      * Get the cards available for the request.

@@ -5,24 +5,25 @@ namespace App\Nova;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attribute extends Resource
+class Warehouse extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Product\Models\Attribute::class;
+    public static $model = \App\Modules\Warehouse\Models\Warehouse::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -32,8 +33,6 @@ class Attribute extends Resource
     public static $search = [
         'id',
     ];
-
-    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -46,15 +45,17 @@ class Attribute extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Value')
+            Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->creationRules('unique:warehouses,name')
+                ->updateRules('unique:warehouses,name,{{resourceId}}'),
 
+            BelongsTo::make('Type', 'type', WarehouseType::class),
 
-            BelongsTo::make('Attribute Group', 'group', AttributeGroup::class),
+            MorphMany::make('Addresses'),
         ];
     }
-
 
     /**
      * Get the cards available for the request.

@@ -2,6 +2,7 @@
 
 namespace App\Modules\ProductProvider\Models;
 
+use App\Modules\ProductProvider\Observers\ProductProviderPaymentObserver;
 use App\Modules\Scaffold\BaseModel as Model;
 
 /**
@@ -31,10 +32,15 @@ class ProductProviderPayment extends Model
     {
         parent::boot();
 
-//        self::observe(ProductProviderPaymentObserver::class);
+        self::observe(ProductProviderPaymentObserver::class);
     }
 
     public function provider()
+    {
+        return $this->belongsTo(ProductProvider::class);
+    }
+
+    public function productProvider()
     {
         return $this->belongsTo(ProductProvider::class);
     }

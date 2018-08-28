@@ -2,27 +2,33 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attribute extends Resource
+class ProductProvider extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Product\Models\Attribute::class;
+    public static $model = \App\Modules\ProductProvider\Models\ProductProvider::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -32,8 +38,6 @@ class Attribute extends Resource
     public static $search = [
         'id',
     ];
-
-    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -45,16 +49,21 @@ class Attribute extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('Name'),
+            Text::make('Code'),
+            Number::make('Level')->sortable(),
+            Textarea::make('Description')->hideFromIndex(),
+            HasOne::make('ProductProviderPayment', 'providerPayment'),
+            MorphMany::make('Addresses'),
+            BelongsToMany::make('ProductVariant', 'productVariants')
+                ->fields(function () {
+                    return [
+                        Currency::make('Price'),
+                    ];
+                }),
 
-            Text::make('Value')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-
-            BelongsTo::make('Attribute Group', 'group', AttributeGroup::class),
         ];
     }
-
 
     /**
      * Get the cards available for the request.
@@ -99,4 +108,5 @@ class Attribute extends Resource
     {
         return [];
     }
+
 }

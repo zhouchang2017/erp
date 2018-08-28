@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Modules\Warehouse\Models;
+
 use App\Modules\Procurement\Models\Procurement;
 use App\Modules\Procurement\Models\ProcurementPlan;
 use App\Modules\Scaffold\BaseModel as Model;
-use App\Modules\Scaffold\Models\Address;
+use App\Modules\Scaffold\Traits\AddressTrait;
 use App\Modules\Warehouse\Observers\WarehouseObserver;
 
 /**
@@ -14,11 +15,13 @@ use App\Modules\Warehouse\Observers\WarehouseObserver;
  */
 class Warehouse extends Model
 {
-    protected $fillable = ['name','type_id'];
+    use AddressTrait;
+
+    protected $fillable = ['name', 'type_id'];
 
     protected $fieldSearchable = [
         'id',
-        'name'
+        'name',
     ];
 
     /**
@@ -35,24 +38,21 @@ class Warehouse extends Model
 
     public function type()
     {
-        return $this->belongsTo(WarehouseType::class,'type_id');
+        return $this->belongsTo(WarehouseType::class, 'type_id');
     }
 
-    public function addresses()
-    {
-        return $this->morphMany(Address::class,'addressable');
-    }
 
     public function manuallise()
     {
-        return $this->hasMany(Manually::class)->when(request()->has('manuallise:status'),function($query){
+        return $this->hasMany(Manually::class)->when(request()->has('manuallise:status'), function ($query) {
             $query->whereStatus(request('manuallise:status'));
         });
     }
 
     public function procurements()
     {
-        return $this->hasManyThrough(Procurement::class, ProcurementPlan::class)->when(request()->has('procurement:status'),function($query){
+        return $this->hasManyThrough(Procurement::class,
+            ProcurementPlan::class)->when(request()->has('procurement:status'), function ($query) {
             $query->whereStatus(request('procurement:status'));
         });
     }

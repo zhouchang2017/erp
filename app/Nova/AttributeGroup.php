@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Panel;
 
 class AttributeGroup extends Resource
 {
@@ -40,7 +39,7 @@ class AttributeGroup extends Resource
 
     public static $with = [
         'values',
-        'types'
+        'types',
     ];
 
     /**
@@ -74,9 +73,9 @@ class AttributeGroup extends Resource
 
             Boolean::make('Required'),
 
-            new Panel('Attributes Information', $this->hasManyAttributes()),
+            HasMany::make('Attribute', 'values'),
 
-            new Panel('Types Information', $this->belongsToManyTypes()),
+            BelongsToMany::make('Product Types', 'productTypes', ProductType::class),
 
 
         ];
@@ -84,24 +83,10 @@ class AttributeGroup extends Resource
     }
 
 
-    protected function hasManyAttributes()
-    {
-        return [
-            HasMany::make('Attribute', 'values'),
-        ];
-    }
-
-    protected function belongsToManyTypes()
-    {
-        return [
-          BelongsToMany::make('ProductTypes','types'),
-        ];
-    }
-
     protected function createOrUpdateAttributes()
     {
         return [
-            AttributeGroupAttributes::make('Attributes')
+            AttributeGroupAttributes::make('Attributes'),
         ];
     }
 

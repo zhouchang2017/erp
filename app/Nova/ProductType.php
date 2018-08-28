@@ -37,7 +37,7 @@ class ProductType extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -47,20 +47,19 @@ class ProductType extends Resource
 
             Text::make('Name')
                 ->sortable()
-                ->rules('required','max:255')
+                ->rules('required', 'max:255')
                 ->creationRules('unique:product_types,name')
                 ->updateRules('unique:product_types,name,{{resourceId}}'),
 
-            BelongsToMany::make('AttributeGroups'),
+            BelongsToMany::make('Attribute Groups', 'attributeGroups', AttributeGroup::class),
         ];
     }
-
 
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -71,7 +70,7 @@ class ProductType extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -82,7 +81,7 @@ class ProductType extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -93,7 +92,7 @@ class ProductType extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "84e5440a73388f51e023472e6b271e86",
+    "content-hash": "295096cb5553fbaed163e716c63168a1",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -3036,6 +3036,40 @@
                 "environment"
             ],
             "time": "2018-07-01T10:25:50+00:00"
+        },
+        {
+            "name": "zhouchang/create-procurement-plan",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/CreateProcurementPlan",
+                "reference": "5164b190d5b68b935342058e0e4c1f6228f03785",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Zhouchang\\CreateProcurementPlan\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zhouchang\\CreateProcurementPlan\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
         }
     ],
     "packages-dev": [
