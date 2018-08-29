@@ -19,7 +19,7 @@
         "chang/create-product": "*",
         "chang/product-attributes": "*",
         "chang/attribute-group-attributes": "*",
-        "zhouchang/create-procurement-plan": "*"
+        "chang/create-procurement-plan": "*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

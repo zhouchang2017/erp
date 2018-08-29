@@ -1,5 +1,5 @@
 {
-    "name": "zhouchang/create-procurement-plan",
+    "name": "chang/create-procurement-plan",
     "description": "A Laravel Nova tool.",
     "keywords": [
         "laravel",
@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Zhouchang\\CreateProcurementPlan\\": "src/"
+            "Chang\\CreateProcurementPlan\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Zhouchang\\CreateProcurementPlan\\ToolServiceProvider"
+                "Chang\\CreateProcurementPlan\\ToolServiceProvider"
             ]
         }
     },

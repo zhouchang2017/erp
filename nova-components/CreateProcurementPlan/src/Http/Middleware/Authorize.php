@@ -1,8 +1,8 @@
 <?php
 
-namespace Zhouchang\CreateProcurementPlan\Http\Middleware;
+namespace Chang\CreateProcurementPlan\Http\Middleware;
 
-use Zhouchang\CreateProcurementPlan\CreateProcurementPlan;
+use Chang\CreateProcurementPlan\CreateProcurementPlan;
 
 class Authorize
 {

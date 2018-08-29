@@ -1,6 +1,6 @@
 <?php
 
-namespace Zhouchang\CreateProcurementPlan;
+namespace Chang\CreateProcurementPlan;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;

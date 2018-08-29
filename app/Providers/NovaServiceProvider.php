@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use Chang\CreateProduct\CreateProduct;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use Zhouchang\CreateProcurementPlan\CreateProcurementPlan;
+use Chang\CreateProcurementPlan\CreateProcurementPlan;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
