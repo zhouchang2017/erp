@@ -3,7 +3,7 @@
         <div class="flex items-center mb-3">
             <h4 class="text-90 font-normal text-2xl">Create ProcurementPlan</h4>
             <div class="ml-auto flex">
-                <button class="btn btn-default btn-primary" @click="show">choose product</button>
+                <button class="btn btn-default btn-primary" @click="hidden = true">choose product</button>
             </div>
         </div>
 
@@ -12,19 +12,27 @@
 
         </card>
 
+
+        <v-drawer v-model="hidden">
+            <v-search/>
+            <v-list/>
+        </v-drawer>
+
+
         <!--<product-modal/>-->
-        <slideout-panel></slideout-panel>
+
     </div>
 </template>
 
 <script>
-  import { vueSlideoutPanelService } from 'vue2-slideout-panel'
 
   export default {
     name: 'create-procurement-plan',
 
     components: {
-      // 'product-modal': require('./ProductModal')
+      'v-drawer': require('./Drawer'),
+      'v-search': require('./Search'),
+      'v-list': require('./List')
     },
 
     data () {
@@ -35,10 +43,7 @@
 
     methods: {
       show () {
-        vueSlideoutPanelService.show({
-          width: 700,
-          component: 'product-modal'
-        })
+
       }
     },
 
@@ -49,5 +54,8 @@
 </script>
 
 <style>
+    /* side list style */
+
     /* Scoped Styles */
+
 </style>

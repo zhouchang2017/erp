@@ -1,8 +1,8 @@
-import { VueSlideoutPanel } from 'vue2-slideout-panel'
+// require('vuetify/src/stylus/app.styl')
+
 
 Nova.booting((Vue, router) => {
-  Vue.component('slideout-panel', VueSlideoutPanel)
-  Vue.component('product-modal', require('./components/ProductModal'))
+
   router.addRoutes([
     {
       name: 'create-procurement-plan',
