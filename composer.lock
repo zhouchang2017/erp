@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "95da39837192c45ec77f041250b5a3ec",
+    "content-hash": "78f71068ec08436aeecf3504aa928f44",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -221,7 +221,7 @@
         },
         {
             "name": "chang/create-procurement-plan",
-            "version": "dev-master",
+            "version": "9999999-dev",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/CreateProcurementPlan",
@@ -1107,7 +1107,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "13640047b08ca5cb46d1a0877308fbbc50fffb21"
+                "reference": "2907954e626474d7b533cac52402d49c4e52b350"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -1162,7 +1162,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-08-25T01:48:02+00:00"
+            "time": "2018-08-30T01:28:29+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1936,6 +1936,60 @@
                 "uuid"
             ],
             "time": "2018-01-20T00:28:24+00:00"
+        },
+        {
+            "name": "spatie/laravel-query-builder",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-query-builder.git",
+                "reference": "b1333e263a1fac24773cb67c8e7ca46d0ae74ecc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/b1333e263a1fac24773cb67c8e7ca46d0ae74ecc",
+                "reference": "b1333e263a1fac24773cb67c8e7ca46d0ae74ecc",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0",
+                "phpunit/phpunit": "^6.1|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\QueryBuilder\\QueryBuilderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\QueryBuilder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Vanderbist",
+                    "email": "alex@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily build Eloquent queries from API requests",
+            "homepage": "https://github.com/spatie/laravel-query-builder",
+            "keywords": [
+                "laravel-query-builder",
+                "spatie"
+            ],
+            "time": "2018-06-12T12:56:44+00:00"
         },
         {
             "name": "spatie/once",

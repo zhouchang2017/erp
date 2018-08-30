@@ -32,7 +32,9 @@ class Product extends Model implements AssetRelation
         'brand_id',
     ];
 
-    protected $fieldSearchable = [ 'name', 'code', 'name_cn', 'name_en' ];
+
+
+    protected $fieldSearchable = ['name', 'code', 'name_cn', 'name_en'];
 
 
     /**
@@ -139,7 +141,10 @@ class Product extends Model implements AssetRelation
             } else {
                 $groupId = $attribute['attribute_group_id'];
                 collect($attribute['attribute_id'])->map(function ($attributeId) use ($groupId, $res) {
-                    $res->push($this->attributes()->create([ 'attribute_group_id' => $groupId, 'attribute_id' => $attributeId ]));
+                    $res->push($this->attributes()->create([
+                        'attribute_group_id' => $groupId,
+                        'attribute_id' => $attributeId,
+                    ]));
                 });
             }
             return $res;
@@ -157,7 +162,7 @@ class Product extends Model implements AssetRelation
         $attributes = collect($attributes);
         return $attributes->map(function ($variant) {
             /** @var ProductVariant $variantInstance */
-            $variantInstance = $this->variants()->create(array_only($variant, [ 'price', 'sku' ]));
+            $variantInstance = $this->variants()->create(array_only($variant, ['price', 'sku']));
             // 关联供应商
 //            if (array_key_exists('providers', $variant)) {
 //                $variantInstance->providers()->sync($variant['providers']);
@@ -217,14 +222,14 @@ class Product extends Model implements AssetRelation
 
     public function loadAttributes()
     {
-        $this->load([ 'attributes.attributeValue' ]);
+        $this->load(['attributes.attributeValue']);
 
         return $this;
     }
 
     public function loadVariants()
     {
-        $this->load([ 'variants.attributes.attributeValue' ]);
+        $this->load(['variants.attributes.attributeValue']);
         return $this;
     }
 
@@ -235,7 +240,7 @@ class Product extends Model implements AssetRelation
      */
     public function updateVariant(array $attributes)
     {
-        $update = [ 'updated' => [], 'deleted' => [] ];
+        $update = ['updated' => [], 'deleted' => []];
         // 1.有id    更新（库存，价格，info)
         $changes = $this->attributesMapWithKeys($attributes);
         $update = $this->variants->reduce(function ($res, $variant) use ($changes) {

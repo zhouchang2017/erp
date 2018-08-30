@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.6.28 on 2018-08-29 12:17:23.
+ * Generated for Laravel 5.6.28 on 2018-08-30 10:08:59.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -8768,6 +8768,66 @@ namespace Illuminate\Support\Facades {
         public static function hasValidSignature()
         {
             return \Illuminate\Http\Request::hasValidSignature();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function includes($include = null)
+        {
+            return \Illuminate\Http\Request::includes($include);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function appends($append = null)
+        {
+            return \Illuminate\Http\Request::appends($append);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function filters($filter = null)
+        {
+            return \Illuminate\Http\Request::filters($filter);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function sort($default = null)
+        {
+            return \Illuminate\Http\Request::sort($default);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function fields($default = null)
+        {
+            return \Illuminate\Http\Request::fields($default);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function sorts($default = null)
+        {
+            return \Illuminate\Http\Request::sorts($default);
         }
          
     }

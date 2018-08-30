@@ -1,7 +1,7 @@
 <template>
     <div>
     <transition name="slide-fade">
-            <div v-show="value" class="bg-white z-500 fixed mx-auto h-screen w-1/2 pin-r pin-b h-8  shadow-md">
+            <div v-show="value" class="bg-white z-500 fixed mx-auto h-screen w-1/2 pin-r pin-b h-8  shadow-md  overflow-y-scroll">
                 <div class="container mx-auto h-full px-2 py-2 flex">
                     <div class="w-full">
                         <slot></slot>

@@ -21,4 +21,6 @@ Route::middleware([])->group(function () {
     Route::get('/product-types/{id}', 'ProductTypeController@show');
     // Update Or Create Product Attributes & Product Variants
     Route::put('/products/{id}/update-attributes', 'ProductController@updateOrCreateAttributes');
+
+    Route::get('/products', 'ProductController@index');
 });

@@ -10,6 +10,7 @@ use App\Modules\Scaffold\BaseService;
 use Illuminate\Support\Collection;
 use DB;
 use Log;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class ProductService
@@ -23,6 +24,17 @@ class ProductService extends BaseService
     protected $product;
 
     protected $debug;
+
+    protected $allowedInclude = [
+        'type',
+        'brand',
+        'variants',
+        'variants.providers',
+        'attributes',
+        'productAttributes',
+        'categories',
+        'providers',
+    ];
 
 
     /**
@@ -203,5 +215,11 @@ class ProductService extends BaseService
             };
             return $res;
         }, new Collection());
+    }
+
+    public function query()
+    {
+        return QueryBuilder::for(Product::class)
+            ->allowedIncludes($this->allowedInclude);
     }
 }

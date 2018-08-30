@@ -1,15 +1,12 @@
 <template>
     <div class="list">
-        <v-list-item/>
+        <slot></slot>
     </div>
 </template>
 
 <script>
   export default {
-    name: 'List',
-    components: {
-      'v-list-item': require('./ListItem')
-    }
+    name: 'v-list'
   }
 </script>
 

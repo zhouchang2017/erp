@@ -58,13 +58,4 @@ abstract class Resource extends NovaResource
         return parent::relatableQuery($request, $query);
     }
 
-    /**
-     * Get the URI key for the resource.
-     *
-     * @return string
-     */
-    public static function uriKey()
-    {
-        return Str::plural(Str::camel(class_basename(get_called_class()), '-'));
-    }
 }

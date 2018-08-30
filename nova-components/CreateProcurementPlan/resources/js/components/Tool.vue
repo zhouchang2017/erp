@@ -15,7 +15,7 @@
 
         <v-drawer v-model="hidden">
             <v-search/>
-            <v-list/>
+            <v-product-list/>
         </v-drawer>
 
 
@@ -32,7 +32,7 @@
     components: {
       'v-drawer': require('./Drawer'),
       'v-search': require('./Search'),
-      'v-list': require('./List')
+      'v-product-list': require('./ProductList')
     },
 
     data () {
