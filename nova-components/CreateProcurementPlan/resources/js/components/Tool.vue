@@ -15,21 +15,23 @@
 
         <v-drawer v-model="hidden">
             <v-search/>
-            <v-product-list/>
+            <v-product-list v-model="variants"/>
         </v-drawer>
-
-
-        <!--<product-modal/>-->
-
+        <add-variant-form
+                          @procurement-plan-save-variant="save"
+        ></add-variant-form>
     </div>
 </template>
 
 <script>
 
+  import AddVariantForm from './AddVariantForm'
+
   export default {
     name: 'create-procurement-plan',
 
     components: {
+      AddVariantForm,
       'v-drawer': require('./Drawer'),
       'v-search': require('./Search'),
       'v-product-list': require('./ProductList')
@@ -37,12 +39,14 @@
 
     data () {
       return {
-        hidden: false
+        hidden: false,
+        modal: false,
+        variants: []
       }
     },
 
     methods: {
-      show () {
+      variantChange () {
 
       }
     },

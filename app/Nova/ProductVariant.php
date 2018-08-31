@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -56,6 +57,12 @@ class ProductVariant extends Resource
             Text::make('Attribute Key', 'attribute_key'),
             Currency::make('Price')->format('%.2n'),
 
+            BelongsToMany::make('Product Providers', 'providers', ProductProvider::class)
+                ->fields(function () {
+                    return [
+                        Currency::make('Price'),
+                    ];
+            }),
         ];
     }
 

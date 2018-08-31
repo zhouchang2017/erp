@@ -25,7 +25,8 @@
         type: Boolean,
         default: false
       }
-    }
+    },
+
   }
 </script>
 

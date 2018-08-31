@@ -71,7 +71,7 @@ class Product extends Resource
 
             BelongsTo::make('ProductType', 'type'),
 
-            BelongsTo::make('Brand', 'brand'),
+            BelongsTo::make('Brand', 'brand')->searchable(),
 
             Markdown::make('Body'),
 

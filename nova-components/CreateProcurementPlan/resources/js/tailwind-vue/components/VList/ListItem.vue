@@ -1,8 +1,11 @@
 <template>
     <div class="list-item flex flex-col">
-        <div class="flex flex-row px-6 py-4 w-full items-center hover:bg-30" :class="{'cursor-pointer':!!$slots.sub}" @click.stop="show">
+        <div class="flex flex-row px-6 py-4 w-full items-center hover:bg-30"
+             :class="{'cursor-pointer':showCursorPointer}"
+             @click.stop="show">
             <slot></slot>
-            <div v-if="!!$slots.sub" @click.stop="hidden = !hidden" class="flex items-center justify-center cursor-pointer">
+            <div v-if="!!$slots.sub" @click.stop="hidden = !hidden"
+                 class="flex items-center justify-center cursor-pointer">
                 ️{{hidden ? '⬆️' :'⬇️'}}
             </div>
         </div>
@@ -23,9 +26,16 @@
     },
     methods: {
       show () {
-        if(!!this.$slots.sub){
+        if (!!this.$slots.sub) {
           this.hidden = !this.hidden
+        } else {
+          this.$emit('click')
         }
+      }
+    },
+    computed: {
+      showCursorPointer () {
+        return !!this.$slots.sub || _.has(this.$listeners, 'click')
       }
     }
   }
