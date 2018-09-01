@@ -32,12 +32,6 @@
                                 >
                                     <span class="text-sm text-white">{{provider.name.charAt(0)}}</span>
                                 </div>
-                                <!--<div class="bg-desable rounded-full h-4 w-4 flex justify-center items-center">-->
-                                <!--<span class="text-sm text-white">B</span>-->
-                                <!--</div>-->
-                                <!--<div class="bg-primary rounded-full h-4 w-4 flex justify-center items-center">-->
-                                <!--<span class="text-sm text-white">C</span>-->
-                                <!--</div>-->
                             </div>
                         </div>
 
@@ -61,12 +55,12 @@
   import VListItem__contentSubTitle from './../tailwind-vue/components/VList/ListItemContentSubTitle'
   import VListItem__action from './../tailwind-vue/components/VList/ListItemAction'
   import VChip from './../tailwind-vue/components/VChip/Chip'
-  import AddVariantForm from './AddVariantForm'
+  // import AddVariantForm from './AddVariantForm'
 
   export default {
     name: 'ProductList',
     components: {
-      AddVariantForm,
+      // AddVariantForm,
       VChip,
       VListItem__action,
       VListItem__contentSubTitle,
@@ -92,7 +86,6 @@
           include: ['brand', 'type', 'variants.providers']
         },
         productList: [],
-        show: false
       }
     },
     methods: {
@@ -103,7 +96,6 @@
       openForm (product, variant) {
         if (variant.providers.length > 0) {
           Nova.$emit('open-add-variant-form', {variant: {product, ...variant}})
-          this.show = true
           return
         }
         this.$toasted.show('该产品暂无供应商，无法进行采购', {type: 'error'})

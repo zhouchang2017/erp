@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78f71068ec08436aeecf3504aa928f44",
+    "content-hash": "3e0e1814757f4a4b3797afa00daf015f",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -186,42 +186,8 @@
             "time": "2018-07-11T18:51:56+00:00"
         },
         {
-            "name": "chang/attribute-group-attributes",
-            "version": "9999999-dev",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/AttributeGroupAttributes",
-                "reference": "31d487393d12f6e681abec78c75cef4e8b3d63ee",
-                "shasum": null
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Chang\\AttributeGroupAttributes\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Chang\\AttributeGroupAttributes\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ]
-        },
-        {
             "name": "chang/create-procurement-plan",
-            "version": "9999999-dev",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/CreateProcurementPlan",
@@ -242,6 +208,40 @@
             "autoload": {
                 "psr-4": {
                     "Chang\\CreateProcurementPlan\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/create-procurement-plan-tool",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/CreateProcurementPlanTool",
+                "reference": "f226e858ea90312cf9ded287ccc9534a2cb69042",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\CreateProcurementPlanTool\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\CreateProcurementPlanTool\\": "src/"
                 }
             },
             "license": [
@@ -282,40 +282,6 @@
                 "MIT"
             ],
             "description": "A Laravel Nova resource tool.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ]
-        },
-        {
-            "name": "chang/product-attributes",
-            "version": "9999999-dev",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/ProductAttributes",
-                "reference": "79fbf369618dd260c70df73f0708b4e72b107104",
-                "shasum": null
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Chang\\ProductAttributes\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Chang\\ProductAttributes\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
             "keywords": [
                 "laravel",
                 "nova"

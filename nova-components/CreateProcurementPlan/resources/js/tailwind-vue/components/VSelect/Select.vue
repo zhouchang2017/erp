@@ -24,7 +24,8 @@
                 </slot>
             </div>
 
-            <button type="button" @click.stop="clear" v-if="value" tabindex="-1" class="absolute p-2 inline-block"
+            <button type="button" @click.stop="clear" v-if="value && !disabled" tabindex="-1"
+                    class="absolute p-2 inline-block"
                     style="right: 4px; top: 6px;">
                 <svg class="block fill-current icon h-2 w-2" xmlns="http://www.w3.org/2000/svg"
                      viewBox="278.046 126.846 235.908 235.908">
@@ -34,7 +35,7 @@
         </div>
 
         <div v-if="show" ref="dropdown"
-             class="form-input px-0 border border-60 absolute pin-t pin-l my-1"
+             class="form-input px-0 border border-60 absolute pin-t pin-l my-1 overflow-hidden"
              :style="{ width: inputWidth + 'px', zIndex: 2000 }">
 
             <div class="p-2 bg-grey-300" v-if="searchable">
@@ -126,6 +127,9 @@
     }),
 
     watch: {
+      value (val) {
+        this.$emit('change', val)
+      },
       search (search) {
         this.selected = 0
         this.$refs.container.scrollTop = 0
@@ -178,12 +182,12 @@
       },
 
       open () {
-        // if (!this.disabled) {
-        this.show = true
-        if (this.searchable) {
-          this.search = ''
+        if (!this.disabled) {
+          this.show = true
+          if (this.searchable) {
+            this.search = ''
+          }
         }
-        // }
       },
 
       close () {
@@ -191,10 +195,10 @@
       },
 
       clear () {
-        // if (!this.disabled) {
-        this.selected = null
-        this.$emit('input', null)
-        // }
+        if (!this.disabled) {
+          this.selected = null
+          this.$emit('input', null)
+        }
       },
 
       move (offset) {

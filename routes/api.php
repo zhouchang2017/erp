@@ -23,4 +23,7 @@ Route::middleware([])->group(function () {
     Route::put('/products/{id}/update-attributes', 'ProductController@updateOrCreateAttributes');
 
     Route::get('/products', 'ProductController@index');
+
+    // warehouse
+    Route::get('/warehouses', 'WarehouseController@index');
 });

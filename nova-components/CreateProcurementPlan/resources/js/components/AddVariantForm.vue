@@ -1,9 +1,10 @@
 <template>
     <transition name="fade">
-        <modal @modal-close="handleClose" class="z-501" ref="modal" v-show="value">
+        <modal @modal-close="value = false" class="z-501" ref="modal" v-show="value">
             <div
+                    ref="modelContext"
                     class="bg-white rounded-lg shadow-lg overflow-hidden"
-                    style="width: 600px"
+                    style="width: 600px" :class="{'overflow-y-scroll':overFlow}"
             >
                 <div class="p-8">
                     <heading :level="2" class="mb-6">{{title}}</heading>
@@ -50,6 +51,7 @@
                                         :error="errors.first('provider')"
                                         searchBy='name'
                                         class="mb-3 border-danger"
+                                        :disabled="edit"
                                 >
                                     <div v-if="currentAddVariant.provider" class="flex items-center">
                                         {{ currentAddVariant.provider.name }}
@@ -120,7 +122,7 @@
                 <div class="bg-30 px-6 py-3 flex">
                     <div class="ml-auto">
                         <button dusk="cancel-upload-delete-button" type="button" data-testid="cancel-button"
-                                @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">
+                                @click.prevent="value = false" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">
                             {{__('Cancel')}}
                         </button>
                         <button ref="handleSubmit"
@@ -136,11 +138,13 @@
 <script>
   import VField from '../tailwind-vue/components/VField/Field'
   import VSelect from '../tailwind-vue/components/VSelect/Select'
+  import vee from '../mixins/vee'
 
   export default {
     name: 'add-variant-form',
     components: {VSelect, VField},
 
+    mixins: [vee],
     props: {
       title: {
         type: String,
@@ -149,10 +153,6 @@
       selected: {
         type: Array,
         default: []
-      },
-      edit: {
-        type: Boolean,
-        default: false
       }
     },
 
@@ -168,16 +168,20 @@
         productName: '加载中',
         productSku: '加载中',
         productAttr: '加载中',
-        value: false
+        value: false,
+        overFlow: false,
+        edit: false,
+        index: undefined
       }
     },
     methods: {
-      handleClose () {
-        this.$emit('input', false)
-      },
       async handleSubmit () {
         if (await this.$validator.validateAll()) {
-          this.$emit('procurement-plan-save-variant', this.currentAddVariant)
+          this.$emit('procurement-plan-save-variant', {
+            variant: this.currentAddVariant,
+            edit: this.edit,
+            index: this.index
+          })
         }
       },
       initForm () {
@@ -203,16 +207,29 @@
           this.productAttr = val.attribute_key
           this.productSku = val.sku
         }
+      },
+      'value': function (value) {
+        if (value) {
+          setTimeout(() => {
+            if (innerHeight - this.$refs.modelContext.clientHeight < 50) {
+              this.$refs.modelContext.style.maxHeight = `${innerHeight - 100}px`
+              this.overFlow = true
+            }
+          }, 50)
+        }
       }
     },
+
     /**
      * Mount the component.
      */
     mounted () {
-      Nova.$on('open-add-variant-form', current => {
+      Nova.$on('open-add-variant-form', ({variant, edit = false, index = undefined}) => {
         this.initForm()
-        this.currentAddVariant = Object.assign({}, this.currentAddVariant, current)
+        this.currentAddVariant = Object.assign({}, this.currentAddVariant, edit ? variant : {variant})
+        this.edit = edit
         this.value = true
+        this.index = index
       })
       Nova.$on('close-add-variant-form', () => {
         this.value = false

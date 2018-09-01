@@ -24,6 +24,10 @@ class Warehouse extends Model
         'name',
     ];
 
+    protected $allowedInclude = [
+        'type'
+    ];
+
     /**
      * 数据模型的启动方法
      *
@@ -35,6 +39,13 @@ class Warehouse extends Model
 
         self::observe(WarehouseObserver::class);
     }
+
+
+    public static function getAllowedInclude()
+    {
+        return (new static())->allowedInclude;
+    }
+
 
     public function type()
     {
