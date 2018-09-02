@@ -30,6 +30,9 @@
                     </div>
                 </div>
             </v-select>
+            <p v-if="errors.first('warehouse')" class="my-2 text-danger">
+                {{ errors.first('warehouse') }}
+            </p>
         </div>
     </div>
 </template>

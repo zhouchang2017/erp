@@ -7,13 +7,26 @@
             </div>
         </div>
 
-        <card class="card mb-6 py-3 px-6">
+        <card class="mb-6 py-3 px-6">
             <v-select-warehouse v-model="warehouseId"></v-select-warehouse>
         </card>
 
-        <card class="bg-10 flex flex-col items-center overflow-hidden" :class="{'justify-center':variants.length<=0}"
-              style="min-height: 300px">
+        <card class="bg-10 mb-6 flex flex-col overflow-hidden" :class="{'justify-center':variants.length<=0}"
+              :style="styles">
             <v-variant-table v-model="variants" @choose-product="hidden = true"></v-variant-table>
+
+        </card>
+
+        <card class="bg-10 flex flex-col overflow-hidden">
+            <div class="bg-30 flex px-8 py-4" >
+                <button dusk="create-and-add-another-button" type="button"
+                        class="ml-auto btn btn-default btn-primary mr-3">
+                    Create &amp; Add Another
+                </button>
+                <button dusk="create-button" class="btn btn-default btn-primary">
+                    Create Procurement Plan
+                </button>
+            </div>
         </card>
 
 
@@ -82,6 +95,12 @@
         }
         Nova.$emit('close-add-variant-form')
 
+      }
+    },
+
+    computed: {
+      styles () {
+        return this.variants.length <= 0 ? {'min-height': 300 + 'px'} : {}
       }
     },
 
