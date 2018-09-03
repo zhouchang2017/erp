@@ -2,6 +2,8 @@
 
 namespace App\Modules\Procurement\Models;
 
+use App\Modules\Product\Models\Product;
+use App\Modules\Product\Models\ProductVariant;
 use App\Modules\ProductProvider\Models\ProductProvider;
 use App\Modules\Scaffold\BaseModel as Model;
 
@@ -28,7 +30,7 @@ class ProcurementPlanProductVariant extends Model
         'arrived_pcs',
         'good',
         'bad',
-        'lost'
+        'lost',
     ];
 
     /**
@@ -52,11 +54,16 @@ class ProcurementPlanProductVariant extends Model
 
     /**
      * 采购单
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function procurement()
     {
-        return $this->hasOne(Procurement::class, 'procurement_plan_id', 'procurement_plan_id');
+        return $this->belongsTo(Procurement::class, 'procurement_plan_id');
+    }
+
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -75,12 +82,17 @@ class ProcurementPlanProductVariant extends Model
         return $this->belongsTo(ProcurementPlan::class, 'procurement_plan_id');
     }
 
+    public function variant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function history()
     {
-        return $this->morphMany(StorageHistory::class,'origin');
+        return $this->morphMany(StorageHistory::class, 'origin');
     }
 
     /**

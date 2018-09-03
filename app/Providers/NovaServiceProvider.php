@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Chang\CreateProcurementPlanTool\CreateProcurementPlanTool;
+use App\Nova\Metrics\PendingProcurementPlans;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
@@ -59,6 +59,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new Help,
+            new PendingProcurementPlans()
         ];
     }
 
@@ -71,7 +72,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new CreateProcurementPlan,
-            new CreateProcurementPlanTool()
         ];
     }
 

@@ -2,8 +2,12 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ProcurementPlanProductVariant extends Resource
@@ -31,23 +35,35 @@ class ProcurementPlanProductVariant extends Resource
         'id',
     ];
 
+    public static $with = [
+        'plan',
+        'variant',
+        'provider'
+    ];
+
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('Procurement Plan ID', 'plan', ProcurementPlan::class),
+            BelongsTo::make('Attr', 'variant', ProductVariant::class),
+            Currency::make('Price')->format('%.2n'),
+            Currency::make('OfferPrice', 'offer_price')->format('%.2n'),
+            BelongsTo::make('Provider', 'provider', ProductProvider::class),
+            Number::make('Pcs')
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -58,7 +74,7 @@ class ProcurementPlanProductVariant extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -69,7 +85,7 @@ class ProcurementPlanProductVariant extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -80,7 +96,7 @@ class ProcurementPlanProductVariant extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)

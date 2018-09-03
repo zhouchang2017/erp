@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e0e1814757f4a4b3797afa00daf015f",
+    "content-hash": "bcdbf5a8e1245377eb6c2dabf8762a5a",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -187,7 +187,7 @@
         },
         {
             "name": "chang/create-procurement-plan",
-            "version": "dev-master",
+            "version": "9999999-dev",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/CreateProcurementPlan",
@@ -208,40 +208,6 @@
             "autoload": {
                 "psr-4": {
                     "Chang\\CreateProcurementPlan\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova tool.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ]
-        },
-        {
-            "name": "chang/create-procurement-plan-tool",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/CreateProcurementPlanTool",
-                "reference": "f226e858ea90312cf9ded287ccc9534a2cb69042",
-                "shasum": null
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Chang\\CreateProcurementPlanTool\\ToolServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Chang\\CreateProcurementPlanTool\\": "src/"
                 }
             },
             "license": [

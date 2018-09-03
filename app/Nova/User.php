@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -45,6 +46,8 @@ class User extends Resource
             ID::make()->sortable(),
 
             Gravatar::make(),
+
+            Avatar::make('Avatar')->disk('public'),
 
             Text::make('Name')
                 ->sortable()

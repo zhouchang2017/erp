@@ -2,11 +2,15 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ApprovalProcurementPlans;
+use App\Nova\Lenses\PendingProcurementPlans;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -46,7 +50,6 @@ class ProcurementPlan extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Code')->exceptOnForms(),
             BelongsTo::make('Warehouse'),
 
             BelongsTo::make('User'),
@@ -55,12 +58,9 @@ class ProcurementPlan extends Resource
 
             Textarea::make('Comment'),
 
-            BelongsToMany::make('Product Variant', 'variants', ProductVariant::class)
-            ->fields(function(){
-                return [
+            HasMany::make('InFo', 'planInfo', ProcurementPlanProductVariant::class),
 
-                ];
-            })
+            Text::make('Status')
         ];
     }
 
@@ -94,7 +94,9 @@ class ProcurementPlan extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new PendingProcurementPlans()
+        ];
     }
 
     /**
@@ -105,6 +107,8 @@ class ProcurementPlan extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new ApprovalProcurementPlans()
+        ];
     }
 }

@@ -35,7 +35,9 @@ class ProcurementServer
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            if($this->debug)dd($exception);
+            if ($this->debug) {
+                dd($exception);
+            }
             Log::error('创建采购计划失败: ' . $exception->getMessage() . '');
         }
     }
@@ -50,8 +52,7 @@ class ProcurementServer
          * attributes['comment'][['user_id'=>1,'text'=>'first comment']]
          * attributes['history']
          * */
-        $data = array_only($attributes, ['warehouse_id', 'user_id', 'description', 'comment', 'history']);
-        $this->procurementPlan = $this->procurementPlan::create($data);
+        $this->procurementPlan = $this->procurementPlan::create($attributes);
     }
 
     /**
@@ -70,5 +71,23 @@ class ProcurementServer
             throw new \Exception('采购计划必须存在商品');
         }
         $this->procurementPlan->planInfo()->createMany($planInfo);
+    }
+
+    public function approval(ProcurementPlan $model, array $attribute)
+    {
+        try {
+            $history = $model->history ?? [];
+            $model->history = array_push($history,
+                [
+                    'info' => $attribute['info'] ?? $attribute['status'],
+                ]);
+            $model->status = $attribute['status'];
+            $model->save();
+        } catch (\Exception $exception) {
+            if ($this->debug) {
+                dd($exception);
+            }
+        }
+
     }
 }

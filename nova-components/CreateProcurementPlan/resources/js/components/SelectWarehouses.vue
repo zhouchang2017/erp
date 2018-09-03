@@ -1,59 +1,51 @@
 <template>
-    <div class="flex border-40">
-        <div class="w-1/5 px-8 py-6">
-            <label class="inline-block text-80 h-9 pt-2">
-                仓库
-            </label>
-        </div>
-        <div class="w-1/2 px-8 py-6">
+    <default-field :field="field">
+        <template slot="field">
             <v-select
-                    name="warehouse"
-                    v-validate="'required'"
-                    v-model='warehouse'
-                    :data='warehouses'
+                    :name="field.name"
+                    v-validate="field.rule"
+                    v-model='value'
+                    :data='resources'
                     trackBy="id"
-                    :error="errors.first('warehouse')"
+                    :error="hasError"
                     searchBy='name'
                     class="mb-3 border-danger"
                     :disabled="edit"
                     @change="val=>$emit('input',val.id)"
             >
-                <div v-if="warehouse" class="flex items-center">
-                    {{ warehouse.name }}
+                <div v-if="value" class="flex items-center">
+                    {{ value.name }}
                 </div>
 
                 <div slot="option" slot-scope="{option, selected}"
                      class="flex flex-row items-center">
+                    <img v-if="option.avatar" class="h-8 rounded-full block mr-4"
+                         src="https://img.alicdn.com/imgextra/i4/2616970884/TB2gWr5XWmgSKJjSspiXXXyJFXa_!!2616970884.jpg"
+                         alt="">
                     <div class="flex flex-1 flex-col">
                         <div class="leading-tight text-xl">{{ option.name }}</div>
-                        <div class="text-xs">{{option.type.name}}</div>
+                        <div class="text-xs" v-if="option.type && option.type.name">{{option.type.name}}</div>
                     </div>
                 </div>
             </v-select>
-            <p v-if="errors.first('warehouse')" class="my-2 text-danger">
-                {{ errors.first('warehouse') }}
+            <p v-if="hasError" class="my-2 text-danger">
+                {{ firstError }}
             </p>
-        </div>
-    </div>
+        </template>
+    </default-field>
 </template>
 
 <script>
   import VSelect from '../tailwind-vue/components/VSelect/Select'
-  import vee from '../mixins/vee'
+  import HandleValidationField from '../tailwind-vue/mixins/handleValidationField'
+  import FormField from '../tailwind-vue/mixins/formField'
 
   export default {
     name: 'v-select-warehouse',
     components: {VSelect},
-    mixins: [vee],
-    model: {
-      event: 'input',
-      prop: 'value'
-    },
+    mixins: [FormField, HandleValidationField],
 
     props: {
-      value: {
-        type: Number
-      },
       edit: {
         type: Boolean,
         default: false
@@ -62,24 +54,20 @@
 
     data () {
       return {
-        warehouses: [],
-        warehouse: null
+        resources: [],
+        value: null
       }
     },
 
     methods: {
-      async fetchWarehouses () {
-        const {data: {data}} = await axios.get('/api/warehouses', {
-          params: {
-            include: ['type']
-          }
-        })
-        this.warehouses = data
+      async fetchResources () {
+        const {data: {data}} = await this.field.fetchResources()
+        this.resources = data
       }
     },
 
     async mounted () {
-      await this.fetchWarehouses()
+      await this.fetchResources()
     }
   }
 </script>
