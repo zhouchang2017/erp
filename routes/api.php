@@ -32,4 +32,6 @@ Route::middleware([])->group(function () {
 
     // procurementPlan
     Route::post('/procurement-plans', 'ProcurementPlanController@store');
+    Route::post('/procurement-plans/{id}', 'ProcurementPlanController@update');
+    Route::get('/procurement-plans/{id}', 'ProcurementPlanController@show');
 });

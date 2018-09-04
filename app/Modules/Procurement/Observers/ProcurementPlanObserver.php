@@ -2,6 +2,7 @@
 
 namespace App\Modules\Procurement\Observers;
 
+use App\Modules\Procurement\Enums\PlanStatus;
 use App\Modules\Procurement\Models\ProcurementPlan;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,11 @@ class ProcurementPlanObserver
 
     public function updated(ProcurementPlan $plan)
     {
-        $this->createProcurement($plan);
+        if ( !$plan->procurement && $plan->status === PlanStatus::getDescription(4)) {
+            // Create Procurement
+            $plan->createProcurement();
+        }
+
     }
 
     public function afterUpdated(ProcurementPlan $plan)
@@ -46,16 +51,5 @@ class ProcurementPlanObserver
         return (string)Str::uuid();
     }
 
-    /**
-     * 审核通过创建采购单
-     * @param ProcurementPlan $plan
-     */
-    private function createProcurement(ProcurementPlan $plan)
-    {
-        // todo 检测是否已存在对应的采购单！！
-        if (in_array($plan->status, [ 'already', 5, '5' ])) {
-            $plan->procurement()->create();
-        }
-    }
 
 }

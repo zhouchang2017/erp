@@ -7,6 +7,7 @@ use App\Modules\Product\Models\Product;
 use App\Modules\Product\Models\ProductAttribute;
 use App\Modules\Product\Models\ProductVariant;
 use App\Modules\Scaffold\BaseService;
+use App\Modules\Scaffold\Traits\HelperTrait;
 use Illuminate\Support\Collection;
 use DB;
 use Log;
@@ -18,6 +19,7 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class ProductService extends BaseService
 {
+    use HelperTrait;
     /**
      * @var Product
      */
@@ -172,49 +174,6 @@ class ProductService extends BaseService
 
         // 2.无id    创建
         $this->createProductVariant($this->findAddAttributes($attributes));
-    }
-
-
-    public function attributesMapWithKeys(iterable $attributes, $key = 'id'): Collection
-    {
-        $attributes = $this->takeCollect($attributes);
-        // 过滤不存在$key的元素
-        $attributes = $attributes->filter(function ($value) use ($key) {
-            return array_key_exists($key, $value) && !is_null($value[$key]);
-        });
-        return $attributes->mapWithKeys(function ($item) use ($key) {
-            return [$item[$key] => $item];
-        });
-    }
-
-    /**
-     * 转换集合
-     * @param array $attributes
-     * @return \Illuminate\Support\Collection
-     */
-    public function takeCollect($attributes): Collection
-    {
-        if ( !$attributes instanceof Collection) {
-            return collect($attributes);
-        }
-        return $attributes;
-    }
-
-    /**
-     * 过滤需要创建的新属性
-     * @param array|Collection $attributes
-     * @param string $key
-     * @return Collection
-     */
-    private function findAddAttributes($attributes, $key = 'id'): Collection
-    {
-        $attributes = $this->takeCollect($attributes);
-        return $attributes->reduce(function ($res, $attribute) use ($key) {
-            if ( !array_key_exists('id', $attribute) || is_null($attribute['id'])) {
-                $res->push($attribute);
-            };
-            return $res;
-        }, new Collection());
     }
 
     public function query()

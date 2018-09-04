@@ -4,6 +4,7 @@ namespace App\Modules\Procurement\Models;
 
 
 use App\Modules\Procurement\Observers\ProcurementPlanObserver;
+use App\Modules\Procurement\Traits\ProcurementPlanTrait;
 use App\Modules\Product\Models\ProductVariant;
 use App\Modules\Warehouse\Models\Warehouse;
 use App\User;
@@ -16,7 +17,7 @@ use App\Modules\Scaffold\BaseModel as Model;
  */
 class ProcurementPlan extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ProcurementPlanTrait;
 
     protected $dates = ['deleted_at'];
     /**
@@ -50,8 +51,14 @@ class ProcurementPlan extends Model
         'comment' => 'array',
     ];
 
-    protected $fieldSearchable = [
-        'status','code'
+    protected $allowedInclude = [
+        'warehouse',
+        'user',
+        'plan_info',
+        'plan_info.provider',
+        'plan_info.product',
+        'plan_info.variant.providers',
+        'plan_info.variant.product',
     ];
 
     /**
@@ -64,6 +71,12 @@ class ProcurementPlan extends Model
         parent::boot();
         self::observe(ProcurementPlanObserver::class);
     }
+
+    public function scopeAllowedInclude()
+    {
+        return $this->allowedInclude;
+    }
+
 
     /**
      * 采购计划指定仓库
@@ -88,12 +101,7 @@ class ProcurementPlan extends Model
      */
     public function variants()
     {
-        return $this->belongsToMany(ProductVariant::class)->using(ProcurementPlanProductVariant::class)
-            ->withPivot(
-            'id','price','pcs','arrived_pcs','offer_price','product_id','product_provider_id','user_id','good','bad','lost'
-            )
-            ->withTimestamps();
-//        return $this->hasMany(ProcurementPlanProductVariant::class);
+        return $this->hasMany(ProcurementPlanProductVariant::class);
     }
 
     public function procurement()

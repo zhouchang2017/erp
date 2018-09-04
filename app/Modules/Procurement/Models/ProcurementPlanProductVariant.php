@@ -33,6 +33,8 @@ class ProcurementPlanProductVariant extends Model
         'lost',
     ];
 
+    protected $touches = ['plan'];
+
     /**
      * 数据模型的启动方法
      *

@@ -6,9 +6,10 @@ export default {
 
   data: () => ({
     value: '',
+    resources: []
   }),
 
-  mounted() {
+  mounted () {
     this.setInitialValue()
 
     // Add a default fill method for the field
@@ -20,7 +21,7 @@ export default {
     })
   },
 
-  destroyed() {
+  destroyed () {
     Nova.$off(this.field.attribute + '-value')
   },
 
@@ -28,7 +29,10 @@ export default {
     /*
      * Set the initial value for the field
      */
-    setInitialValue() {
+    setInitialValue () {
+      if (this.field.trackBy) {
+        return
+      }
       this.value = this.field.value || ''
     },
 
@@ -36,14 +40,14 @@ export default {
      * Provide a function that fills a passed FormData object with the
      * field's internal value attribute
      */
-    fill(formData) {
+    fill (formData) {
       formData.append(this.field.attribute, this.value || '')
     },
 
     /**
      * Update the field's internal value
      */
-    handleChange(value) {
+    handleChange (value) {
       this.value = value
     },
   },

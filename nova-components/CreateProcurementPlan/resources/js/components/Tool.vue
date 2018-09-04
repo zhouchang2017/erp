@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="flex items-center mb-3">
-            <h4 class="text-90 font-normal text-2xl">Create ProcurementPlan</h4>
+            <h4 class="text-90 font-normal text-2xl">{{title}}</h4>
             <div class="ml-auto flex">
-                <button class="btn btn-default btn-primary" @click="hidden = true">choose product</button>
+                <button class="btn btn-default btn-primary" @click="hidden = true">{{__('Choose Product')}}</button>
             </div>
         </div>
 
-        <card class="mb-6 py-3 px-6">
+        <card class="mb-6 py-3 px-6" v-if="loaded">
             <!--<v-select-warehouse v-model="warehouseId"></v-select-warehouse>-->
 
             <component
@@ -25,12 +25,13 @@
               :style="styles">
             <v-variant-table v-model="variants" @choose-product="hidden = true"></v-variant-table>
             <div class="bg-30 flex px-8 py-4" v-if="variants.length>0">
-                <select v-model="status" class="form-control form-select ml-auto mr-3">
-                    <option value="uncommitted">保存</option>
-                    <option value="pending" selected>提交审核</option>
+                <select v-model="status" :disabled="selectDisable" class="form-control form-select ml-auto mr-3">
+                    <option value="uncommitted">{{__('Save')}}</option>
+                    <option value="pending" selected>{{__('Submit Approval')}}</option>
+                    <option value="already" disabled>{{__('Already')}}</option>
                 </select>
-                <button class="btn btn-default btn-primary" @click="store">
-                    Create Procurement Plan
+                <button class="btn btn-default btn-primary" @click="beforeSubmit" :disabled="selectDisable">
+                    {{buttonTitle}}
                 </button>
             </div>
         </card>
@@ -74,20 +75,24 @@
       'v-textarea': require('../tailwind-vue/components/VTextarea/Textarea')
     },
 
+    props: {
+      id: null
+    },
+
     data () {
       return {
         hidden: false,
         modal: false,
         variants: [],
         status: 'pending',
-
         fields: [
           {
             component: 'v-select-warehouse',
-            name: '采购仓库',
+            name: this.__('Warehouse'),
             attribute: 'warehouse_id',
             value: null,
             rule: 'required',
+            trackBy: 'id',
             fetchResources: () => axios.get('/api/warehouses', {
               params: {
                 include: ['type']
@@ -96,34 +101,58 @@
           },
           {
             component: 'v-select-warehouse',
-            name: '采购员',
+            name: this.__('Salesman'),
             attribute: 'user_id',
             value: null,
             rule: 'required',
+            trackBy: 'id',
             fetchResources: () => axios.get('/api/users')
           },
           {
             component: 'v-textarea',
-            name: '采购说明',
+            name: `${this.__('Procurement')}${this.__('Description')}`,
             attribute: 'description',
             value: null,
             rule: 'required'
           },
           {
             component: 'v-textarea',
-            name: '备注信息',
+            name: this.__('Comment'),
             attribute: 'comment',
             value: null,
             rule: ''
           },
-        ]
+        ],
+        origin: {},
+        loaded: false
+      }
+    },
+
+    beforeRouteEnter (to, from, next) {
+      if (to.params.id) {
+        const queryBuild = {
+          include: ['plan_info.provider', 'plan_info.variant.product']
+        }
+        axios.get(`/api/procurement-plans/${to.params.id}`, {params: queryBuild}).then(({data: {data}}) => {
+          next(vm => {
+            console.log('fetched!')
+            vm.origin = data
+            vm.fill()
+          })
+        }).catch(err => {
+          next(vm => {
+            vm.toasted.show(err, {type: 'error'})
+          })
+        })
+      } else {
+        next(vm => {
+          vm.fill()
+        })
       }
     },
 
     methods: {
-      variantChange () {
 
-      },
       inArray (ProviderId, variantId) {
         return this.variants.find(item => item.provider.id === ProviderId && item.variant.id === variantId)
       },
@@ -147,7 +176,7 @@
 
       },
 
-      async store () {
+      async beforeSubmit () {
         if (await this.$validator.validateAll()) {
           const formData = this.fields.reduce((res, field) => {
             res[field.attribute] = field.value
@@ -157,36 +186,77 @@
           formData.status = this.status
 
           formData.variants = this.variants.map(item => {
-            return {
+            const id = item.id ? {id: item.id} : {}
+            return Object.assign({}, {
               product_id: item.variant.product_id,
               product_variant_id: item.variant.id,
               price: item.variant.price,
               pcs: item.pcs,
-              offer_price: item.offerPrice,
+              offer_price: item.offer_price,
               user_id: formData.user_id,
-              product_provider_id:item.provider.id
-            }
+              product_provider_id: item.provider.id
+            }, id)
           })
-
-          try {
-            await axios.post('/api/procurement-plans', formData)
-            this.$toasted.show('创建成功', {type: 'success'})
-          } catch (e) {
-            console.error(e)
-            this.$toasted.show('创建失败', {type: 'error'})
-          }
-
+          this.id ? this.update(formData) : this.store(formData)
         }
+      },
+
+      async store (formData) {
+        try {
+          await axios.post('/api/procurement-plans', formData)
+          this.$toasted.show(this.__('The :resource was created!', {
+            resource: this.__('Procurement Plan'),
+          }), {type: 'success'})
+        } catch (e) {
+          console.error(e)
+          this.$toasted.show(this.__('The :resource was :action failed!', {
+            resource: this.__('Procurement Plan'),
+            action: this.__('Create')
+          }), {type: 'error'})
+        }
+      },
+
+      async update (formData) {
+        try {
+          await axios.post(`/api/procurement-plans/${this.id}`, formData)
+          this.$toasted.show(this.__('The :resource was updated!', {
+            resource: this.__('Procurement Plan'),
+          }), {type: 'success'})
+        } catch (e) {
+          console.error(e)
+          this.$toasted.show(this.__('The :resource was :action failed!', {
+            resource: this.__('Procurement Plan'),
+            action: this.__('Update')
+          }), {type: 'error'})
+        }
+      },
+      fill () {
+        this.fields.forEach(item => {
+          const value = _.get(this.origin, item['attribute'])
+          if (value) {
+            item.value = value
+          }
+        })
+        this.status = _.get(this.origin, 'status', 'pending')
+        this.variants = _.get(this.origin, 'plan_info', [])
+        this.loaded = true
       }
     },
 
     computed: {
       styles () {
         return this.variants.length <= 0 ? {'min-height': 300 + 'px'} : {}
+      },
+      title () {
+        return this.id ? `${this.__('Update & Editing')} ${this.__('Procurement Plan')}` : `${this.__('Create')} ${this.__('Procurement Plan')}`
+      },
+      buttonTitle () {
+        return this.id ? `${this.__('Update')} ${this.__('Procurement Plan')}` : `${this.__('Create')} ${this.__('Procurement Plan')}`
+      },
+      selectDisable () {
+        const disable = ['cancel', 'already']
+        return disable.includes(this.status)
       }
-    },
-
-    mounted () {
     },
     destroyed () {
     }

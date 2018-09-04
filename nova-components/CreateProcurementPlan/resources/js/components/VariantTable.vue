@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="overflow-x-auto">
         <div class="text-center" v-if="value.length <= 0">
             <svg xmlns="http://www.w3.org/2000/svg" width="65" height="51" viewBox="0 0 65 51" class="mb-3">
                 <g id="Page-1" fill="none" fill-rule="evenodd">
@@ -14,7 +14,7 @@
             </h3>
             <span class="ml-auto">
                 <button class="btn btn-sm btn-outline" @click="$emit('choose-product')">
-                    Choose Product
+                    {{__('Choose Product')}}
                  </button>
             </span>
         </div>
@@ -81,7 +81,7 @@
           {text: '销售属性', value: 'variant.attribute_key'},
           {text: '建议售价', value: 'price'},
           {text: '供应商', value: 'provider.name'},
-          {text: '采购价', value: 'offerPrice'},
+          {text: '采购价', value: 'offer_price'},
           {text: '采购数量', value: 'pcs'},
           // {text: '小计金额', value: 'pcs'}
         ]

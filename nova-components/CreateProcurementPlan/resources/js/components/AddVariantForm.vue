@@ -86,7 +86,7 @@
                             <template slot="field">
                                 <input
                                         name="offerPrice"
-                                        v-model="currentAddVariant.offerPrice"
+                                        v-model="currentAddVariant.offer_price"
                                         class="w-full form-control form-input form-input-bordered"
                                         v-validate="'required'"
                                         :class="{'border-danger':errors.first('offerPrice')}"
@@ -160,7 +160,7 @@
       return {
         currentAddVariant: {
           provider: null,
-          offerPrice: 0,
+          offer_price: 0,
           price: 0,
           pcs: 0,
           variant: null
@@ -187,7 +187,7 @@
       initForm () {
         this.currentAddVariant = {
           provider: null,
-          offerPrice: 0,
+          offer_price: 0,
           price: 0,
           pcs: 0,
           variant: null
@@ -197,7 +197,7 @@
     watch: {
       'currentAddVariant.provider': function (val, oldVal) {
         if (val && val !== oldVal) {
-          this.currentAddVariant.offerPrice = val.pivot.price
+          this.currentAddVariant.offer_price = val.pivot.price
         }
       },
       'currentAddVariant.variant': function (val) {

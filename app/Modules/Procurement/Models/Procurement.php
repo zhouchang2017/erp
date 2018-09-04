@@ -2,6 +2,7 @@
 
 namespace App\Modules\Procurement\Models;
 
+use App\Modules\Procurement\Observers\ProcurementObserver;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Modules\Scaffold\BaseModel as Model;
 
@@ -63,6 +64,7 @@ class Procurement extends Model
     protected static function boot()
     {
         parent::boot();
+        self::observe(ProcurementObserver::class);
     }
 
     /**
@@ -93,26 +95,5 @@ class Procurement extends Model
         return $this->planInfo()->has('history')->with('history')->get();
     }
 
-    /**
-     * 计算采购单总价格和总数量
-     * @return array
-     */
-    public function calcTotalPriceOrPcs(): array
-    {
-        return $this->plan->variants->reduce(function ($calc, $variant) {
-            $calc['total_price'] += $variant->plan_info->getTotalPrice();
-            $calc['total_pcs'] += $variant->plan_info->pcs;
-            $calc['able_price'] = $calc['total_price'];
-            return $calc;
-        }, ['total_price' => 0, 'total_pcs' => 0, 'able_price' => 0]);
-    }
 
-    /**
-     * 更新采购总价格和总数量
-     * @return $this
-     */
-    public function updateTotalPriceOrPcs()
-    {
-//        return $this->store($this->calcTotalPriceOrPcs());
-    }
 }

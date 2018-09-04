@@ -6,7 +6,7 @@
                     v-validate="field.rule"
                     v-model='value'
                     :data='resources'
-                    trackBy="id"
+                    :trackBy="field.trackBy"
                     :error="hasError"
                     searchBy='name'
                     class="mb-3 border-danger"
@@ -54,7 +54,6 @@
 
     data () {
       return {
-        resources: [],
         value: null
       }
     },
@@ -63,11 +62,17 @@
       async fetchResources () {
         const {data: {data}} = await this.field.fetchResources()
         this.resources = data
-      }
+      },
+      initialValue () {
+        if (this.field.trackBy && this.field.value) {
+          this.value = _.find(this.resources, [this.field.trackBy, this.field.value]) || ''
+        }
+      },
     },
 
     async mounted () {
       await this.fetchResources()
+      this.initialValue()
     }
   }
 </script>

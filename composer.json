@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "barryvdh/laravel-ide-helper": "^2.4",
+        "bensampo/laravel-enum": "^1.8",
         "chang/create-procurement-plan": "*",
         "chang/create-product": "*",
         "fideloper/proxy": "^4.0",

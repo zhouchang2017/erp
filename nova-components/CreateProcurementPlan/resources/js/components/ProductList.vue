@@ -89,7 +89,7 @@
       }
     },
     methods: {
-      async fetch (queryBuild = {}) {
+      async getResources (queryBuild = {}) {
         const {data: {data}} = await axios.get('/api/products', {params: Object.assign({}, queryBuild, this.queryBuild)})
         this.productList = data
       },
@@ -124,7 +124,7 @@
       }
     },
     async mounted () {
-      await this.fetch()
+      await this.getResources()
     }
   }
 </script>
