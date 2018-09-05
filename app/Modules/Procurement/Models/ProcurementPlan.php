@@ -3,6 +3,7 @@
 namespace App\Modules\Procurement\Models;
 
 
+use App\Modules\Procurement\Enums\PlanStatus;
 use App\Modules\Procurement\Observers\ProcurementPlanObserver;
 use App\Modules\Procurement\Traits\ProcurementPlanTrait;
 use App\Modules\Product\Models\ProductVariant;
@@ -20,16 +21,6 @@ class ProcurementPlan extends Model
     use SoftDeletes, ProcurementPlanTrait;
 
     protected $dates = ['deleted_at'];
-    /**
-     * @var array
-     */
-    protected $status = [
-        'uncommitted',//未提交
-        'pending',//待审核
-        'return',//退回修改
-        'cancel',//取消采购
-        'already'//已下单
-    ];
 
     /**
      * @var array
@@ -61,6 +52,8 @@ class ProcurementPlan extends Model
         'plan_info.variant.product',
     ];
 
+    protected $appends = ['procurement_id'];
+
     /**
      * 数据模型的启动方法
      *
@@ -75,6 +68,11 @@ class ProcurementPlan extends Model
     public function scopeAllowedInclude()
     {
         return $this->allowedInclude;
+    }
+
+    public function getProcurementIdAttribute()
+    {
+        return $this->procurement->id ?? null;
     }
 
 
@@ -112,5 +110,30 @@ class ProcurementPlan extends Model
     public function planInfo()
     {
         return $this->hasMany(ProcurementPlanProductVariant::class);
+    }
+
+    public function getUncommittedAttribute()
+    {
+        return $this->status === PlanStatus::getDescription(0);
+    }
+
+    public function getPendingAttribute()
+    {
+        return $this->status === PlanStatus::getDescription(1);
+    }
+
+    public function getReturnAttribute()
+    {
+        return $this->status === PlanStatus::getDescription(2);
+    }
+
+    public function getCancelAttribute()
+    {
+        return $this->status === PlanStatus::getDescription(3);
+    }
+
+    public function getAlreadyAttribute()
+    {
+        return $this->status === PlanStatus::getDescription(4);
     }
 }

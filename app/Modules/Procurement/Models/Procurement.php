@@ -43,7 +43,7 @@ class Procurement extends Model
         'total_price',          //货款
         'able_price',           //应付款
         'already_price',        //已付款
-        'procurement_at',       //采购日期
+        'shipment_at',       //发货日期
         'pre_arrived_at',       //预计到货日期
         'arrived_at',           //到货日期
         'shipment',             //物流
@@ -54,7 +54,10 @@ class Procurement extends Model
      */
     protected $casts = [
         'shipment' => 'array',
+        'shipment_at' => 'datetime',
+        'pre_arrived_at' => 'datetime',
     ];
+
 
     /**
      * 数据模型的启动方法
@@ -83,6 +86,18 @@ class Procurement extends Model
     public function planInfo()
     {
         return $this->hasMany(ProcurementPlanProductVariant::class, 'procurement_plan_id', 'procurement_plan_id');
+    }
+
+    public function variants()
+    {
+        return $this->hasManyThrough(
+            ProcurementPlanProductVariant::class,
+            ProcurementPlan::class,
+            'id',
+            'procurement_plan_id',
+            'procurement_plan_id',
+            'id'
+        );
     }
 
     public function getWarehouseAttribute()

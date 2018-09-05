@@ -2,6 +2,7 @@
 
 namespace App\Modules\Procurement\Models;
 
+use App\Modules\Procurement\Observers\ProcurementPlanProductVariantObserver;
 use App\Modules\Product\Models\Product;
 use App\Modules\Product\Models\ProductVariant;
 use App\Modules\ProductProvider\Models\ProductProvider;
@@ -43,6 +44,7 @@ class ProcurementPlanProductVariant extends Model
     protected static function boot()
     {
         parent::boot();
+        self::observe(ProcurementPlanProductVariantObserver::class);
     }
 
     /**

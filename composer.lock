@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c035450e8656a94d9489de770103fcf",
+    "content-hash": "69c84a2c5037c41fc2f6e868ac690e54",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -675,6 +675,50 @@
             "time": "2018-02-07T20:20:57+00:00"
         },
         {
+            "name": "fourstacks/nova-repeatable-fields",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fourstacks/nova-repeatable-fields.git",
+                "reference": "10f82f24acfbb1179c3d273e42990ed980c25978"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fourstacks/nova-repeatable-fields/zipball/10f82f24acfbb1179c3d273e42990ed980c25978",
+                "reference": "10f82f24acfbb1179c3d273e42990ed980c25978",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Fourstacks\\NovaRepeatableFields\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fourstacks\\NovaRepeatableFields\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "source": "https://github.com/fourstacks/nova-repeatable-fields/tree/v0.1.0",
+                "issues": "https://github.com/fourstacks/nova-repeatable-fields/issues"
+            },
+            "time": "2018-09-03T08:22:29+00:00"
+        },
+        {
             "name": "guzzlehttp/psr7",
             "version": "1.4.2",
             "source": {
@@ -1100,7 +1144,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "2907954e626474d7b533cac52402d49c4e52b350"
+                "reference": "5103481d61e6dd40d566b8cf35653a56951273bf"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -1155,7 +1199,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-08-30T01:28:29+00:00"
+            "time": "2018-09-05T01:29:38+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -4817,7 +4861,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "laravel/nova": 20
+        "laravel/nova": 20,
+        "fourstacks/nova-repeatable-fields": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

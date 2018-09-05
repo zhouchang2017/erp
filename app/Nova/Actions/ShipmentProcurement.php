@@ -2,7 +2,8 @@
 
 namespace App\Nova\Actions;
 
-use App\Modules\Procurement\Services\ProcurementServer;
+use App\Modules\Scaffold\Models\LogisticCompany;
+use Fourstacks\NovaRepeatableFields\Repeater;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
@@ -10,15 +11,13 @@ use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 
 /**
- * 采购计划审核动作
- * Class ApprovalProcurementPlans
+ * 采购单发货动作
+ * Class ShipmentProcurement
  * @package App\Nova\Actions
  */
-class ApprovalProcurementPlans extends Action
+class ShipmentProcurement extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,11 +31,7 @@ class ApprovalProcurementPlans extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $attribute = $fields->toArray();
-        $models->each(function ($model) use ($attribute) {
-            app(ProcurementServer::class)->approval($model, $attribute);
-        });
-        return Action::message($attribute['status'] . 'success!!');
+        dd($fields);
     }
 
     /**
@@ -46,14 +41,20 @@ class ApprovalProcurementPlans extends Action
      */
     public function fields()
     {
+        $logisticCompany = LogisticCompany::all()->pluck('name', 'id');
         return [
-            Text::make('Info'),
-            Select::make('Status')
-                ->options([
-                    'return' => '退回修改',
-                    'cancel' => '取消采购',
-                    'already' => '同意下单',
-                ]),
+            Repeater::make(__('Shipment'), 'shipment')
+                ->addField([
+                    'label' => __('Shipment Num'),
+                    'placeholder' => __('Shipment Num'),
+                    'name' => 'num',
+                ])->addField([
+                    'label' => __('Logistics company'),
+                    'placeholder' => __('Logistics company'),
+                    'name' => 'company',
+                    'type' => 'select',
+                    'options' => $logisticCompany,
+                ])->rules('required'),
         ];
     }
 }

@@ -60,7 +60,7 @@ class ProcurementPlan extends Resource
 
             HasMany::make('InFo', 'planInfo', ProcurementPlanProductVariant::class),
 
-            Text::make('Status')
+            Text::make('Status'),
         ];
     }
 
@@ -95,7 +95,7 @@ class ProcurementPlan extends Resource
     public function lenses(Request $request)
     {
         return [
-            new PendingProcurementPlans()
+            new PendingProcurementPlans(),
         ];
     }
 
@@ -108,7 +108,11 @@ class ProcurementPlan extends Resource
     public function actions(Request $request)
     {
         return [
-            new ApprovalProcurementPlans()
+            (new ApprovalProcurementPlans)->canSee(function ($request) {
+                return true;
+            })->canRun(function ($request, $user) {
+                return true;
+            }),
         ];
     }
 }

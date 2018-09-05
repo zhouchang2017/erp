@@ -19,8 +19,8 @@
 
                 <div slot="option" slot-scope="{option, selected}"
                      class="flex flex-row items-center">
-                    <img v-if="option.avatar" class="h-8 rounded-full block mr-4"
-                         src="https://img.alicdn.com/imgextra/i4/2616970884/TB2gWr5XWmgSKJjSspiXXXyJFXa_!!2616970884.jpg"
+                    <img v-if="option.avatar" class="h-8 w-8 rounded-full block mr-4"
+                         :src="'/'+option.avatar"
                          alt="">
                     <div class="flex flex-1 flex-col">
                         <div class="leading-tight text-xl">{{ option.name }}</div>

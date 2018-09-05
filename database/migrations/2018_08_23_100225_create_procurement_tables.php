@@ -86,7 +86,7 @@ class CreateProcurementTables extends Migration
             $table->integer('already_price')->unsigned()->default(0)->comment('已付款');
             $table->enum('procurement_status', [ 'part_finished', 'pending', 'sending', 'finished', 'cancel' ])->comment('采购状态');
             $table->enum('payment_status', [ 'unpaid', 'paid', 'part_paid', 'cancel' ])->comment('付款状态');
-            $table->timestamp('procurement_at')->nullable()->comment('采购日期');
+            $table->timestamp('shipment_at')->nullable()->comment('发货时间');
             $table->timestamp('arrived_at')->nullable()->comment('到货日期');
             $table->timestamp('pre_arrived_at')->nullable()->comment('预计到货日期');
             $table->json('shipment')->nullable()->comment('物流信息');

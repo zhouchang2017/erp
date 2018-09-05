@@ -7,6 +7,7 @@ use App\Modules\Procurement\Models\Procurement;
 use App\Modules\Procurement\Models\ProcurementPlan;
 use App\Modules\Procurement\Models\ProcurementPlanProductVariant;
 use App\Modules\Scaffold\Traits\HelperTrait;
+use App\Notifications\ApprovalProcurementPlan;
 use DB;
 use Log;
 
@@ -123,6 +124,11 @@ class ProcurementServer
     }
 
 
+    /**
+     * 审核采购计划
+     * @param ProcurementPlan $model
+     * @param array $attribute
+     */
     public function approval(ProcurementPlan $model, array $attribute)
     {
         try {
@@ -130,11 +136,13 @@ class ProcurementServer
             array_push($history,
                 [
                     'info' => $attribute['info'] ?? $attribute['status'],
-                    'created_at' => date('Y-m-d H:i:s')
+                    'user_id' => \Auth::id(),
+                    'created_at' => date('Y-m-d H:i:s'),
                 ]);
             $model->history = $history;
             $model->status = $attribute['status'];
             $model->save();
+            $model->user->notify(new ApprovalProcurementPlan($model));
         } catch (\Exception $exception) {
             if ($this->debug) {
                 dd($exception);

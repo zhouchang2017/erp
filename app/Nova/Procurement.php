@@ -2,9 +2,19 @@
 
 namespace App\Nova;
 
+use App\Modules\Scaffold\Models\LogisticCompany;
+use App\Nova\Actions\ShipmentProcurement;
+use Fourstacks\NovaRepeatableFields\Repeater;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class Procurement extends Resource
 {
@@ -34,20 +44,68 @@ class Procurement extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make(__('Procurement Plan'), 'plan', ProcurementPlan::class),
+            Currency::make(__('Total Price'), 'total_price')->format('%.2n')->resolveUsing(function ($pcs) {
+                return (string)$pcs;
+            }),
+            Currency::make(__('Payable Price'), 'able_price')->format('%.2n')->resolveUsing(function ($pcs) {
+                return (string)$pcs;
+            }),
+            Currency::make(__('Settled Price'), 'already_price')->format('%.2n')->resolveUsing(function ($pcs) {
+                return (string)$pcs;
+            }),
+            Number::make(__('Total Pcs'), 'total_pcs')->resolveUsing(function ($pcs) {
+                return (string)$pcs;
+            }),
+            Text::make(__('Procurement') . ' ' . __('Status'), 'procurement_status'),
+            Text::make(__('Payment') . ' ' . __('Status'), 'payment_status'),
+
+
+            DateTime::make(__('Possible Arrival At'), 'pre_arrived_at')->hideFromIndex(),
+
+            DateTime::make(__('Arrived At'), 'arrived_at')->hideFromIndex(),
+
+            DateTime::make(__('Created At'), 'created_at')->hideFromIndex(),
+            DateTime::make(__('Updated At'), 'updated_at')->hideFromIndex(),
+
+            HasMany::make(__('Procurement Plan Info'), 'planInfo', ProcurementPlanProductVariant::class),
+
+            new Panel(__('Shipment'), $this->shipmentPanel()),
+
+        ];
+    }
+
+    protected function shipmentPanel()
+    {
+        $logisticCompany = LogisticCompany::all()->pluck('name', 'id');
+        return [
+            DateTime::make(__('Shipment At'), 'shipment_at')->hideFromIndex(),
+            Repeater::make(__('Shipment'), 'shipment')
+                ->addField([
+                    'label' => __('Shipment Num'),
+                    'placeholder' => __('Shipment Num'),
+                    'name' => 'num',
+                ])->addField([
+                    'label' => __('Logistics company'),
+                    'placeholder' => __('Logistics company'),
+                    'name' => 'company',
+                    'type' => 'select',
+                    'options' => $logisticCompany,
+                ])->rules('required'),
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -58,7 +116,7 @@ class Procurement extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -69,7 +127,7 @@ class Procurement extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -80,11 +138,13 @@ class Procurement extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new ShipmentProcurement,
+        ];
     }
 }

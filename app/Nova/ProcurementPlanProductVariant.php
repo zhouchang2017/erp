@@ -2,13 +2,14 @@
 
 namespace App\Nova;
 
+use App\Rules\CheckArrivedProductNum;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class ProcurementPlanProductVariant extends Resource
 {
@@ -38,8 +39,10 @@ class ProcurementPlanProductVariant extends Resource
     public static $with = [
         'plan',
         'variant',
-        'provider'
+        'provider',
     ];
+
+    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -51,12 +54,34 @@ class ProcurementPlanProductVariant extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsTo::make('Procurement Plan ID', 'plan', ProcurementPlan::class),
-            BelongsTo::make('Attr', 'variant', ProductVariant::class),
-            Currency::make('Price')->format('%.2n'),
-            Currency::make('OfferPrice', 'offer_price')->format('%.2n'),
-            BelongsTo::make('Provider', 'provider', ProductProvider::class),
-            Number::make('Pcs')
+//            BelongsTo::make('Procurement Plan ID', 'plan', ProcurementPlan::class),
+            BelongsTo::make(__('Attribute'), 'variant', ProductVariant::class),
+            Currency::make(__('Recommended Price'), 'price')->format('%.2n'),
+            Currency::make(__('Purchasing Price'), 'offer_price')->format('%.2n'),
+            BelongsTo::make(__('Product Provider'), 'provider', ProductProvider::class),
+
+            new Panel('Arrived Info', $this->arrivedInfo($request)),
+        ];
+    }
+
+
+    protected function arrivedInfo($request)
+    {
+        return [
+            Number::make(__('Pcs'), 'pcs')->min(0)->step(1)->resolveUsing(function ($pcs) {
+                return (string)$pcs;
+            }),
+            Number::make(__('Arrived Pcs'), 'arrived_pcs')->min(0)->step(1)->hideWhenUpdating(),
+
+            Number::make(__('Arrived Good'), 'good')->min(0)->step(1)->resolveUsing(function ($good) {
+                return (string)$good;
+            })->rules('required', new CheckArrivedProductNum($request)),
+            Number::make(__('Arrived Bad'), 'bad')->min(0)->step(1)->resolveUsing(function ($bad) {
+                return (string)$bad;
+            })->rules('required', new CheckArrivedProductNum($request)),
+            Number::make(__('Arrived Lost'), 'lost')->min(0)->step(1)->resolveUsing(function ($lost) {
+                return (string)$lost;
+            })->rules('required', new CheckArrivedProductNum($request)),
         ];
     }
 
@@ -101,6 +126,8 @@ class ProcurementPlanProductVariant extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+
+        ];
     }
 }
