@@ -3,28 +3,26 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\MorphMany;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Warehouse extends Resource
+class Storage extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Warehouse\Models\Warehouse::class;
+    public static $model = \App\Modules\Warehouse\Models\Storage::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -46,17 +44,25 @@ class Warehouse extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255')
-                ->creationRules('unique:warehouses,name')
-                ->updateRules('unique:warehouses,name,{{resourceId}}'),
+            BelongsTo::make(__('Warehouse'), 'warehouse', Warehouse::class),
 
-            BelongsTo::make('Type', 'type', WarehouseType::class),
+            BelongsTo::make(__('Product'), 'product', Product::class),
 
-            HasMany::make(__('Warehouse Storage'), 'storage', Storage::class),
+            BelongsTo::make(__('Product Variant'), 'productVariant', ProductVariant::class)
+                ->display('attribute_key'),
 
-            MorphMany::make('Addresses'),
+            Number::make(__('Pcs'), 'num')->resolveUsing(function ($num) {
+                return (string)$num;
+            })->rules('required'),
+
+            Number::make(__('Arrived Good'), 'good')->resolveUsing(function ($good) {
+                return (string)$good;
+            })->rules('required'),
+
+            Number::make(__('Arrived Bad'), 'bad')->resolveUsing(function ($bad) {
+                return (string)$bad;
+            })->rules('required'),
+
         ];
     }
 
@@ -106,6 +112,6 @@ class Warehouse extends Resource
 
     public static function label()
     {
-        return __('Warehouse');
+        return __('Warehouse Storage');
     }
 }

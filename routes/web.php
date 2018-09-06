@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test',function(){
-    dd(\App\Modules\Procurement\Models\ProcurementPlan::allowedInclude());
+Route::get('/test', function () {
+    app(\App\Modules\Warehouse\Models\Warehouse::class)->putStorage(\App\Modules\Procurement\Models\Procurement::findOrFail(7));
 });

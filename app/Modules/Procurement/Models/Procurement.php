@@ -3,16 +3,18 @@
 namespace App\Modules\Procurement\Models;
 
 use App\Modules\Procurement\Observers\ProcurementObserver;
+use App\Modules\Warehouse\Contracts\WarehouseStorageContract;
+use App\Modules\Warehouse\Traits\StorageHistoryTrait;
+use App\Modules\Warehouse\Traits\WarehouseStorageTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Modules\Scaffold\BaseModel as Model;
 
 /**
  * Class Procurement
- * @package App\Models
  */
-class Procurement extends Model
+class Procurement extends Model implements WarehouseStorageContract
 {
-    use SoftDeletes;
+    use SoftDeletes, StorageHistoryTrait, WarehouseStorageTrait;
     /**
      * @var array
      */
@@ -70,6 +72,12 @@ class Procurement extends Model
         self::observe(ProcurementObserver::class);
     }
 
+    public function warehouse()
+    {
+        return $this->plan->warehouse;
+    }
+
+
     /**
      * 对应的采购计划
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -105,10 +113,20 @@ class Procurement extends Model
         return $this->plan->warehouse;
     }
 
-    public function getHistoryAttribute()
+    /**
+     * @return mixed
+     */
+    public function getVariantList()
     {
-        return $this->planInfo()->has('history')->with('history')->get();
+        return $this->planInfo->map(function ($item) {
+            return [
+                'product_id' => $item->product_id,
+                'product_variant_id' => $item->product_variant_id,
+                'product_provider_id' => $item->product_provider_id,
+                'num' => $item->arrived_pcs,
+                'good' => $item->good,
+                'bad' => $item->bad,
+            ];
+        });
     }
-
-
 }

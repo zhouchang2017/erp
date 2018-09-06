@@ -77,6 +77,10 @@ class Procurement extends Resource
 
             HasMany::make(__('Procurement Plan Info'), 'planInfo', ProcurementPlanProductVariant::class),
 
+            Text::make('Edit',function(){
+               return "<router-link to='/'> 123</router-link>";
+            })->asHtml(),
+
             new Panel(__('Shipment'), $this->shipmentPanel()),
 
         ];

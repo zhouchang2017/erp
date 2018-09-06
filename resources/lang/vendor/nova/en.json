@@ -379,5 +379,8 @@
   "Shipment":"Shipment",
   "Shipment Num":"Shipment Num",
   "Shipment At":"Shipment At",
-  "Logistics company":"Logistics company"
+  "Logistics company":"Logistics company",
+  "Product":"Product",
+  "Product Variant":"Product Variant",
+  "Warehouse Storage":"Warehouse Storage"
 }

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\UpdateProcurementPlanProductVariant;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -20,11 +21,13 @@ class UpdateProcurementStatus
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param UpdateProcurementPlanProductVariant $event
      * @return void
      */
-    public function handle($event)
+    public function handle(UpdateProcurementPlanProductVariant $event)
     {
-        //
+        $procurement = $event->productVariant->plan->procurement;
+        $procurement->procurement_status = $event->productVariant->plan->calcShipmentStatus();
+        $procurement->save();
     }
 }

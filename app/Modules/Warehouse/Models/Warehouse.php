@@ -7,6 +7,7 @@ use App\Modules\Procurement\Models\ProcurementPlan;
 use App\Modules\Scaffold\BaseModel as Model;
 use App\Modules\Scaffold\Traits\AddressTrait;
 use App\Modules\Warehouse\Observers\WarehouseObserver;
+use App\Modules\Warehouse\Traits\WarehouseTrait;
 
 /**
  * 仓库
@@ -15,7 +16,7 @@ use App\Modules\Warehouse\Observers\WarehouseObserver;
  */
 class Warehouse extends Model
 {
-    use AddressTrait;
+    use AddressTrait, WarehouseTrait;
 
     protected $fillable = ['name', 'type_id'];
 
@@ -25,7 +26,7 @@ class Warehouse extends Model
     ];
 
     protected $allowedInclude = [
-        'type'
+        'type',
     ];
 
     /**

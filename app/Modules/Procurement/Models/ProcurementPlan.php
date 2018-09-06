@@ -78,7 +78,7 @@ class ProcurementPlan extends Model
 
     /**
      * 采购计划指定仓库
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo | Warehouse
      */
     public function warehouse()
     {

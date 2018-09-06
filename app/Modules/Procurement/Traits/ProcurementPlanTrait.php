@@ -9,6 +9,8 @@
 namespace App\Modules\Procurement\Traits;
 
 
+use App\Modules\Procurement\Enums\ProcurementStatus;
+
 trait ProcurementPlanTrait
 {
     /**
@@ -41,5 +43,21 @@ trait ProcurementPlanTrait
             $calc['able_price'] += $variant['offer_price'] * $variant['pcs'];
             return $calc;
         }, ['total_price' => 0, 'total_pcs' => 0, 'able_price' => 0]);
+    }
+
+    public function calcShipmentStatus()
+    {
+        $status = ProcurementStatus::getDescription(2);;
+        $arrived = $this->planInfo()->get(['pcs', 'arrived_pcs'])->every(function ($item) use ($status) {
+            $res = $item->pcs - $item->arrived_pcs;
+            if ($res > 0 && $res < $item->pcs) {
+                $status = ProcurementStatus::getDescription(0);
+            }
+            return $res === 0;
+        });
+
+        return tap($status, function (&$item) use ($arrived) {
+            $item = $arrived ? ProcurementStatus::getDescription(3) : $item;
+        });
     }
 }

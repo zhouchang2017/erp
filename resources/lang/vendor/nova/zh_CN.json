@@ -380,6 +380,9 @@
   "Shipment":"物流",
   "Shipment Num":"物流单号",
   "Shipment At":"发货日期",
-  "Logistics company":"物流公司"
+  "Logistics company":"物流公司",
+  "Product":"产品",
+  "Product Variant":"变体",
+  "Warehouse Storage":"货架"
 
 }

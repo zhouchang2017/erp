@@ -31,6 +31,6 @@ class ProcurementPlanPolicy
 
     public function update()
     {
-        return false;
+        return true;
     }
 }

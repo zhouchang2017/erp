@@ -56,14 +56,6 @@ class ProcurementPlanProductVariant extends Model
         return $this->belongsTo(ProductProvider::class, 'product_provider_id');
     }
 
-    /**
-     * 采购单
-     */
-    public function procurement()
-    {
-        return $this->belongsTo(Procurement::class, 'procurement_plan_id');
-    }
-
 
     public function product()
     {
@@ -91,13 +83,6 @@ class ProcurementPlanProductVariant extends Model
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function history()
-    {
-        return $this->morphMany(StorageHistory::class, 'origin');
-    }
 
     /**
      * @return string

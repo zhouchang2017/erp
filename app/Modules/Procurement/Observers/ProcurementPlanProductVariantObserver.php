@@ -2,6 +2,7 @@
 
 namespace App\Modules\Procurement\Observers;
 
+use App\Events\UpdateProcurementPlanProductVariant;
 use App\Modules\Procurement\Enums\PlanStatus;
 use App\Modules\Procurement\Models\ProcurementPlanProductVariant;
 
@@ -15,7 +16,7 @@ class ProcurementPlanProductVariantObserver
     public function updated(ProcurementPlanProductVariant $planProductVariant)
     {
         if ($planProductVariant->plan->already && $planProductVariant->plan->procurement) {
-
+            event(new UpdateProcurementPlanProductVariant($planProductVariant));
         };
     }
 
