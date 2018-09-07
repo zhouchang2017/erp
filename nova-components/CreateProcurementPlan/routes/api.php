@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/endpoint', function (Request $request) {
-//     //
-// });
+Route::get('/users', \App\Http\Controllers\Api\UserController::class . '@index');
+Route::get('/warehouses', \App\Http\Controllers\Api\WarehouseController::class . '@index');
+Route::get('/products', \App\Http\Controllers\Api\ProductController::class . '@index');
+// procurementPlan
+Route::get('/procurement-plans/{id}', \App\Http\Controllers\Api\ProcurementPlanController::class . '@show');
+Route::post('/procurement-plans', \App\Http\Controllers\Api\ProcurementPlanController::class . '@store');
+Route::post('/procurement-plans/{id}', \App\Http\Controllers\Api\ProcurementPlanController::class . '@update');
+
+// manually
+Route::get('/manuallies/{id}', \App\Http\Controllers\Api\ManuallyController::class . '@show');
+Route::post('/manuallies', \App\Http\Controllers\Api\ManuallyController::class . '@store');
+Route::post('/manuallies/{id}', \App\Http\Controllers\Api\ManuallyController::class . '@update');

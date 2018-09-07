@@ -16,5 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    app(\App\Modules\Warehouse\Models\Warehouse::class)->putStorage(\App\Modules\Procurement\Models\Procurement::findOrFail(7));
+    app(\App\Modules\Warehouse\Models\Warehouse::class)->putStorage(\App\Modules\Procurement\Models\Procurement::findOrFail(7
+    ));
 });

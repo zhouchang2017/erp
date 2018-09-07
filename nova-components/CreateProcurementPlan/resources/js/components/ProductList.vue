@@ -90,7 +90,7 @@
     },
     methods: {
       async getResources (queryBuild = {}) {
-        const {data: {data}} = await axios.get('/api/products', {params: Object.assign({}, queryBuild, this.queryBuild)})
+        const {data: {data}} = await axios.get('/nova-vendor/create-procurement-plan/products', {params: Object.assign({}, queryBuild, this.queryBuild)})
         this.productList = data
       },
       openForm (product, variant) {

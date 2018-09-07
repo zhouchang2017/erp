@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "69c84a2c5037c41fc2f6e868ac690e54",
+    "content-hash": "0cf46ae68b20e0d8a61aab065b4dc6ca",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -309,6 +309,40 @@
                 "MIT"
             ],
             "description": "A Laravel Nova resource tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/create-resource-button",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/CreateResourceButton",
+                "reference": "32b4dcbd7408c3f8744a19ecc9787bd7e4ef589d",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\CreateResourceButton\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\CreateResourceButton\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
             "keywords": [
                 "laravel",
                 "nova"

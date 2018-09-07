@@ -383,6 +383,11 @@
   "Logistics company":"物流公司",
   "Product":"产品",
   "Product Variant":"变体",
-  "Warehouse Storage":"货架"
-
+  "Warehouse Storage":"货架",
+  "Warehousing":"已入库",
+  "Manual":"手工",
+  "Uncommitted":"未提交",
+  "Pending Approval":"待审核",
+  "Return Modification":"退回修改",
+  "Finished":"以完成"
 }

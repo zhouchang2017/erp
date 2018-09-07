@@ -26,9 +26,9 @@
             <v-variant-table v-model="variants" @choose-product="hidden = true"></v-variant-table>
             <div class="bg-30 flex px-8 py-4" v-if="variants.length>0">
                 <select v-model="status" :disabled="selectDisable" class="form-control form-select ml-auto mr-3">
-                    <option value="uncommitted">{{__('Save')}}</option>
-                    <option value="pending" selected>{{__('Submit Approval')}}</option>
-                    <option value="already" disabled>{{__('Already')}}</option>
+                    <option :value="item.value" v-for="item in statusList" :key="item.value" :disabled="item.disabled">
+                        {{item.text}}
+                    </option>
                 </select>
                 <button class="btn btn-default btn-primary" @click="beforeSubmit" :disabled="selectDisable">
                     {{buttonTitle}}
@@ -76,7 +76,11 @@
     },
 
     props: {
-      id: null
+      id: null,
+      resourceName: {
+        type: String,
+        default: 'procurement-plans'
+      }
     },
 
     data () {
@@ -85,73 +89,53 @@
         modal: false,
         variants: [],
         status: 'pending',
-        fields: [
-          {
-            component: 'v-select-warehouse',
-            name: this.__('Warehouse'),
-            attribute: 'warehouse_id',
-            value: null,
-            rule: 'required',
-            trackBy: 'id',
-            fetchResources: () => axios.get('/api/warehouses', {
-              params: {
-                include: ['type']
-              }
-            })
-          },
-          {
-            component: 'v-select-warehouse',
-            name: this.__('Salesman'),
-            attribute: 'user_id',
-            value: null,
-            rule: 'required',
-            trackBy: 'id',
-            fetchResources: () => axios.get('/api/users')
-          },
-          {
-            component: 'v-textarea',
-            name: `${this.__('Procurement')}${this.__('Description')}`,
-            attribute: 'description',
-            value: null,
-            rule: 'required'
-          },
-          {
-            component: 'v-textarea',
-            name: this.__('Comment'),
-            attribute: 'comment',
-            value: null,
-            rule: ''
-          },
-        ],
+        fields: [],
         origin: {},
-        loaded: false
-      }
-    },
-
-    beforeRouteEnter (to, from, next) {
-      if (to.params.id) {
-        const queryBuild = {
-          include: ['plan_info.provider', 'plan_info.variant.product']
+        loaded: false,
+        config: {
+          // 新建手工入库
+          manuallies: {
+            name: 'Manually',
+            createApi: '',
+            updateApi: '',
+            showApi: '',
+            queryBuild: {},
+            status: [
+              {value: 'uncommitted', text: this.__('Save'), disabled: false},
+              {value: 'pending', text: this.__('Submit Approval'), disabled: false},
+              {value: 'finished', text: this.__('Finished'), disabled: true},
+              {value: 'cancel', text: this.__('Cancel'), disabled: true},
+              {value: 'return', text: this.__('Return Modification'), disabled: true},
+            ]
+          },
+          // 新建采购计划
+          'procurement-plans': {
+            name: 'Procurement Plan',
+            createApi: '',
+            updateApi: '',
+            showApi: '',
+            queryBuild: {
+              include: ['plan_info.provider', 'plan_info.variant.product']
+            },
+            status: [
+              {value: 'uncommitted', text: this.__('Save'), disabled: false},
+              {value: 'pending', text: this.__('Submit Approval'), disabled: false},
+              {value: 'already', text: this.__('Already'), disabled: true},
+              {value: 'cancel', text: this.__('Cancel'), disabled: true},
+              {value: 'return', text: this.__('Return Modification'), disabled: true},
+            ]
+          }
         }
-        axios.get(`/api/procurement-plans/${to.params.id}`, {params: queryBuild}).then(({data: {data}}) => {
-          next(vm => {
-            console.log('fetched!')
-            vm.origin = data
-            vm.fill()
-          })
-        }).catch(err => {
-          next(vm => {
-            vm.toasted.show(err, {type: 'error'})
-          })
-        })
-      } else {
-        next(vm => {
-          vm.fill()
-        })
       }
     },
 
     methods: {
+
+      fetchDetails () {
+        return axios.get(`/nova-vendor/create-procurement-plan/${this.resourceName}/${this.id}`,
+          {params: _.get(this, `config.${this.resourceName}.queryBuild`)}
+        )
+      },
 
       inArray (ProviderId, variantId) {
         return this.variants.find(item => item.provider.id === ProviderId && item.variant.id === variantId)
@@ -203,7 +187,7 @@
 
       async store (formData) {
         try {
-          await axios.post('/api/procurement-plans', formData)
+          await axios.post(`/nova-vendor/create-procurement-plan/${this.resourceName}`, formData)
           this.$toasted.show(this.__('The :resource was created!', {
             resource: this.__('Procurement Plan'),
           }), {type: 'success'})
@@ -218,7 +202,7 @@
 
       async update (formData) {
         try {
-          await axios.post(`/api/procurement-plans/${this.id}`, formData)
+          await axios.post(`/nova-vendor/create-procurement-plan/${this.resourceName}/${this.id}`, formData)
           this.$toasted.show(this.__('The :resource was updated!', {
             resource: this.__('Procurement Plan'),
           }), {type: 'success'})
@@ -240,6 +224,49 @@
         this.status = _.get(this.origin, 'status', 'pending')
         this.variants = _.get(this.origin, 'plan_info', [])
         this.loaded = true
+      },
+      genFields () {
+        const fields = [
+          {
+            component: 'v-select-warehouse',
+            name: this.__('Warehouse'),
+            attribute: 'warehouse_id',
+            value: null,
+            rule: 'required',
+            trackBy: 'id',
+            fetchResources: () => axios.get('/nova-vendor/create-procurement-plan/warehouses', {
+              params: {
+                include: ['type']
+              }
+            })
+          },
+          {
+            component: 'v-select-warehouse',
+            name: this.__('Salesman'),
+            attribute: 'user_id',
+            value: null,
+            rule: 'required',
+            trackBy: 'id',
+            fetchResources: () => axios.get('/nova-vendor/create-procurement-plan/users')
+          },
+          {
+            component: 'v-textarea',
+            name: `${this.__(this.name)}${this.__('Description')}`,
+            attribute: 'description',
+            value: null,
+            rule: 'required'
+          },
+        ]
+        if (this.resourceName === 'procurement-plans') {
+          fields.push({
+            component: 'v-textarea',
+            name: this.__('Comment'),
+            attribute: 'comment',
+            value: null,
+            rule: ''
+          })
+        }
+        this.fields = fields
       }
     },
 
@@ -247,15 +274,36 @@
       styles () {
         return this.variants.length <= 0 ? {'min-height': 300 + 'px'} : {}
       },
+      name () {
+        return _.get(this, `config.${this.resourceName}.name`, 'Name not defined')
+      },
       title () {
-        return this.id ? `${this.__('Update & Editing')} ${this.__('Procurement Plan')}` : `${this.__('Create')} ${this.__('Procurement Plan')}`
+        return this.id ? `${this.__('Update & Editing')} ${this.__(this.name)}` : `${this.__('Create')} ${this.__(this.name)}`
       },
       buttonTitle () {
-        return this.id ? `${this.__('Update')} ${this.__('Procurement Plan')}` : `${this.__('Create')} ${this.__('Procurement Plan')}`
+        return this.id ? `${this.__('Update')} ${this.__(this.name)}` : `${this.__('Create')} ${this.__(this.name)}`
       },
       selectDisable () {
         const disable = ['cancel', 'already']
         return disable.includes(this.status)
+      },
+      statusList () {
+        return _.get(this, `config.${this.resourceName}.status`, [])
+      }
+    },
+    async created () {
+      this.genFields()
+      if (this.id) {
+        try {
+          const {data: {data}} = await this.fetchDetails()
+          this.origin = data
+          this.fill()
+        } catch (err) {
+          console.error(err)
+          this.$toasted.show(err, {type: 'error'})
+        }
+      } else {
+        this.loaded = true
       }
     },
     destroyed () {

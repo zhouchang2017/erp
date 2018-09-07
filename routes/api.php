@@ -24,14 +24,4 @@ Route::middleware([])->group(function () {
 
     Route::get('/products', 'ProductController@index');
 
-    // warehouse
-    Route::get('/warehouses', 'WarehouseController@index');
-
-    // users
-    Route::get('/users', 'UserController@index');
-
-    // procurementPlan
-    Route::post('/procurement-plans', 'ProcurementPlanController@store');
-    Route::post('/procurement-plans/{id}', 'ProcurementPlanController@update');
-    Route::get('/procurement-plans/{id}', 'ProcurementPlanController@show');
 });

@@ -51,6 +51,10 @@ class Procurement extends Model implements WarehouseStorageContract
         'shipment',             //物流
     ];
 
+    protected $appends = [
+      'is_storage'
+    ];
+
     /**
      * @var array
      */

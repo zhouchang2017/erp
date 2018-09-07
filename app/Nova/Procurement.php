@@ -3,15 +3,18 @@
 namespace App\Nova;
 
 use App\Modules\Scaffold\Models\LogisticCompany;
+use App\Nova\Actions\PutStorage;
 use App\Nova\Actions\ShipmentProcurement;
 use Fourstacks\NovaRepeatableFields\Repeater;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -77,9 +80,9 @@ class Procurement extends Resource
 
             HasMany::make(__('Procurement Plan Info'), 'planInfo', ProcurementPlanProductVariant::class),
 
-            Text::make('Edit',function(){
-               return "<router-link to='/'> 123</router-link>";
-            })->asHtml(),
+            Boolean::make(__('Warehousing'), function () {
+                return $this->is_storage;
+            }),
 
             new Panel(__('Shipment'), $this->shipmentPanel()),
 
@@ -149,6 +152,7 @@ class Procurement extends Resource
     {
         return [
             new ShipmentProcurement,
+            new PutStorage,
         ];
     }
 }

@@ -382,5 +382,11 @@
   "Logistics company":"Logistics company",
   "Product":"Product",
   "Product Variant":"Product Variant",
-  "Warehouse Storage":"Warehouse Storage"
+  "Warehouse Storage":"Warehouse Storage",
+  "Warehousing" :"Warehousing",
+  "Manual":"Manual",
+  "Uncommitted":"Uncommitted",
+  "Pending Approval":"Pending Approval",
+  "Return Modification":"Return Modification",
+  "Finished":"Finished"
 }

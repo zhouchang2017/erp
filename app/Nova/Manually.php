@@ -2,27 +2,19 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ApprovalProcurementPlans;
-use App\Nova\Lenses\PendingProcurementPlans;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Status;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ProcurementPlan extends Resource
+class Manually extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Procurement\Models\ProcurementPlan::class;
+    public static $model = \App\Modules\Warehouse\Models\Manually::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -40,7 +32,6 @@ class ProcurementPlan extends Resource
         'id',
     ];
 
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -51,17 +42,10 @@ class ProcurementPlan extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsTo::make('Warehouse'),
 
-            BelongsTo::make('User'),
+            BelongsTo::make(__('Salesman'), 'user', User::class),
 
-            Textarea::make('Description'),
-
-            Textarea::make('Comment'),
-
-            HasMany::make('InFo', 'planInfo', ProcurementPlanProductVariant::class),
-
-            Text::make('Status'),
+            BelongsTo::make(__('Warehouse'), 'warehouse', Warehouse::class),
         ];
     }
 
@@ -73,8 +57,7 @@ class ProcurementPlan extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -85,9 +68,7 @@ class ProcurementPlan extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -98,9 +79,7 @@ class ProcurementPlan extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new PendingProcurementPlans(),
-        ];
+        return [];
     }
 
     /**
@@ -111,12 +90,6 @@ class ProcurementPlan extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            (new ApprovalProcurementPlans)->canSee(function ($request) {
-                return true;
-            })->canRun(function ($request, $user) {
-                return true;
-            }),
-        ];
+        return [];
     }
 }

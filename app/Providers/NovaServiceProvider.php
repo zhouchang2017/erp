@@ -72,6 +72,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new CreateProcurementPlan,
+            new CreateProcurementPlan('Manually'),
         ];
     }
 

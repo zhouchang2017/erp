@@ -6,10 +6,11 @@ use App\Modules\Product\Models\ProductVariant;
 use App\Modules\Scaffold\BaseModel as Model;
 
 //use App\Observers\ManuallyObserver;
-use App\Modules\User\Models\User;
+use App\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Manually extends Model {
+class Manually extends Model
+{
     use SoftDeletes;
 
     protected $fillable = ['user_id', 'warehouse_id', 'description', 'status'];
@@ -18,7 +19,10 @@ class Manually extends Model {
         'history' => 'array',
     ];
 
-    protected $status = ['uncommitted', 'pending', 'finished', 'cancel'];
+
+    protected $allowedInclude = [
+
+    ];
 
     /**
      * 数据模型的启动方法
@@ -29,6 +33,11 @@ class Manually extends Model {
     {
         parent::boot();
 //        self::observe(ManuallyObserver::class);
+    }
+
+    public function scopeAllowedInclude()
+    {
+        return $this->allowedInclude;
     }
 
     public function scopeOfStatus($query, $status = null)
@@ -54,20 +63,6 @@ class Manually extends Model {
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * 手动入库关联的产品变体
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function variants()
-    {
-        return $this->belongsToMany(ProductVariant::class)->using(ManuallyProductVariant::class)
-            ->as('manually_info')
-            ->withPivot(
-                'id', 'price', 'pcs', 'offer_price', 'product_id', 'product_provider_id', 'user_id', 'good', 'bad'
-            )
-            ->withTimestamps();
     }
 
     public function manuallyInfo()
