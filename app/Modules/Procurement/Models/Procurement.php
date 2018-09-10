@@ -2,9 +2,9 @@
 
 namespace App\Modules\Procurement\Models;
 
+use App\Modules\Procurement\Enums\ProcurementStatus;
 use App\Modules\Procurement\Observers\ProcurementObserver;
 use App\Modules\Warehouse\Contracts\WarehouseStorageContract;
-use App\Modules\Warehouse\Traits\StorageHistoryTrait;
 use App\Modules\Warehouse\Traits\WarehouseStorageTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Modules\Scaffold\BaseModel as Model;
@@ -14,27 +14,8 @@ use App\Modules\Scaffold\BaseModel as Model;
  */
 class Procurement extends Model implements WarehouseStorageContract
 {
-    use SoftDeletes, StorageHistoryTrait, WarehouseStorageTrait;
-    /**
-     * @var array
-     */
-    protected $procurement_status = [
-        'part_finished', // 未全部到货
-        'pending', // 等待发货
-        'sending',// 途中
-        'finished',// 全部到货
-        'cancel'// 作废
-    ];
+    use SoftDeletes, WarehouseStorageTrait;
 
-    /**
-     * @var array
-     */
-    protected $payment_status = [
-        'unpaid',       // 未支付
-        'paid',         // 以支付
-        'part_paid',    // 部分支付
-        'cancel',       // 以取消支付
-    ];
 
     /**
      * @var array
@@ -52,7 +33,7 @@ class Procurement extends Model implements WarehouseStorageContract
     ];
 
     protected $appends = [
-      'is_storage'
+        'is_storage',
     ];
 
     /**
@@ -132,5 +113,10 @@ class Procurement extends Model implements WarehouseStorageContract
                 'bad' => $item->bad,
             ];
         });
+    }
+
+    public function canStore(): bool
+    {
+        return $this->procurement_status === ProcurementStatus::getDescription(3);
     }
 }

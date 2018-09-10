@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Modules\Procurement\Enums\ProcurementStatus;
+use App\Modules\Warehouse\Contracts\WarehouseStorageContract;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
@@ -25,14 +25,13 @@ class PutStorage extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $error = [];
-        $models->each(function ($storageContract) use (&$error) {
-
-            if ( !$storageContract->is_storage) {
-                if ($storageContract->procurement_status !== ProcurementStatus::getDescription(3)) {
+        $models->each(function (WarehouseStorageContract $storageContract) use (&$error) {
+            if ( !$storageContract->finished()) {
+                if ( !$storageContract->canStore()) {
                     $error['msg'] = 'id:' . $storageContract->id . ' 该计划尚未完成，暂时无法入库！';
                     return false;
                 }
-                $storageContract->warehouse->putStorage($storageContract);
+                $storageContract->put();
             } else {
                 $error['msg'] = 'id:' . $storageContract->id . ' 请勿重复入库';
                 return false;

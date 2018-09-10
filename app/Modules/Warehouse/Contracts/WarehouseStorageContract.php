@@ -20,6 +20,8 @@ interface WarehouseStorageContract
     public function getVariantList();
 
     public function histories();
-}
 
-//Warehouse->put(Procurement::find(1))
+    public function canStore(): bool;
+
+    public function finished();
+}

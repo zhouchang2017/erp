@@ -18,6 +18,11 @@ trait StorageHistoryTrait
         return $this->morphMany(StorageHistory::class, 'origin');
     }
 
+    public function finished()
+    {
+        return $this->histories()->count() > 0;
+    }
+
     public function getIsStorageAttribute()
     {
         return $this->histories()->count() > 0;

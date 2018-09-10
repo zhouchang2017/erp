@@ -2,9 +2,15 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ApprovalManually;
+use Inspheric\Fields\Indicator;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Manually extends Resource
@@ -46,7 +52,34 @@ class Manually extends Resource
             BelongsTo::make(__('Salesman'), 'user', User::class),
 
             BelongsTo::make(__('Warehouse'), 'warehouse', Warehouse::class),
+
+            HasMany::make(__('Manually Info'), 'manuallyInfo', ManuallyProductVariant::class),
+
+            Indicator::make('Status')
+                ->labels(
+                    [
+                        'uncommitted' => 'Uncommitted',
+                        'pending' => 'Pending',
+                        'return' => 'Return',
+                        'finished' => 'Finished',
+                        'cancel' => 'Cancel',
+                    ]
+                )
+                ->colors([
+                    'uncommitted' => 'red',
+                    'pending' => 'blue',
+                    'return' => 'yellow',
+                    'finished' => 'green',
+                    'cancel' => 'grey',
+                ]),
+            Textarea::make(__('Description'), 'description')->hideFromIndex(),
+
+            Boolean::make(__('Warehousing'), function () {
+                return $this->is_storage;
+            }),
+
         ];
+
     }
 
     /**
@@ -90,6 +123,8 @@ class Manually extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new ApprovalManually
+        ];
     }
 }

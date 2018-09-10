@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Modules\Procurement\Enums\PlanStatus;
+use App\Modules\Procurement\Models\ProcurementPlan;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -29,8 +31,8 @@ class ProcurementPlanPolicy
         return false;
     }
 
-    public function update()
+    public function update(User $user, ProcurementPlan $plan)
     {
-        return true;
+        return !in_array($plan->status, [PlanStatus::getDescription(3), PlanStatus::getDescription(4)]);
     }
 }

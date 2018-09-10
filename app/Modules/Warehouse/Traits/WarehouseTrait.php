@@ -16,8 +16,9 @@ trait WarehouseTrait
 {
     public function putStorage(WarehouseStorageContract $storageContract)
     {
-        $warehouse = $storageContract->warehouse();
+        $warehouse = $storageContract->warehouse;
         $storageContract->getVariantList()->each(function ($item) use ($warehouse, $storageContract) {
+
             $item = array_merge($item, ['warehouse_id' => $warehouse->id]);
 
             tap($warehouse->storage()->whereProductVariantId($item['product_variant_id'])->first(),

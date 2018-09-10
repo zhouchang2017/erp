@@ -6,6 +6,7 @@ use App\Modules\Scaffold\Models\LogisticCompany;
 use App\Nova\Actions\PutStorage;
 use App\Nova\Actions\ShipmentProcurement;
 use Fourstacks\NovaRepeatableFields\Repeater;
+use Inspheric\Fields\Indicator;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
@@ -14,7 +15,6 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
@@ -57,18 +57,35 @@ class Procurement extends Resource
             BelongsTo::make(__('Procurement Plan'), 'plan', ProcurementPlan::class),
             Currency::make(__('Total Price'), 'total_price')->format('%.2n')->resolveUsing(function ($pcs) {
                 return (string)$pcs;
-            }),
+            })->hideFromIndex(),
             Currency::make(__('Payable Price'), 'able_price')->format('%.2n')->resolveUsing(function ($pcs) {
                 return (string)$pcs;
             }),
             Currency::make(__('Settled Price'), 'already_price')->format('%.2n')->resolveUsing(function ($pcs) {
                 return (string)$pcs;
-            }),
+            })->hideFromIndex(),
             Number::make(__('Total Pcs'), 'total_pcs')->resolveUsing(function ($pcs) {
                 return (string)$pcs;
             }),
-            Text::make(__('Procurement') . ' ' . __('Status'), 'procurement_status'),
-            Text::make(__('Payment') . ' ' . __('Status'), 'payment_status'),
+
+            Indicator::make(__('Procurement') . ' ' . __('Status'), 'procurement_status')
+                ->labels(
+                    [
+                        'part_finished'=>'Part finished',
+                        'pending' => 'Pending',
+                        'sending' => 'Sending',
+                        'finished' => 'Finished',
+                        'cancel' => 'Cancel',
+                    ]
+                )
+                ->colors([
+                    'part_finished'=>'indigo',
+                    'pending' => 'blue',
+                    'sending' => 'teal',
+                    'finished' => 'green',
+                    'cancel' => 'grey',
+                ]),
+            Text::make(__('Payment') . ' ' . __('Status'), 'payment_status')->hideFromIndex(),
 
 
             DateTime::make(__('Possible Arrival At'), 'pre_arrived_at')->hideFromIndex(),
@@ -105,7 +122,7 @@ class Procurement extends Resource
                     'name' => 'company',
                     'type' => 'select',
                     'options' => $logisticCompany,
-                ])->rules('required'),
+                ])->rules('required')->hideFromIndex(),
         ];
     }
 

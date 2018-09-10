@@ -389,5 +389,6 @@
   "Uncommitted":"未提交",
   "Pending Approval":"待审核",
   "Return Modification":"退回修改",
-  "Finished":"以完成"
+  "Finished":"以完成",
+  "Manually Info":"手工入库明细"
 }

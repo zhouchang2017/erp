@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\ApprovalProcurementPlans;
 use App\Nova\Lenses\PendingProcurementPlans;
+use Inspheric\Fields\Indicator;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
@@ -61,7 +62,23 @@ class ProcurementPlan extends Resource
 
             HasMany::make('InFo', 'planInfo', ProcurementPlanProductVariant::class),
 
-            Text::make('Status'),
+            Indicator::make('Status')
+                ->labels(
+                    [
+                        'uncommitted' => 'Uncommitted',
+                        'pending' => 'Pending',
+                        'return' => 'Return',
+                        'already' => 'Already',
+                        'cancel' => 'Cancel',
+                    ]
+                )
+                ->colors([
+                    'uncommitted' => 'red',
+                    'pending' => 'blue',
+                    'return' => 'yellow',
+                    'already' => 'green',
+                    'cancel' => 'grey',
+                ]),
         ];
     }
 

@@ -5,6 +5,7 @@ namespace App\Modules\Warehouse\Services;
 
 use App\Modules\Scaffold\Traits\HelperTrait;
 use App\Modules\Warehouse\Models\Manually;
+use App\Notifications\ApprovalManually;
 use DB;
 use Log;
 
@@ -100,5 +101,31 @@ class ManuallyService
         });
         $willCreate = $this->findAddAttributes($manuallyInfo);
         $willCreate->count() > 0 && $this->manually->manuallyInfo()->createMany($willCreate->toArray());
+    }
+
+    /**
+     * 审核手工入库
+     * @param Manually $model
+     * @param array $attribute
+     */
+    public function approval(Manually $model, array $attribute)
+    {
+        try {
+            $history = $model->getAttribute('history') ?? [];
+            array_push($history,
+                [
+                    'info' => $attribute['info'] ?? $attribute['status'],
+                    'user_id' => \Auth::id(),
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            $model->history = $history;
+            $model->status = $attribute['status'];
+            $model->save();
+            $model->user->notify(new ApprovalManually($model));
+        } catch (\Exception $exception) {
+            if ($this->debug) {
+                dd($exception);
+            }
+        }
     }
 }

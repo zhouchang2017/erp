@@ -31,7 +31,7 @@ class ShipmentProcurement extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        dd($fields);
+
     }
 
     /**

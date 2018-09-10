@@ -386,7 +386,8 @@
   "Warehousing" :"Warehousing",
   "Manual":"Manual",
   "Uncommitted":"Uncommitted",
-  "Pending Approval":"Pending Approval",
+  "Pending Approval":"Pending Approval",  
   "Return Modification":"Return Modification",
-  "Finished":"Finished"
+  "Finished":"Finished",
+  "Manually Info":"Manually Info"
 }

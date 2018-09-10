@@ -27,10 +27,20 @@ class CardServiceProvider extends ServiceProvider
             Nova::provideToScript([
                 'customCreateResourceButtonConfig' => [
                     'procurement-plans' => [
-                        'url' => ['name' => 'create-procurement-plan'],
+                        'url' => [
+                            'name' => 'create-put-storage-plan',
+                            'params' => [
+                                'resourceName' => 'procurement-plans',
+                            ],
+                        ],
                     ],
                     'manuallies' => [
-                        'url' => ['name' => 'create-manuallies'],
+                        'url' => [
+                            'name' => 'create-put-storage-plan',
+                            'params' => [
+                                'resourceName' => 'manuallies',
+                            ],
+                        ],
                     ],
                 ],
             ]);

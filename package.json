@@ -19,7 +19,9 @@
         "build-create-procurement-plan-tool": "cd nova-components/CreateProcurementPlanTool && npm run dev",
         "build-create-procurement-plan-tool-prod": "cd nova-components/CreateProcurementPlanTool && npm run prod",
         "build-create-resource-button": "cd nova-components/CreateResourceButton && npm run dev",
-        "build-create-resource-button-prod": "cd nova-components/CreateResourceButton && npm run prod"
+        "build-create-resource-button-prod": "cd nova-components/CreateResourceButton && npm run prod",
+        "build-amazon-mws": "cd nova-components/AmazonMws && npm run dev",
+        "build-amazon-mws-prod": "cd nova-components/AmazonMws && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.18",
