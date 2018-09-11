@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    app(\App\Modules\Warehouse\Models\Warehouse::class)->putStorage(\App\Modules\Procurement\Models\Procurement::findOrFail(7
-    ));
+Route::get('/test', function (\Chang\AmazonMws\Models\Amazon $amazon) {
+
+     $store = $amazon::find(2);
+     $mws = $store->runMWS();
+     $res = $mws->action(\Chang\AmazonMws\Actions\Sellers\ListMarketplaceParticipations::make());
+     return $res;
 });

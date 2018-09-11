@@ -2,6 +2,7 @@
 
 namespace Chang\AmazonMws;
 
+use Chang\AmazonMws\Nova\Amazon;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,10 @@ class ToolServiceProvider extends ServiceProvider
         Nova::serving(function (ServingNova $event) {
             //
         });
+
+        Nova::resources([
+            Amazon::class,
+        ]);
     }
 
     /**

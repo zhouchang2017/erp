@@ -18,9 +18,10 @@ class CreateAmazonsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('seller_id');
-            $table->string('mws_auth_token');
+            $table->string('mws_auth_token')->nullable();
             $table->string('aws_access_key_id');
             $table->string('secret_key');
+            $table->json('country');
             $table->boolean('enabled');
             $table->timestamps();
         });

@@ -14,8 +14,8 @@ trait UserAgentHeaderTrait
     public function getUserAgentHeader(
         $applicationName,
         $applicationVersion,
-        $attributes = null)
-    {
+        $attributes = null
+    ) {
 
         if (is_null($attributes)) {
             $attributes = [];
@@ -35,7 +35,7 @@ trait UserAgentHeaderTrait
         }
 
         $userAgent =
-            $this->quoteApplicationName($applicationName)
+            $this->quoteApplicationName(title_case($applicationName))
             . '/'
             . $this->quoteApplicationVersion($applicationVersion);
 

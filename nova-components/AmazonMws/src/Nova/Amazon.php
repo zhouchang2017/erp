@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Nova;
+namespace Chang\AmazonMws\Nova;
 
+use Fourstacks\NovaRepeatableFields\Repeater;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class Amazon extends Resource
      *
      * @var string
      */
-    public static $model = \App\Modules\Channel\Models\Amazon::class;
+    public static $model = \Chang\AmazonMws\Models\Amazon::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -50,26 +51,46 @@ class Amazon extends Resource
 
             Textarea::make('Description'),
 
-            Text::make('Seller ID','seller_id')
+            Repeater::make(__('Country'), 'country')
+                ->addField([
+                    'label' => __('Country'),
+                    'placeholder' => __('Country'),
+                    'name' => 'code',
+                    'type' => 'select',
+                    'options' => [
+                        'ca' => __('Canada'),
+                        'us' => __('United States'),
+                        'de' => __('Germany'),
+                        'es' => __('Spain'),
+                        'fr' => __('France'),
+                        'in' => __('India'),
+                        'it' => __('Italy'),
+                        'uk' => __('United Kingdom'),
+                        'jp' => __('Japan'),
+                        'cn' => __('China'),
+                    ],
+                ])->rules('required')->hideFromIndex(),
+
+            Text::make('Seller ID', 'seller_id')
                 ->creationRules('required', 'string')
                 ->updateRules('nullable', 'string'),
 
-            Password::make('MWS Auth Token','mws_auth_token')
+//            Text::make('MWS Auth Token', 'mws_auth_token')
+//                ->onlyOnForms()
+//                ->creationRules('required', 'string')
+//                ->updateRules('nullable', 'string'),
+
+            Text::make('AWS Access Key Id', 'aws_access_key_id')
                 ->onlyOnForms()
                 ->creationRules('required', 'string')
                 ->updateRules('nullable', 'string'),
 
-            Text::make('AWS Access Key Id','aws_access_key_id')
+            Text::make('Secret Key', 'secret_key')
                 ->onlyOnForms()
                 ->creationRules('required', 'string')
                 ->updateRules('nullable', 'string'),
 
-            Password::make('Secret Key','secret_key')
-                ->onlyOnForms()
-                ->creationRules('required', 'string')
-                ->updateRules('nullable', 'string'),
-
-            Boolean::make('Enabled')
+            Boolean::make('Enabled'),
         ];
     }
 

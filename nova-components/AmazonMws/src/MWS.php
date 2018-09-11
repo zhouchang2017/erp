@@ -8,10 +8,9 @@
 
 namespace Chang\AmazonMws;
 
+use Chang\AmazonMws\Actions\Action;
+use Chang\AmazonMws\Traits\SignTrait;
 use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Exception\RequestException;
 use Chang\AmazonMws\Traits\UserAgentHeaderTrait;
 
 /**
@@ -20,145 +19,149 @@ use Chang\AmazonMws\Traits\UserAgentHeaderTrait;
  */
 class MWS extends Client
 {
-    use UserAgentHeaderTrait;
+    use UserAgentHeaderTrait, SignTrait;
+
+    protected $config;
+
+    protected $method = 'POST';
+
+    protected $uri;
+
+    protected $endPoint;
+
     /**
      * 客户端版本
      */
-    const CLIENT_VERSION = 'V0.01';
-    /**
-     * @var Collection
-     */
-    protected $collection;
+    const CLIENT_VERSION = 'v0.0.1';
 
-    /**
-     * 商店设置信息以及authToken
-     * @var
-     */
-    private $storeKeys;
+    protected $userAgentHeader;
 
-    /**
-     * 请求头
-     * @var
-     */
-    private $header;
-
-
-    /**
-     * Mws constructor.
-     * @param Collection $collection
-     */
-    public function __construct(Collection $collection)
+    public function __construct(array $amazon, array $keys = [], array $config = [])
     {
-        parent::__construct();
-        $this->collection = $collection;
-    }
-
-
-    /**
-     * 验证请求action是否存在
-     * @param string $action
-     * @return bool
-     */
-    public function actionIsValid(string $action)
-    {
-        $action = studly_case($action);
-        return in_array($action, $this->collection->actions());
-    }
-
-
-    /**
-     * 设置请求头
-     */
-    public function setHeader()
-    {
-        $this->header['Content-Type'] = "application/x-www-form-urlencoded; charset=utf-8"; // We need to make sure to set utf-8 encoding here
-        $this->header['Expect'] = null; // Don't expect 100 Continue
-        $this->header['UserAgent'] = $this->getUserAgentHeader($this->storeKeys['app_name'], 'dev-v0.01');
-    }
-
-    /**
-     * @param $xml
-     * @return mixed
-     */
-    public function xmlToArray($xml)
-    {
-        //禁止引用外部xml实体
-        libxml_disable_entity_loader(true);
-        $values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-        return $values;
-    }
-
-    /**
-     * @param array $params
-     * @param $requestUrl
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private function httpRequest(array $params, $requestUrl)
-    {
+        parent::__construct($config);
         try {
-            $this->setHeader();
-            $response = $this->request('POST', $requestUrl, [
-                'form_params' => $params,
-                'headers'     => $this->header,
+            $this->setConfig($amazon, $keys);
+            $this->userAgentHeader = $this->getUserAgentHeader($this->config['name'], self::CLIENT_VERSION);
+            $this->setHeader([
+                'UserAgent' => $this->userAgentHeader,
+                'Content-Type' => "application/x-www-form-urlencoded; charset=utf-8",
+                'Expect' => null,
             ]);
-            return $this->xmlToArray(((string)($response->getBody())));
-        } catch (RequestException $e) {
-            dd(Psr7\str($e->getResponse()));
-//            if ($e->hasResponse()) {
-//                //
-//            }
+            $this->setEndPoint($this->getEndPoint($this->config['country'][0]['code']));
+        } catch (Exception $e) {
+            dd($e);
         }
     }
 
+    public function action(Action $action)
+    {
+        $config = $action->toArray();
+        $this->setUri($this->endPoint . '/' . $config['apiType'] . '/' . $config['version']);
+
+        $params = array_merge($config['params'], ['action' => $config['action']]);
+
+        $this->setFormParams($params);
+
+        return $this->xmlToArray($this->fetch());
+    }
 
     /**
      * 启动MWS服务，设置店铺信息
-     * @param string|null $storeName
+     * @param array $config
      * @param array $keys
      * @return $this
      * @throws Exception
      */
-    public function store(string $storeName = null, $keys = [])
+    public function setConfig(array $config, array $keys)
     {
-        if ($storeName){
-            $storeKeys = config('amazon.faker_user_keys.'.$storeName,[]);
-            if(count($keys)>0){
-                $storeKeys = array_merge($storeKeys,$keys);
+        if ($config) {
+            if (count($keys) > 0) {
+                $config = array_merge($config, $keys);
             }
-            if(!key_exists('seller_id',$storeKeys))throw new Exception('seller_id不存在');
-            if(!key_exists('auth_token',$storeKeys))throw new Exception('auth_token不存在');
-            if(!key_exists('service_locale',$storeKeys))throw new Exception('service_locale不存在');
-            if(!key_exists('app_name',$storeKeys)){
-                $storeKeys['app_name'] = config('amazon.app_name');
+            if ( !key_exists('seller_id', $config)) {
+                throw new Exception('seller_id不存在');
             }
-            if(!key_exists('user_agent',$storeKeys)){
-                $storeKeys['user_agent'] = config('amazon.user_agent');
+            if ( !key_exists('mws_auth_token', $config)) {
+                throw new Exception('mws_auth_token不存在');
             }
-
-            $this->storeKeys = $storeKeys;
+//            if ( !key_exists('service_locale', $config)) {
+//                throw new Exception('service_locale不存在');
+//            }
+            if ( !key_exists('name', $config)) {
+                $config['name'] = config('amazon.app_name');
+            }
+            if ( !key_exists('user_agent', $config)) {
+                $config['user_agent'] = config('amazon.user_agent');
+            }
+            $this->config = $config;
             return $this;
         }
-        throw new Exception('缺少必要shopName参数');
+        throw new Exception('缺少必要参数');
     }
-
 
     /**
-     * @param $name
-     * @param $args
-     * @return \GuzzleHttp\Promise\PromiseInterface|mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param string $method
      */
-    public function __call($name, $args)
+    public function setMethod(string $method): void
     {
-        $module = $this->collection->getModule($name);
-        $moduleName = 'Mws\\Apis\\' . $module;
-        $apiInstance = (new $moduleName($this->storeKeys))->$name($args[0])->setAction($name)->setModuleName($module);
-        try {
-            $signRequest = Signature::sign($apiInstance->params, $apiInstance->getRequestUri());
-            return $this->httpRequest($signRequest,$apiInstance->getRequestUri());
-        } catch (Exception $e) {
-            //
-        }
+        $this->method = $method;
     }
+
+    /**
+     * @param mixed $uri
+     */
+    public function setUri($uri): void
+    {
+        $this->uri = $uri;
+    }
+
+    public function setFormParams($params = [])
+    {
+        $this->setOptions([
+            'form_params' => $this->signer($params, $this->getRequestUri()),
+        ]);
+    }
+
+    public function getQueryParams()
+    {
+        // TODO: Implement getQueryParams() method.
+    }
+
+    public function getRequestMethod(): string
+    {
+        return $this->method;
+    }
+
+    public function getRequestUri(): string
+    {
+        return $this->uri;
+    }
+
+    public function getEndPoint($country)
+    {
+        $list = config('amazon.services_url');
+        if (array_key_exists($country, $list)) {
+            return $list[$country];
+        }
+        return $list[config('amazon.default_service_locale')];
+    }
+
+    public function getMarketplaceId($country)
+    {
+        $list = config('amazon.marketplaceId');
+        if (array_key_exists($country, $list)) {
+            return $list[$country];
+        }
+        return $list[config('amazon.default_service_locale')];
+    }
+
+    /**
+     * @param mixed $endPoint
+     */
+    public function setEndPoint($endPoint): void
+    {
+        $this->endPoint = $endPoint;
+    }
+
+
 }

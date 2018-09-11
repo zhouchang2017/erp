@@ -14,8 +14,9 @@ class AmazonMws extends Tool
      */
     public function boot()
     {
-        Nova::script('amazon-mws', __DIR__.'/../dist/js/tool.js');
-        Nova::style('amazon-mws', __DIR__.'/../dist/css/tool.css');
+        Nova::script('amazon-mws', __DIR__ . '/../dist/js/tool.js');
+        Nova::style('amazon-mws', __DIR__ . '/../dist/css/tool.css');
+
     }
 
     /**
