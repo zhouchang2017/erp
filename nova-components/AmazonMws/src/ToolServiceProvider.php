@@ -35,6 +35,22 @@ class ToolServiceProvider extends ServiceProvider
             ], 'migrations');
         }
 
+        if (! class_exists('CreateShippingAddressesTable')) {
+            $timestamp = date('Y_m_d_His', time());
+            $this->publishes([
+                __DIR__.'/../database/migrations/2018_09_12_112150_create_shipping_addresses_table.php' => $this->app->databasePath()."/migrations/{$timestamp}_create_shipping_addresses_table.php",
+            ], 'migrations');
+        }
+
+        if (! class_exists('CreateAmazonOrdersTable')) {
+            $timestamp = date('Y_m_d_His', time());
+            $this->publishes([
+                __DIR__.'/../database/migrations/2018_09_12_113425_create_amazon_orders_table.php' => $this->app->databasePath()."/migrations/{$timestamp}_create_amazon_orders_table.php",
+            ], 'migrations');
+        }
+
+
+
 
         Nova::serving(function (ServingNova $event) {
             //

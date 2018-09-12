@@ -62,7 +62,7 @@ class MWS extends Client
 
         $this->setFormParams($params);
 
-        return $this->xmlToArray($this->fetch());
+        return $action->response($this->fetch());
     }
 
     /**

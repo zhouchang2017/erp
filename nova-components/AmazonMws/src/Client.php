@@ -72,6 +72,9 @@ abstract class Client extends HttpClient
         return new Request($this->getRequestMethod(), $this->getRequestUri(), $this->getHeader(), $this->body);
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface
+     */
     public function fetch()
     {
         try {
