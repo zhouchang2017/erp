@@ -305,6 +305,7 @@
       } else {
         this.loaded = true
       }
+
     },
     destroyed () {
     }

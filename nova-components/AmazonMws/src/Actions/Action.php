@@ -8,24 +8,35 @@
 
 namespace Chang\AmazonMws\Actions;
 
+use Chang\AmazonMws\Traits\ReportParserTrait;
+use Chang\AmazonMws\Traits\XmlParserTrait;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use Psr\Http\Message\StreamInterface;
-use Rodenastyle\StreamParser\StreamParser;
-use Tightenco\Collect\Support\Collection;
 
 abstract class Action implements Arrayable
 {
+    use XmlParserTrait, ReportParserTrait;
+
     protected $params;
 
     protected $action;
 
     protected $apiType;
 
-    public function __construct($params = null)
+    protected $mock;
+
+    public function __construct($params = null, $mock = false)
     {
         $this->params = $params ?? [];
         $this->action = $this->setAction();
         $this->apiType = $this->setApiType();
+        $this->mock = $mock;
+    }
+
+    public function isMock()
+    {
+        return $this->mock;
     }
 
     public static function make(...$arguments)
@@ -52,36 +63,20 @@ abstract class Action implements Arrayable
         ];
     }
 
-    public function response(StreamInterface $data)
+    public function getMockData()
     {
-        $reader = new \XMLReader();
-        dd($reader->XML($data));
-        return $this->xmlToArray($data);
+        return '';
     }
 
-    protected function xmlToArray($xml)
+    public function responseMock()
     {
-        //禁止引用外部xml实体
-        libxml_disable_entity_loader(true);
-        $values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-        return $values;
+        return $this->getMockData();
     }
 
-    protected function textToArray(string $content)
+    public function response(StreamInterface $data = null): Collection
     {
-        $arr = explode("\r\n", $content);
-
-        $header = explode("\t", array_shift($arr));
-        $length = count($header);
-
-        return collect($arr)->reduce(function ($res, $item) use ($header, $length) {
-            tap(explode("\t", $item), function ($col) use ($header, $length, &$res) {
-                if (count($col) === $length) {
-                    array_push($res, array_combine($header, $col));
-                }
-            });
-            return $res;
-        }, []);
+        $response = $this->mock ? $this->getMockData() : $data->getContents();
+        return $this->xmlToArray($response);
     }
 
 }

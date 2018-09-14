@@ -55,6 +55,9 @@ class MWS extends Client
 
     public function action(Action $action)
     {
+        if($action->isMock()){
+            return $action->response();
+        }
         $config = $action->toArray();
         $this->setUri($this->endPoint . '/' . $config['apiType'] . '/' . $config['version']);
 

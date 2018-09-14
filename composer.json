@@ -24,7 +24,6 @@
         "laravel/framework": "5.6.*",
         "laravel/nova": "dev-master",
         "laravel/tinker": "^1.0",
-        "rodenastyle/stream-parser": "^1.1",
         "spatie/array-to-xml": "^2.7",
         "spatie/laravel-query-builder": "^1.10"
     },

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd8b46bc1898e2f69a43b9bcea2e1243",
+    "content-hash": "36f40a3a75fba4f69b8af7d7f4e3cd56",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -278,10 +278,11 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/AmazonMws",
-                "reference": "09dd71271fc231223b02d91e5904a5e281d60217",
+                "reference": "d890d9b2358ca8f4959431bc4c8d27292670d3d1",
                 "shasum": null
             },
             "require": {
+                "guzzlehttp/guzzle": "^6.3",
                 "php": ">=7.1.0"
             },
             "type": "library",
@@ -1899,7 +1900,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "ea9c5f4715bd7323ff6c8f24c333ecc6b0ed41ac"
+                "reference": "b890122cc7683bcfcbe16174b57d49050fbc9836"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -1954,7 +1955,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-09-10T01:46:21+00:00"
+            "time": "2018-09-13T02:07:56+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2114,58 +2115,6 @@
                 "storage"
             ],
             "time": "2018-08-22T07:45:22+00:00"
-        },
-        {
-            "name": "maxakawizard/json-collection-parser",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MAXakaWIZARD/JsonCollectionParser.git",
-                "reference": "5138540970090e654f2c15edc9d54bd07f14eff7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MAXakaWIZARD/JsonCollectionParser/zipball/5138540970090e654f2c15edc9d54bd07f14eff7",
-                "reference": "5138540970090e654f2c15edc9d54bd07f14eff7",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "php": "^5.6 | ^7.0",
-                "salsify/json-streaming-parser": "~6.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~5.0",
-                "satooshi/php-coveralls": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "JsonCollectionParser\\": "src/",
-                    "JsonCollectionParser\\Tests\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Max Grigorian",
-                    "email": "maxakawizard@gmail.com"
-                }
-            ],
-            "description": "Streaming parser for large JSON files containing array of objects",
-            "homepage": "https://github.com/MAXakaWIZARD/JsonCollectionParser",
-            "keywords": [
-                "json"
-            ],
-            "time": "2018-06-19T14:39:07+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2860,129 +2809,6 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
-            "name": "rodenastyle/stream-parser",
-            "version": "1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Rodenastyle/stream-parser.git",
-                "reference": "698c63cff6dc705972083354598ea6c954a6b0e1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Rodenastyle/stream-parser/zipball/698c63cff6dc705972083354598ea6c954a6b0e1",
-                "reference": "698c63cff6dc705972083354598ea6c954a6b0e1",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "ext-xmlreader": "*",
-                "maxakawizard/json-collection-parser": "^1.1",
-                "php": "^7.0",
-                "tightenco/collect": "^5.5.33"
-            },
-            "require-dev": {
-                "mockery/mockery": "^0.9.9",
-                "phpunit/phpunit": "^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Rodenastyle\\StreamParser\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sergio Ródenas",
-                    "homepage": "https://rodenastyle.com",
-                    "role": "developer"
-                }
-            ],
-            "description": "PHP Multiformat Streaming Parser",
-            "keywords": [
-                "PHP7",
-                "csv",
-                "json",
-                "laravel",
-                "parser",
-                "pull",
-                "stream",
-                "xml"
-            ],
-            "time": "2018-08-10T21:37:08+00:00"
-        },
-        {
-            "name": "salsify/json-streaming-parser",
-            "version": "v6.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/salsify/jsonstreamingparser.git",
-                "reference": "0b6403c8a2b1fc4c5af77b5c0174c11bd958a9d2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/salsify/jsonstreamingparser/zipball/0b6403c8a2b1fc4c5af77b5c0174c11bd958a9d2",
-                "reference": "0b6403c8a2b1fc4c5af77b5c0174c11bd958a9d2",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": "^5.4 | ^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "JsonStreamingParser\\": "src",
-                    "JsonStreamingParser\\Test\\": "tests"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxim Gnatenko",
-                    "email": "mgnatenko@gmail.com"
-                },
-                {
-                    "name": "Rob Gonzalez",
-                    "email": "rob@salsify.com",
-                    "homepage": "http://salsify.com/"
-                },
-                {
-                    "name": "Max Grigorian",
-                    "email": "maxakawizard@gmail.com",
-                    "homepage": "http://wizardcat.com/"
-                }
-            ],
-            "description": "A streaming parser for JSON in PHP.",
-            "homepage": "https://github.com/salsify/jsonstreamingparser",
-            "keywords": [
-                "json",
-                "parser",
-                "streaming"
-            ],
-            "time": "2017-09-02T14:02:01+00:00"
-        },
-        {
             "name": "seld/jsonlint",
             "version": "1.7.1",
             "source": {
@@ -3263,16 +3089,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3324,7 +3150,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/console",
@@ -4337,62 +4163,6 @@
                 "dump"
             ],
             "time": "2018-08-02T09:24:26+00:00"
-        },
-        {
-            "name": "tightenco/collect",
-            "version": "v5.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tightenco/collect.git",
-                "reference": "87c1e7eb0a2252748fa2fc1824e97f2fc892788f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/collect/zipball/87c1e7eb0a2252748fa2fc1824e97f2fc892788f",
-                "reference": "87c1e7eb0a2252748fa2fc1824e97f2fc892788f",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/var-dumper": "^4.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "nesbot/carbon": "^1.26.3",
-                "phpunit/phpunit": "^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/Collect/Support/helpers.php",
-                    "src/Collect/Support/alias.php"
-                ],
-                "psr-4": {
-                    "Tightenco\\Collect\\": "src/Collect"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
-            "description": "Collect - Illuminate Collections as a separate package.",
-            "keywords": [
-                "collection",
-                "laravel"
-            ],
-            "time": "2018-09-06T15:55:11+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

@@ -14,9 +14,4 @@ use Chang\AmazonMws\Traits\ActionTrait;
 class ListOrders extends Action
 {
     use ActionTrait;
-
-    public function getVersion(): string
-    {
-        return '2013-09-01';
-    }
 }

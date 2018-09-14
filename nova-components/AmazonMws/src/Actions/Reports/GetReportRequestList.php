@@ -2,16 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: z
- * Date: 2018/9/12
- * Time: 2:51 PM
+ * Date: 2018/9/14
+ * Time: 4:41 PM
  */
 
 namespace Chang\AmazonMws\Actions\Reports;
 
+
 use Chang\AmazonMws\Actions\Action;
 use Chang\AmazonMws\Traits\ActionTrait;
 
-class RequestReport extends Action
+class GetReportRequestList extends Action
 {
     use ActionTrait;
 }
