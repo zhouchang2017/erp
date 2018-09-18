@@ -9,6 +9,7 @@
 namespace Chang\AmazonMws;
 
 use Chang\AmazonMws\Actions\Action;
+use Chang\AmazonMws\Models\Amazon;
 use Chang\AmazonMws\Traits\SignTrait;
 use Exception;
 use Chang\AmazonMws\Traits\UserAgentHeaderTrait;
@@ -29,6 +30,8 @@ class MWS extends Client
 
     protected $endPoint;
 
+    protected $amazon;
+
     /**
      * 客户端版本
      */
@@ -36,7 +39,7 @@ class MWS extends Client
 
     protected $userAgentHeader;
 
-    public function __construct(array $amazon, array $keys = [], array $config = [])
+    public function __construct(Amazon $amazon, array $keys = [], array $config = [])
     {
         parent::__construct($config);
         try {
@@ -55,7 +58,7 @@ class MWS extends Client
 
     public function action(Action $action)
     {
-        if($action->isMock()){
+        if ($action->isMock()) {
             return $action->response();
         }
         $config = $action->toArray();
@@ -70,14 +73,17 @@ class MWS extends Client
 
     /**
      * 启动MWS服务，设置店铺信息
-     * @param array $config
+     * @param Amazon $config
      * @param array $keys
      * @return $this
      * @throws Exception
      */
-    public function setConfig(array $config, array $keys)
+    public function setConfig(Amazon $config, array $keys)
     {
+        $this->amazon = $config;
         if ($config) {
+            $config = array_except($config->toArray(),
+                ['description', 'enabled', 'created_at', 'updated_at']);
             if (count($keys) > 0) {
                 $config = array_merge($config, $keys);
             }
@@ -157,6 +163,12 @@ class MWS extends Client
         }
         return $list[config('amazon.default_service_locale')];
     }
+
+    public function getAmazon()
+    {
+        return $this->amazon;
+    }
+
 
     /**
      * @param mixed $endPoint

@@ -26,6 +26,8 @@ abstract class Action implements Arrayable
 
     protected $mock;
 
+    protected $customResponse;
+
     public function __construct($params = null, $mock = false)
     {
         $this->params = $params ?? [];
@@ -77,6 +79,17 @@ abstract class Action implements Arrayable
     {
         $response = $this->mock ? $this->getMockData() : $data->getContents();
         return $this->xmlToArray($response);
+    }
+
+    public function setResponse(\Closure $callback)
+    {
+        $this->customResponse = $callback;
+        return $this;
+    }
+
+    protected function callCustomResponse($data)
+    {
+        return call_user_func($this->customResponse, $data);
     }
 
 }

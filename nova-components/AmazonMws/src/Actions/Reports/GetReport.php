@@ -20,6 +20,9 @@ class GetReport extends Action
 
     public function response(StreamInterface $data = null): Collection
     {
+        if ($this->customResponse) {
+            return $this->callCustomResponse($data->getContents());
+        }
         return $this->textToArray($data->getContents());
     }
 

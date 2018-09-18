@@ -4,8 +4,105 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "36f40a3a75fba4f69b8af7d7f4e3cd56",
+    "content-hash": "71496e89a49188491b535f911a9c919f",
     "packages": [
+        {
+            "name": "64robots/nova-fields",
+            "version": "0.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/64robots/nova-fields.git",
+                "reference": "5b528eb7852bc13a75b1992a9cf13e8428b5c8a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/64robots/nova-fields/zipball/5b528eb7852bc13a75b1992a9cf13e8428b5c8a6",
+                "reference": "5b528eb7852bc13a75b1992a9cf13e8428b5c8a6",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "R64\\NovaFields\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "R64\\NovaFields\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2018-09-15T14:21:50+00:00"
+        },
+        {
+            "name": "64robots/nova-json",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/64robots/nova-json.git",
+                "reference": "4b4effc47e168921667c77deb6ac821e53a7ff61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/64robots/nova-json/zipball/4b4effc47e168921667c77deb6ac821e53a7ff61",
+                "reference": "4b4effc47e168921667c77deb6ac821e53a7ff61",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "64robots/nova-fields": "^0.1.10",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "R64\\NovaJson\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "R64\\NovaJson\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "JSON Laravel Nova field.",
+            "keywords": [
+                "field",
+                "json",
+                "laravel",
+                "nova"
+            ],
+            "time": "2018-09-17T06:24:39+00:00"
+        },
         {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v2.5.1",

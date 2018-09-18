@@ -15,4 +15,9 @@ use Chang\AmazonMws\Traits\ActionTrait;
 class GetMatchingProductForId extends Action
 {
     use ActionTrait;
+
+    public static function toFormData(array $data)
+    {
+
+    }
 }

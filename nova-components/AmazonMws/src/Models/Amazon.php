@@ -2,11 +2,16 @@
 
 namespace Chang\AmazonMws\Models;
 
+use Chang\AmazonMws\Traits\MWSTrait;
 use Illuminate\Database\Eloquent\Model;
 use Chang\AmazonMws\MWS;
 
 class Amazon extends Model
 {
+    use MWSTrait;
+    /**
+     * @var MWS|null
+     */
     protected $MWS = null;
 
     protected $fillable = [
@@ -25,14 +30,13 @@ class Amazon extends Model
         'country' => 'array',
     ];
 
-    public function runMWS()
+    /**
+     * @return MWS
+     */
+    public function runMWS(): MWS
     {
-        if ( !$this->enabled) {
-            return false;
-        }
         if (is_null($this->MWS)) {
-            $this->MWS = new MWS(array_except($this->toArray(),
-                ['id', 'description', 'enabled', 'created_at', 'updated_at']));
+            $this->MWS = new MWS($this);
         }
         return $this->MWS;
     }
@@ -40,5 +44,10 @@ class Amazon extends Model
     public function ListMarketplaceParticipations()
     {
         $this->runMWS();
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
     }
 }
