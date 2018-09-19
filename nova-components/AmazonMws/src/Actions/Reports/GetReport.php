@@ -12,18 +12,17 @@ namespace Chang\AmazonMws\Actions\Reports;
 use Chang\AmazonMws\Actions\Action;
 use Chang\AmazonMws\Traits\ActionTrait;
 use Illuminate\Support\Collection;
-use Psr\Http\Message\StreamInterface;
 
 class GetReport extends Action
 {
     use ActionTrait;
 
-    public function response(StreamInterface $data = null): Collection
+    public function response($data = null): Collection
     {
         if ($this->customResponse) {
-            return $this->callCustomResponse($data->getContents());
+            return $this->callCustomResponse($data);
         }
-        return $this->textToArray($data->getContents());
+        return $this->textToArray($data);
     }
 
 }

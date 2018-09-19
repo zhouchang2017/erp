@@ -11,6 +11,7 @@ namespace Chang\AmazonMws;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\ResponseInterface;
 use Spatie\ArrayToXml\ArrayToXml;
 use GuzzleHttp\Psr7;
 
@@ -78,8 +79,9 @@ abstract class Client extends HttpClient
     public function fetch()
     {
         try {
+            \Log::info('http request: ', $this->getOptions());
             $response = $this->send($this->buildRequest(), $this->getOptions());
-            return $response->getBody();
+            return $this->responseEncodingUtf8($response);
         } catch (GuzzleException $exception) {
             dd(Psr7\str($exception->getResponse()));
 //            dd($exception->getMessage());
@@ -91,16 +93,12 @@ abstract class Client extends HttpClient
         $this->body = ArrayToXml::convert($xml, $rootName);
     }
 
-    /**
-     * @param $xml
-     * @return mixed
-     */
-    public function xmlToArray($xml)
+
+    private function responseEncodingUtf8(ResponseInterface $response)
     {
-        //禁止引用外部xml实体
-        libxml_disable_entity_loader(true);
-        $values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-        return $values;
+        $type = $response->getHeader('content-type');
+        $parsed = Psr7\parse_header($type);
+        return mb_convert_encoding($response->getBody(), 'UTF-8', $parsed[0]['charset'] ?? 'UTF-8');
     }
 
 }

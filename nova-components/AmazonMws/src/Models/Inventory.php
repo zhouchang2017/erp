@@ -9,16 +9,19 @@ class Inventory extends Model
     protected $table = 'amazon_inventories';
 
     protected $casts = [
-        'business_price_options' => 'array',
+        'earliest_availability' => 'array',
+        'supply_detail' => 'array',
     ];
 
     protected $fillable = [
-        'sku',
+        'seller_sku',
         'asin',
-        'price',
-        'quantity',
-        'business_price',
-        'business_price_options',
+        'fnsku',
+        'in_stock_supply_quantity',
+        'condition',
+        'total_supply_quantity',
+        'earliest_availability',
+        'supply_detail'
     ];
 
     public function getTitleAttribute()
@@ -33,6 +36,6 @@ class Inventory extends Model
 
     public function listing()
     {
-        return $this->belongsTo(Listing::class, 'sku', 'sku');
+        return $this->belongsTo(Listing::class, 'sku', 'seller_sku');
     }
 }

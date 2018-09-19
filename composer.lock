@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "71496e89a49188491b535f911a9c919f",
+    "content-hash": "b57a5a45eaa9d03dc9e1bb7d8d2d65ba",
     "packages": [
         {
             "name": "64robots/nova-fields",
-            "version": "0.1.10",
+            "version": "0.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/64robots/nova-fields.git",
-                "reference": "5b528eb7852bc13a75b1992a9cf13e8428b5c8a6"
+                "reference": "d75e42958a61cde045ec2b79cac537719920a99e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/64robots/nova-fields/zipball/5b528eb7852bc13a75b1992a9cf13e8428b5c8a6",
-                "reference": "5b528eb7852bc13a75b1992a9cf13e8428b5c8a6",
+                "url": "https://api.github.com/repos/64robots/nova-fields/zipball/d75e42958a61cde045ec2b79cac537719920a99e",
+                "reference": "d75e42958a61cde045ec2b79cac537719920a99e",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -51,20 +51,20 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2018-09-15T14:21:50+00:00"
+            "time": "2018-09-18T08:49:56+00:00"
         },
         {
             "name": "64robots/nova-json",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/64robots/nova-json.git",
-                "reference": "4b4effc47e168921667c77deb6ac821e53a7ff61"
+                "reference": "9f6a8511618e7d7d31a811b69308ffd8a687471d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/64robots/nova-json/zipball/4b4effc47e168921667c77deb6ac821e53a7ff61",
-                "reference": "4b4effc47e168921667c77deb6ac821e53a7ff61",
+                "url": "https://api.github.com/repos/64robots/nova-json/zipball/9f6a8511618e7d7d31a811b69308ffd8a687471d",
+                "reference": "9f6a8511618e7d7d31a811b69308ffd8a687471d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -74,7 +74,7 @@
                 ]
             },
             "require": {
-                "64robots/nova-fields": "^0.1.10",
+                "64robots/nova-fields": "^0.1.11",
                 "php": ">=7.1.0"
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2018-09-17T06:24:39+00:00"
+            "time": "2018-09-17T18:24:11+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -240,16 +240,16 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "1.12.0",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "723e17f0a1d8f37cf9bffc45cfeee4f794d317ad"
+                "reference": "f1d1daf265f1aab81a22de145e9d7076509310c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/723e17f0a1d8f37cf9bffc45cfeee4f794d317ad",
-                "reference": "723e17f0a1d8f37cf9bffc45cfeee4f794d317ad",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/f1d1daf265f1aab81a22de145e9d7076509310c4",
+                "reference": "f1d1daf265f1aab81a22de145e9d7076509310c4",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -304,7 +304,7 @@
                 "package",
                 "validation"
             ],
-            "time": "2018-09-06T10:35:48+00:00"
+            "time": "2018-09-16T21:57:37+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -1286,6 +1286,62 @@
             "time": "2018-09-03T08:22:29+00:00"
         },
         {
+            "name": "gregoriohc/laravel-nova-theme-responsive",
+            "version": "v0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gregoriohc/laravel-nova-theme-responsive.git",
+                "reference": "76a740e9c4602033b6e61c71f1a0eec9b9597cf4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gregoriohc/laravel-nova-theme-responsive/zipball/76a740e9c4602033b6e61c71f1a0eec9b9597cf4",
+                "reference": "76a740e9c4602033b6e61c71f1a0eec9b9597cf4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gregoriohc\\LaravelNovaThemeResponsive\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gregoriohc\\LaravelNovaThemeResponsive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregorio Hernández Caso",
+                    "email": "gregoriohc@gmail.com",
+                    "homepage": "https://github.com/gregoriohc",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova responsive theme.",
+            "homepage": "https://github.com/gregoriohc/laravel-nova-theme-responsive",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2018-09-17T08:21:23+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "6.3.3",
             "source": {
@@ -1997,7 +2053,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "b890122cc7683bcfcbe16174b57d49050fbc9836"
+                "reference": "77002c8dab76699aa12be7464612617ee4a4eac2"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -2052,7 +2108,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-09-13T02:07:56+00:00"
+            "time": "2018-09-19T01:36:14+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2125,16 +2181,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.46",
+            "version": "1.0.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2"
+                "reference": "a11e4a75f256bdacf99d20780ce42d3b8272975c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a11e4a75f256bdacf99d20780ce42d3b8272975c",
+                "reference": "a11e4a75f256bdacf99d20780ce42d3b8272975c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2144,13 +2200,13 @@
                 ]
             },
             "require": {
+                "ext-fileinfo": "*",
                 "php": ">=5.5.9"
             },
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
             },
             "require-dev": {
-                "ext-fileinfo": "*",
                 "phpspec/phpspec": "^3.4",
                 "phpunit/phpunit": "^5.7.10"
             },
@@ -2211,7 +2267,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-08-22T07:45:22+00:00"
+            "time": "2018-09-14T15:30:29+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2413,16 +2469,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.0.3",
+            "version": "v4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d"
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/bd088dc940a418f09cda079a9b5c7c478890fb8d",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/fa6ee28600d21d49b2b4e1006b48426cec8e579c",
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2466,7 +2522,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-07-15T17:25:16+00:00"
+            "time": "2018-09-18T07:03:24+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3012,16 +3068,16 @@
         },
         {
             "name": "spatie/array-to-xml",
-            "version": "2.7.1",
+            "version": "2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/array-to-xml.git",
-                "reference": "cb8befcd0c58ccf8baa5491e61a5c1d02a3acbba"
+                "reference": "2b01cb1a04b4b65f0db03cd8a78df4b978fe5cd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/cb8befcd0c58ccf8baa5491e61a5c1d02a3acbba",
-                "reference": "cb8befcd0c58ccf8baa5491e61a5c1d02a3acbba",
+                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/2b01cb1a04b4b65f0db03cd8a78df4b978fe5cd7",
+                "reference": "2b01cb1a04b4b65f0db03cd8a78df4b978fe5cd7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3063,20 +3119,20 @@
                 "convert",
                 "xml"
             ],
-            "time": "2018-02-20T15:21:24+00:00"
+            "time": "2018-09-17T11:45:05+00:00"
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "1.10.1",
+            "version": "1.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "f1465f764c3d93f623bef292362de19529250a75"
+                "reference": "372bfcd1360b2a41ca418614cf2d11e95c422619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/f1465f764c3d93f623bef292362de19529250a75",
-                "reference": "f1465f764c3d93f623bef292362de19529250a75",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/372bfcd1360b2a41ca418614cf2d11e95c422619",
+                "reference": "372bfcd1360b2a41ca418614cf2d11e95c422619",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3086,10 +3142,13 @@
                 ]
             },
             "require": {
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/http": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
                 "php": "^7.1"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
                 "phpunit/phpunit": "^6.1|^7.0"
             },
             "type": "library",
@@ -3123,7 +3182,7 @@
                 "laravel-query-builder",
                 "spatie"
             ],
-            "time": "2018-08-21T06:50:03+00:00"
+            "time": "2018-09-17T10:23:19+00:00"
         },
         {
             "name": "spatie/once",
@@ -5228,16 +5287,16 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c"
+                "reference": "050bedf145a257b1ff02746c31894800e5122946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/cecbc684605bb0cc288828eb5d65d93d5c676d3c",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/050bedf145a257b1ff02746c31894800e5122946",
+                "reference": "050bedf145a257b1ff02746c31894800e5122946",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5248,6 +5307,9 @@
             },
             "require": {
                 "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "extra": {
@@ -5277,7 +5339,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-06-11T11:44:00+00:00"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",

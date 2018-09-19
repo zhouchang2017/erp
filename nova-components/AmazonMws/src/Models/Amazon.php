@@ -28,6 +28,7 @@ class Amazon extends Model
     protected $casts = [
         'enabled' => 'boolean',
         'country' => 'array',
+        'sync_at' => 'date',
     ];
 
     /**
@@ -44,6 +45,11 @@ class Amazon extends Model
     public function ListMarketplaceParticipations()
     {
         $this->runMWS();
+    }
+
+    public function getHasInventoryAttribute()
+    {
+        return $this->inventories()->count() > 0;
     }
 
     public function inventories()

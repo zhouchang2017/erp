@@ -2,6 +2,7 @@
 
 namespace Chang\AmazonMws\Nova;
 
+use Chang\AmazonMws\Nova\Actions\AsyncListing;
 use Fourstacks\NovaRepeatableFields\Repeater;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
@@ -135,6 +136,8 @@ class Amazon extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new AsyncListing(),
+        ];
     }
 }

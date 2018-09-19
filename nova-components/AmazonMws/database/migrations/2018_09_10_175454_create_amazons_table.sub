@@ -23,6 +23,7 @@ class CreateAmazonsTable extends Migration
             $table->string('secret_key');
             $table->json('country');
             $table->boolean('enabled');
+            $table->timestamp('sync_at');
             $table->timestamps();
         });
     }

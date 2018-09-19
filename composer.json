@@ -18,6 +18,7 @@
         "chang/create-resource-button": "*",
         "fideloper/proxy": "^4.0",
         "fourstacks/nova-repeatable-fields": "dev-master",
+        "gregoriohc/laravel-nova-theme-responsive": "^0.2.0",
         "guzzlehttp/guzzle": "^6.3",
         "inspheric/nova-indicator-field": "^1.2",
         "intervention/image": "^2.4",

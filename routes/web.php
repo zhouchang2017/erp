@@ -21,7 +21,9 @@ Route::get('/test', function (\Chang\AmazonMws\Models\Amazon $amazon) {
 
     /** @var \Chang\AmazonMws\Models\Amazon $store */
     $store = $amazon::find(2);
-    $mws = $store->runMWS();
+    $mws = new \Chang\AmazonMws\Services\AmazonService($store);
+    $mws->setMWS();
+    return $mws->syncInventory();
 //    $res = $mws->action(\Chang\AmazonMws\Actions\Orders\ListOrders::make([
 //        'CreatedAfter' => Carbon::createFromDate(2018, 8, 20)->toIso8601String(),
 //        'MarketplaceId.Id.1' => 'ATVPDKIKX0DER',
@@ -32,19 +34,19 @@ Route::get('/test', function (\Chang\AmazonMws\Models\Amazon $amazon) {
 //            'ASINList.ASIN.1' => 'B075YC3L3Q',
 //        ], true
 //    ));
-    $res = $mws->action(\Chang\AmazonMws\Actions\FulfillmentInventory\ListInventorySupply::make([
-        'QueryStartDateTime' => Carbon::createFromDate(2018, 5, 20)->toIso8601String(),
-        'ResponseGroup' => 'Detailed',
-    ]));
+//    $res = $mws->action(\Chang\AmazonMws\Actions\FulfillmentInventory\ListInventorySupply::make([
+//        'QueryStartDateTime' => Carbon::today()->subYear(2)->toIso8601String(),
+//        'ResponseGroup' => 'Detailed',
+//    ]));
 //    $res = $mws->action(\Chang\AmazonMws\Actions\Reports\RequestReport::make(
 //        [
-//            'ReportType' => '_GET_FLAT_FILE_OPEN_LISTINGS_DATA_',
-////            'StartDate' => Carbon::today()->subMonths(3)->toIso8601String()
+//            'ReportType' => '_GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA_',
+//            'StartDate' => Carbon::today()->subYear(1)->toIso8601String()
 //        ]
 //    ));
 //    $res = $mws->action(\Chang\AmazonMws\Actions\Reports\GetReportRequestList::make());
 //    $res = $mws->action(\Chang\AmazonMws\Actions\Reports\GetReport::make([
-//        'ReportId' => '11315947351017792',
+//        'ReportId' => '11331655667017793',
 //    ]));
 //    $data = $res->map(function ($item) {
 //        $attr = array_only($item, ['sku', 'asin', 'price', 'quantity', 'business_price']);
@@ -65,7 +67,6 @@ Route::get('/test', function (\Chang\AmazonMws\Models\Amazon $amazon) {
 //        'IdType' => 'SellerSKU',
 //        'MarketplaceId' => 'ATVPDKIKX0DER',
 //    ]));
-    return $res;
 });
 
 Route::get('/test/1', function () {

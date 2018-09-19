@@ -15,7 +15,7 @@ trait ReportParserTrait
 {
     protected function textToArray(string $content): Collection
     {
-        $arr = explode("\r\n", $content);
+        $arr = explode("\n", $content);
 
         $header = collect(explode("\t", array_shift($arr)))->map(function ($item) {
             return snake_case($item);

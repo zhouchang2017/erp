@@ -12,7 +12,6 @@ use Chang\AmazonMws\Traits\ReportParserTrait;
 use Chang\AmazonMws\Traits\XmlParserTrait;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
-use Psr\Http\Message\StreamInterface;
 
 abstract class Action implements Arrayable
 {
@@ -46,6 +45,15 @@ abstract class Action implements Arrayable
         return new static(...$arguments);
     }
 
+    public function next(string $nextToken)
+    {
+        $this->params = [
+            'NextToken' => $nextToken,
+        ];
+        $this->action = $this->action . 'ByNextToken';
+        return $this;
+    }
+
     abstract public function setApiType(): string;
 
     abstract public function setAction(): string;
@@ -75,9 +83,9 @@ abstract class Action implements Arrayable
         return $this->getMockData();
     }
 
-    public function response(StreamInterface $data = null): Collection
+    public function response($data = null): Collection
     {
-        $response = $this->mock ? $this->getMockData() : $data->getContents();
+        $response = $this->mock ? $this->getMockData() : $data;
         return $this->xmlToArray($response);
     }
 
