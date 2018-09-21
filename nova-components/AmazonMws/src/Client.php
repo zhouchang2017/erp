@@ -10,6 +10,7 @@ namespace Chang\AmazonMws;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Spatie\ArrayToXml\ArrayToXml;
@@ -86,6 +87,20 @@ abstract class Client extends HttpClient
             dd(Psr7\str($exception->getResponse()));
 //            dd($exception->getMessage());
         }
+    }
+
+    public function asyncFetch()
+    {
+        $promise = $this->sendAsync($this->buildRequest(), $this->getOptions());
+        $promise->then(
+            function (ResponseInterface $response) {
+                $this->responseEncodingUtf8($response);
+            },
+            function (RequestException $exception) {
+                dd($exception->getMessage());
+            }
+        );
+        $promise->wait();
     }
 
     public function setBodyToXML(array $xml, string $rootName = 'root')

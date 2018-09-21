@@ -19,6 +19,7 @@ class ProductVariant extends Resource
      */
     public static $model = \App\Modules\Product\Models\ProductVariant::class;
 
+    public static $category = "Product";
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

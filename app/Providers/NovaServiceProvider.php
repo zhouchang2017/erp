@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Nova\Metrics\PendingProcurementPlans;
+use Chang\AmazonMws\AmazonMws;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
@@ -29,9 +30,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -59,7 +60,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new Help,
-            new PendingProcurementPlans()
+            new PendingProcurementPlans(),
         ];
     }
 
@@ -73,6 +74,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new CreateProcurementPlan,
             new CreateProcurementPlan('Manually'),
+            new AmazonMws,
         ];
     }
 

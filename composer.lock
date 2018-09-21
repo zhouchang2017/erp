@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b57a5a45eaa9d03dc9e1bb7d8d2d65ba",
+    "content-hash": "62fd22f48a526b7e35cfb86ae80d1dc0",
     "packages": [
         {
             "name": "64robots/nova-fields",
@@ -102,6 +102,61 @@
                 "nova"
             ],
             "time": "2018-09-17T18:24:11+00:00"
+        },
+        {
+            "name": "alexbowers/nova-categorise-resources",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexbowers/nova-categorise-resources.git",
+                "reference": "8a26ccf27c858b06ab0ce18813e7c6d655167ecc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexbowers/nova-categorise-resources/zipball/8a26ccf27c858b06ab0ce18813e7c6d655167ecc",
+                "reference": "8a26ccf27c858b06ab0ce18813e7c6d655167ecc",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AlexBowers\\NovaCategoriseResources\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AlexBowers\\NovaCategoriseResources\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Bowers",
+                    "email": "bowersbros@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Group and categorise your nova resources",
+            "homepage": "https://github.com/alexbowers/nova-categorise-resources",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2018-09-17T22:07:43+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -240,16 +295,16 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "1.14.0",
+            "version": "1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "f1d1daf265f1aab81a22de145e9d7076509310c4"
+                "reference": "a63d9b39ca33a5ad9f0ee5e668b6b3fdbb22adae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/f1d1daf265f1aab81a22de145e9d7076509310c4",
-                "reference": "f1d1daf265f1aab81a22de145e9d7076509310c4",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/a63d9b39ca33a5ad9f0ee5e668b6b3fdbb22adae",
+                "reference": "a63d9b39ca33a5ad9f0ee5e668b6b3fdbb22adae",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -304,7 +359,7 @@
                 "package",
                 "validation"
             ],
-            "time": "2018-09-16T21:57:37+00:00"
+            "time": "2018-09-19T06:18:38+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -2053,7 +2108,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "77002c8dab76699aa12be7464612617ee4a4eac2"
+                "reference": "0493aaf483aa52e82341ead8caa5c2cbfaaaad73"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -2108,7 +2163,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-09-19T01:36:14+00:00"
+            "time": "2018-09-20T01:32:21+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2574,6 +2629,62 @@
                 "random"
             ],
             "time": "2018-07-02T15:55:56+00:00"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/container",

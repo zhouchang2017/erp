@@ -23,7 +23,7 @@ Route::get('/test', function (\Chang\AmazonMws\Models\Amazon $amazon) {
     $store = $amazon::find(2);
     $mws = new \Chang\AmazonMws\Services\AmazonService($store);
     $mws->setMWS();
-    return $mws->syncInventory();
+    return $mws->getMWS()->action(\Chang\AmazonMws\Actions\Reports\GetReportScheduleList::make());
 //    $res = $mws->action(\Chang\AmazonMws\Actions\Orders\ListOrders::make([
 //        'CreatedAfter' => Carbon::createFromDate(2018, 8, 20)->toIso8601String(),
 //        'MarketplaceId.Id.1' => 'ATVPDKIKX0DER',

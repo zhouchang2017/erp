@@ -17,6 +17,8 @@ class Attribute extends Resource
      */
     public static $model = \App\Modules\Product\Models\Attribute::class;
 
+    public static $category = "Product";
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

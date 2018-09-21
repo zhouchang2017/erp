@@ -16,6 +16,7 @@ class Payment extends Resource
      */
     public static $model = \App\Modules\ProductProvider\Models\Payment::class;
 
+    public static $category = "Product Provider";
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

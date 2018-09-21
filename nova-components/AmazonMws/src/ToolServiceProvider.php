@@ -10,6 +10,7 @@ use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Chang\AmazonMws\Http\Middleware\Authorize;
+use Chang\AmazonMws\Models\Amazon as AmazonModel;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,11 @@ class ToolServiceProvider extends ServiceProvider
             Inventory::class,
             Listing::class,
         ]);
+
+        Nova::provideToScript([
+            'locale' => config('app.locale'),
+        ]);
+
     }
 
     private function publishMigrations()
@@ -78,6 +84,8 @@ class ToolServiceProvider extends ServiceProvider
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/amazon-mws')
             ->group(__DIR__ . '/../routes/api.php');
+
+        Route::model('amazon', AmazonModel::class);
     }
 
     /**

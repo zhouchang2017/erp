@@ -114,4 +114,125 @@ class ReportType
             ],
         ];
     }
+
+    public static function getFulfillmentFbaType()
+    {
+        return [
+            [
+                'name' => '亚马逊物流货件报告',
+                'value' => '_GET_AMAZON_FULFILLED_SHIPMENTS_DATA_',
+            ],
+            [
+                'name' => '文本文件格式的、按最后更新日期排列的所有库存订单报告',
+                'value' => '_GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_',
+            ],
+            [
+                'name' => '按订单日期排列的所有库存数据文件订单报告',
+                'value' => '_GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_',
+            ],
+            [
+                'name' => 'XML 文件格式的、按最后更新日期排列的所有订单报告',
+                'value' => '_GET_XML_ALL_ORDERS_DATA_BY_LAST_UPDATE_',
+            ],
+            [
+                'name' => 'XML 文件格式的、按订单日期排列的所有订单报告',
+                'value' => '_GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_',
+            ],
+            [
+                'name' => '亚马逊物流买家货件销售报告',
+                'value' => '_GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_SALES_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流促销报告',
+                'value' => '_GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流买家税费',
+                'value' => '_GET_FBA_FULFILLMENT_CUSTOMER_TAXES_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流库存报告',
+                'value' => '_GET_AFN_INVENTORY_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流每日库存历史报告',
+                'value' => '_GET_FBA_FULFILLMENT_CURRENT_INVENTORY_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流每月库存历史报告',
+                'value' => '_GET_FBA_FULFILLMENT_MONTHLY_INVENTORY_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流已收到库存报告',
+                'value' => '_GET_FBA_FULFILLMENT_INVENTORY_RECEIPTS_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流库存事件详情报告',
+                'value' => '_GET_FBA_FULFILLMENT_INVENTORY_SUMMARY_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流库存盘点报告',
+                'value' => '_GET_FBA_FULFILLMENT_INVENTORY_ADJUSTMENTS_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流库存状况报告',
+                'value' => '_GET_FBA_FULFILLMENT_INVENTORY_HEALTH_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流管理库存',
+                'value' => '_GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流管理库存 - 存档',
+                'value' => '_GET_FBA_MYI_ALL_INVENTORY_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流入库绩效报告',
+                'value' => '_GET_FBA_FULFILLMENT_INBOUND_NONCOMPLIANCE_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流危险品状态更改报告',
+                'value' => '_GET_FBA_HAZMAT_STATUS_CHANGE_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流预计费用报告',
+                'value' => '_GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流赔偿报告',
+                'value' => '_GET_FBA_REIMBURSEMENTS_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流退货报告',
+                'value' => '_GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流换货报告',
+                'value' => '_GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流建议移除商品报告',
+                'value' => '_GET_FBA_RECOMMENDED_REMOVAL_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流移除订单详情报告',
+                'value' => '_GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA_',
+            ],
+            [
+                'name' => '亚马逊物流移除货件详情报告',
+                'value' => '_GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA_',
+            ],
+        ];
+    }
+
+    public static function all()
+    {
+        return array_merge(
+            self::getInventoryType(),
+            self::getOrderTrackingType(),
+            self::getOrderType(),
+            self::getPendingOrderType(),
+            self::getFulfillmentFbaType()
+        );
+    }
 }

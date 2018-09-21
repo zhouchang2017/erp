@@ -390,5 +390,18 @@
   "Return Modification":"Return Modification",
   "Finished":"Finished",
   "Manually Info":"Manually Info",
-  "Country" :"Country"
+  "Country" :"Country",
+  "Request Report":"Request Report",
+  "Report Type":"Report Type",
+  "Report Processing Status":"Report Processing Status",
+  "Start Date":"Start Date",
+  "End Date":"End Date",
+  "Scheduled":"Scheduled",
+  "Report Request Id":"Report Request Id",
+  "Started Processing Date":"Started Processing Date",
+  "Submitted Date":"Submitted Date",
+  "Completed Date":"Completed Date",
+  "Submit":"Submit",
+  "Report Options":"Report Options",
+  "Refresh":"Refresh"
 }

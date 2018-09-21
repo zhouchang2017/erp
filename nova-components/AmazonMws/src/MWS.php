@@ -68,7 +68,9 @@ class MWS extends Client
 
         $this->setFormParams($params);
 
-        return $action->response($this->fetch());
+        $response = $action->getIsAsync() ? $this->asyncFetch() : $this->fetch();
+
+        return $action->response($response);
     }
 
     /**

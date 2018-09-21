@@ -391,5 +391,18 @@
   "Return Modification":"退回修改",
   "Finished":"以完成",
   "Manually Info":"手工入库明细",
-  "Country":"国家"
+  "Country":"国家",
+  "Request Report":"请求创建报告请求报告",
+  "Report Type":"报告类型",
+  "Report Processing Status":"处理状态",
+  "Start Date":"数据开始日期",
+  "End Date":"数据结束日期",
+  "Scheduled":"计划报告",
+  "Report Request Id":"请求码",
+  "Started Processing Date":"开始处理报告的日期",
+  "Submitted Date":"提交日期",
+  "Completed Date":"完成处理日期",
+  "Submit":"提交",
+  "Report Options":"传递给报告的其他信息",
+  "Refresh":"刷新"
 }

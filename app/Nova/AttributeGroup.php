@@ -21,6 +21,7 @@ class AttributeGroup extends Resource
      */
     public static $model = \App\Modules\Product\Models\AttributeGroup::class;
 
+    public static $category = "Product";
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

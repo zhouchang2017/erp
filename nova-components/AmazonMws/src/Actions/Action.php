@@ -27,6 +27,23 @@ abstract class Action implements Arrayable
 
     protected $customResponse;
 
+    protected $isAsync = false;
+
+    /**
+     * @return bool
+     */
+    public function getIsAsync(): bool
+    {
+        return $this->isAsync;
+    }
+
+
+    public function setIsAsync(bool $isAsync)
+    {
+        $this->isAsync = $isAsync;
+        return $this;
+    }
+
     public function __construct($params = null, $mock = false)
     {
         $this->params = $params ?? [];
@@ -34,6 +51,7 @@ abstract class Action implements Arrayable
         $this->apiType = $this->setApiType();
         $this->mock = $mock;
     }
+
 
     public function isMock()
     {
@@ -45,12 +63,12 @@ abstract class Action implements Arrayable
         return new static(...$arguments);
     }
 
-    public function next(string $nextToken)
+    public function next(string $nextToken, string $action = null)
     {
         $this->params = [
             'NextToken' => $nextToken,
         ];
-        $this->action = $this->action . 'ByNextToken';
+        $this->action = $action ?? $this->action . 'ByNextToken';
         return $this;
     }
 

@@ -32,6 +32,7 @@ class AmazonService
      */
     protected $MWS;
 
+
     /**
      * @param Amazon $amazon
      */
@@ -61,6 +62,14 @@ class AmazonService
     public function setMWS()
     {
         $this->MWS = $this->amazon->runMWS();
+    }
+
+    /**
+     * @return MWS
+     */
+    public function getMWS(): MWS
+    {
+        return $this->MWS;
     }
 
     public function syncInventory()
@@ -110,7 +119,7 @@ class AmazonService
     }
 
     /**
-     * @param string $reportType
+     * @param string|array $reportType
      * @param string|null $startDate 用于选择待报告数据日期范围的起始日期
      * @param string|null $endDate 用于选择待报告数据日期范围的结束日期
      * @param array $marketplaceIdList 一个包含您所注册的一个或多个商城编号的列表。生成的报告将包含您指定的所有商城的信息
@@ -118,12 +127,15 @@ class AmazonService
      * @return \Illuminate\Support\Collection
      */
     public function getRequestReport(
-        string $reportType,
+        $reportType,
         string $startDate = null,
         string $endDate = null,
         array $marketplaceIdList = [],
         string $reportOptions = null
     ) {
+        if (is_array($reportType)) {
+            return $this->MWS->action(RequestReport::make($reportType));
+        }
         $params = [
             'ReportType' => $reportType,
             'StartDate' => $startDate ?? $this->now(),
@@ -163,6 +175,16 @@ class AmazonService
             ['RequestedToDate' => $requestedToDate ?? $this->now()]
         );
         return $this->MWS->action(GetReportRequestList::make($params));
+    }
+
+    /**
+     * @param string $nextToken
+     * @param string|null $action
+     * @return \Illuminate\Support\Collection
+     */
+    public function getReportRequestListByNextToken(string $nextToken, string $action = null)
+    {
+        return $this->MWS->action(GetReportRequestList::make()->next($nextToken, $action));
     }
 
     /**
