@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
@@ -55,6 +56,11 @@ class ProductProvider extends Resource
             Number::make('Level')->sortable(),
             Textarea::make('Description')->hideFromIndex(),
             HasOne::make('ProductProviderPayment', 'providerPayment'),
+            Images::make('Images', 'product_provider_image')// second parameter is the media collection name
+            ->thumbnail('thumb_product_provider_image')// conversion used to display the image
+            ->multiple()// enable upload of multiple images - also ordering
+            ->fullSize(),// full size column
+            // validation rules for the collection of images
             MorphMany::make('Addresses'),
             BelongsToMany::make('ProductVariant', 'productVariants')
                 ->fields(function () {

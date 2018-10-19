@@ -2,13 +2,16 @@
 
 namespace Chang\AmazonMws\Models;
 
-use Chang\AmazonMws\Traits\MWSTrait;
+use App\Modules\Channel\ChannelContract;
+use App\Modules\Channel\Traits\ChannelTrait;
+use Chang\AmazonMws\Traits\ProductsApiTrait;
 use Illuminate\Database\Eloquent\Model;
 use Chang\AmazonMws\MWS;
+use Laravel\Nova\Actions\Actionable;
 
-class Amazon extends Model
+class Amazon extends Model implements ChannelContract
 {
-    use MWSTrait;
+    use ProductsApiTrait, Actionable, ChannelTrait;
     /**
      * @var MWS|null
      */
@@ -30,6 +33,8 @@ class Amazon extends Model
         'country' => 'array',
         'sync_at' => 'date',
     ];
+
+    public $marketplaceId = 'ATVPDKIKX0DER';
 
     /**
      * @return MWS
@@ -55,5 +60,22 @@ class Amazon extends Model
     public function inventories()
     {
         return $this->hasMany(Inventory::class);
+    }
+
+    public function listings()
+    {
+        return $this->hasMany(Listing::class, 'amazon_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'amazon_id', 'id');
+    }
+
+    public function inChannel()
+    {
+        if ($this->channel->count() === 0) {
+            $this->channel()->create(['name' => $this->name]);
+        }
     }
 }

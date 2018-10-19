@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Modules\Channel\Dealpaw\Models\DealpawShippingAddress;
+use App\Modules\Channel\Dealpaw\Observers\DealpawShippingAddressNovaObserver;
+use App\Nova\Metrics\AllOrders;
+use App\Nova\Metrics\NewOrders;
+use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\PendingProcurementPlans;
 use Chang\AmazonMws\AmazonMws;
 use Laravel\Nova\Nova;
@@ -20,6 +25,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        // Nova相关的HTTP请求期间附加任何观察者
+        Nova::serving(function () {
+            DealpawShippingAddress::observe(DealpawShippingAddressNovaObserver::class);
+        });
     }
 
     /**
@@ -59,8 +69,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
-            new PendingProcurementPlans(),
+//            new PendingProcurementPlans(),
+            new NewOrders(),
+            new OrdersPerDay(),
+            new AllOrders()
         ];
     }
 

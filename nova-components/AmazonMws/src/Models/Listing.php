@@ -2,15 +2,21 @@
 
 namespace Chang\AmazonMws\Models;
 
+use App\Modules\Product\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Model;
 
 class Listing extends Model
 {
-    protected $table = 'amazon_products';
+    protected $table = 'amazon_listings';
 
     protected $fillable = [
         'sku',
         'asin',
+        'price',
+        'quantity',
+        'business_price',
+        'business_options',
+
         'marketplace_id',
         'binding',
         'brand',
@@ -26,18 +32,28 @@ class Listing extends Model
     ];
 
     protected $casts = [
+        'business_options' => 'array',
         'variation_parent' => 'array',
         'props' => 'array',
         'sales_rank' => 'array',
     ];
 
-    public function getPriceAttribute()
+    public function getFbaStockAttribute()
     {
-        return $this->inventory->price;
+        return $this->inventory->total_supply_quantity;
     }
+
 
     public function inventory()
     {
-        return $this->hasOne(Inventory::class, 'sku', 'sku');
+        return $this->hasOne(Inventory::class, 'seller_sku', 'sku')
+            ->withDefault([
+                'total_supply_quantity' => 0,
+            ]);
+    }
+
+    public function localVariant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'original_variant_id');
     }
 }

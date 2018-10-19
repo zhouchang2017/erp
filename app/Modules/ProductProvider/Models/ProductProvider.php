@@ -5,7 +5,13 @@ namespace App\Modules\ProductProvider\Models;
 use App\Modules\Product\Models\ProductVariant;
 use App\Modules\ProductProvider\Observers\ProductProviderObserver;
 use App\Modules\Scaffold\BaseModel as Model;
+use App\Modules\Scaffold\Contracts\AssetRelation;
 use App\Modules\Scaffold\Traits\AddressTrait;
+use App\Modules\Scaffold\Traits\AssetTrait;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 /**
  * @property mixed providerPayment
@@ -13,9 +19,9 @@ use App\Modules\Scaffold\Traits\AddressTrait;
  * @property mixed info
  * @property mixed products
  */
-class ProductProvider extends Model
+class ProductProvider extends Model implements AssetRelation, HasMedia
 {
-    use AddressTrait;
+    use AddressTrait,AssetTrait, HasMediaTrait;
 
     protected $fillable = [
         'name',
@@ -33,6 +39,24 @@ class ProductProvider extends Model
     {
         parent::boot();
         self::observe(ProductProviderObserver::class);
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        try {
+            $this->addMediaConversion('thumb_product_provider_image')
+                ->width(80)
+                ->height(80);
+        } catch (InvalidManipulation $e) {
+            dd($e->getMessage());
+        }
+
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('main')->singleFile();
+        $this->addMediaCollection('product_provider_image');
     }
 
     public function info()

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use R64\NovaJson\JSON;
+use R64\NovaFields\JSON;
 
 class Inventory extends Resource
 {
@@ -38,9 +38,14 @@ class Inventory extends Resource
     public static $search = [
         'id',
         'asin',
+        'seller_sku',
     ];
 
+    public static $category = "Amazon";
+
     public static $with = ['listing'];
+
+    public static $displayInNavigation = false;
 
     /**
      * Get the fields displayed by the resource.
@@ -53,39 +58,29 @@ class Inventory extends Resource
         return [
             ID::make()->sortable(),
             Avatar::make('Thumb', function () {
-                return $this->avatar;
-            })->thumbnail(function () {
-                return $this->avatar;
-            }),
-            Text::make('Title', function () {
                 $params = \Route::current()->parameters;
-                return array_key_exists('resourceId', $params) ? $this->title : str_limit($this->title, 50);
+                return array_key_exists('resourceId',
+                    $params) ? ProductAvatarField::getOriginAvatar($this->avatar) : $this->avatar;
+            })->thumbnail(function () {
+                $params = \Route::current()->parameters;
+                return array_key_exists('resourceId',
+                    $params) ? ProductAvatarField::getOriginAvatar($this->avatar) : $this->avatar;
             }),
-            Text::make('Sku'),
-            Text::make('Asin'),
-            Currency::make('Price'),
-            Number::make('Quantity'),
-            Currency::make('Business Price', 'business_price'),
-            Json::make('Business Price Options', [
-                Text::make('Quantity Price Type', 'quantity_price_type'),
-                Text::make('Quantity Price 1', 'quantity_price1'),
-                Text::make('Quantity Lower Bound 1', 'quantity_lower_bound1'),
-
-                Text::make('Quantity Price 2', 'quantity_price2'),
-                Text::make('Quantity Lower Bound 2', 'quantity_lower_bound2'),
-
-                Text::make('Quantity Price 3', 'quantity_price3'),
-                Text::make('Quantity Lower Bound 3', 'quantity_lower_bound3'),
-
-                Text::make('Quantity Price 4', 'quantity_price4'),
-                Text::make('Quantity Lower Bound 4', 'quantity_lower_bound4'),
-
-                Text::make('Quantity Price 5', 'quantity_price5'),
-                Text::make('Quantity Lower Bound 5', 'quantity_lower_bound5'),
-
-            ], 'business_price_options'),
-
             BelongsTo::make('Listing'),
+
+            Text::make('SellerSKU', 'seller_sku'),
+
+            Text::make('Asin'),
+
+            Text::make('Fnsku')->hideFromIndex(),
+
+            Number::make('In Stock Supply Quantity', 'in_stock_supply_quantity')->hideFromIndex(),
+
+            Number::make('Total Quantity', 'total_supply_quantity')->sortable(),
+
+            Text::make('Condition')->hideFromIndex(),
+
+            Code::make('Earliest Availability', 'earliest_availability')->json()->hideFromIndex(),
         ];
     }
 

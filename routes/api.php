@@ -24,4 +24,10 @@ Route::middleware([])->group(function () {
 
     Route::get('/products', 'ProductController@index');
 
+    Route::post('/storeToAmazon/orders', 'OrderController@storeForAmazon');
+
+    Route::post('/dealpaw/orders', 'OrderController@storeForDealpaw');
+
+    Route::put('/dealpaw/orders/{number}', 'OrderController@updateForDealpaw');
+
 });

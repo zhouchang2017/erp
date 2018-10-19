@@ -11,13 +11,21 @@ namespace Chang\AmazonMws\Actions\Products;
 
 use Chang\AmazonMws\Actions\Action;
 use Chang\AmazonMws\Traits\ActionTrait;
+use Chang\AmazonMws\Traits\ProductsApiTrait;
+use Illuminate\Support\Collection;
 
 class GetMatchingProductForId extends Action
 {
-    use ActionTrait;
+    use ActionTrait, ProductsApiTrait;
 
-    public static function toFormData(array $data)
+    public function response($data = null): Collection
     {
-
+        $response = parent::response($data);
+        return $this->getMatchingProductForIdResultToCollection(
+            $response->get('GetMatchingProductForIdResponse')
+                ->get('GetMatchingProductForIdResult')
+        );
     }
+
+
 }

@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Chang\CreateProduct\CreateProduct;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
@@ -63,6 +64,12 @@ class Product extends Resource
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
+
+            Images::make('Images', 'product_image')// second parameter is the media collection name
+//                ->thumbnail()// conversion used to display the image
+                ->multiple()// enable upload of multiple images - also ordering
+                ->fullSize(),// full size column
+                // validation rules for the collection of images
 
             Text::make('Code')
                 ->sortable()

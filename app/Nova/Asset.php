@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Asset extends Resource
@@ -41,6 +43,13 @@ class Asset extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Avatar::make('Url')->disk('public')
+                ->preview(function () {
+                    return $this->value
+                        ? Storage::disk($this->disk)->url($this->value)
+                        : null;
+                })
         ];
     }
 

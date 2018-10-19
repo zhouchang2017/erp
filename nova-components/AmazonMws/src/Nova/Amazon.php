@@ -2,12 +2,14 @@
 
 namespace Chang\AmazonMws\Nova;
 
-use Chang\AmazonMws\Nova\Actions\AsyncListing;
+use Chang\AmazonMws\Nova\Actions\SyncInventories;
+use Chang\AmazonMws\Nova\Actions\SyncListings;
+use Chang\AmazonMws\Nova\Actions\SyncOrders;
 use Fourstacks\NovaRepeatableFields\Repeater;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -137,7 +139,9 @@ class Amazon extends Resource
     public function actions(Request $request)
     {
         return [
-            new AsyncListing(),
+            new SyncListings(),
+            new SyncInventories(),
+            new SyncOrders(),
         ];
     }
 }

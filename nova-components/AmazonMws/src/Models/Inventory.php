@@ -36,6 +36,10 @@ class Inventory extends Model
 
     public function listing()
     {
-        return $this->belongsTo(Listing::class, 'sku', 'seller_sku');
+        return $this->belongsTo(Listing::class,'seller_sku','sku')
+            ->withDefault([
+                'title' => '暂无listing数据',
+                'avatar' => 'http://www.xinxuelin.com/product/img/alert.png'
+            ]);
     }
 }

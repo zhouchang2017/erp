@@ -4,8 +4,11 @@ namespace App\Modules\Product\Models;
 
 
 //use App\Observers\ProductVariantObserver;
+use App\Modules\Channel\Dealpaw\Models\DealpawProduct;
 use App\Modules\ProductProvider\Models\ProductProvider;
 use App\Modules\Scaffold\BaseModel as Model;
+use Chang\AmazonMws\Models\Listing;
+
 class ProductVariant extends Model
 {
     protected $fillable = [
@@ -13,7 +16,7 @@ class ProductVariant extends Model
         'sku',
         'options',
         'price',
-        'attribute_key'
+        'attribute_key',
     ];
 
     /**
@@ -35,6 +38,12 @@ class ProductVariant extends Model
         parent::boot();
 
 //        self::observe(ProductVariantObserver::class);
+    }
+
+    public function getAvatarAttribute()
+    {
+        $avatar = $this->product->getMedia('product_image')->first();
+        return $avatar ? $avatar->getUrl() : 'https://vignette.wikia.nocookie.net/citrus/images/6/60/No_Image_Available.png/revision/latest?cb=20170129011325';
     }
 
     public function product()
@@ -79,12 +88,13 @@ class ProductVariant extends Model
 
     public function attributes()
     {
-        return $this->belongsToMany(ProductAttribute::class,'product_variant_product_attribute','product_variant_id','product_attribute_id');
+        return $this->belongsToMany(ProductAttribute::class, 'product_variant_product_attribute', 'product_variant_id',
+            'product_attribute_id');
     }
 
     public function providers()
     {
-         return $this->belongsToMany(ProductProvider::class,'variant_provider')->withPivot('price')->withTimestamps();
+        return $this->belongsToMany(ProductProvider::class, 'variant_provider')->withPivot('price')->withTimestamps();
     }
 
     public function createInfo($attributes)
@@ -99,5 +109,44 @@ class ProductVariant extends Model
         // return $this->hasMany(ProcurementPlanProductVariant::class);
     }
 
+    public function dealpawVariants()
+    {
+        return $this->hasMany(DealpawProduct::class, 'original_variant_id');
+    }
+
+    public function getOnDealpawAttribute()
+    {
+        return $this->dealpawVariants->count() > 0;
+    }
+
+    public function amazonVariants()
+    {
+        return $this->hasMany(Listing::class, 'original_variant_id');
+    }
+
+    public function getOnAmazonAttribute()
+    {
+        return $this->amazonVariants->count() > 0;
+    }
+
+//    public function dealpawVariants()
+//    {
+//        return $this->morphedByMany(
+//            DealpawProduct::class,
+//            'relationable',
+//            'relation_product',
+//            'variant_id'
+//        );
+//    }
+
+//    public function amazonVariants()
+//    {
+//        return $this->morphedByMany(
+//            Listing::class,
+//            'relationable',
+//            'relation_product',
+//            'variant_id'
+//        );
+//    }
 
 }

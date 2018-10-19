@@ -2,18 +2,23 @@
 
 namespace Chang\AmazonMws\Nova;
 
+use App\Nova\ProductVariant;
 use Fourstacks\NovaRepeatableFields\Repeater;
 use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
+use R64\NovaFields\JSON;
 
 class Listing extends Resource
 {
@@ -38,9 +43,18 @@ class Listing extends Resource
      */
     public static $search = [
         'id',
+        'sku',
     ];
 
-    public static $with = ['inventory'];
+    public static $category = "Amazon";
+
+    public static $with = [];
+
+    public function title()
+    {
+        $params = \Route::current()->parameters;
+        return array_key_exists('resourceId', $params) ? $this->title : str_limit($this->title, 60);
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -54,7 +68,9 @@ class Listing extends Resource
             ID::make()->sortable(),
 
             Avatar::make('Thumb', 'avatar')->thumbnail(function () {
-                return $this->avatar;
+                $params = \Route::current()->parameters;
+                return array_key_exists('resourceId',
+                    $params) ? ProductAvatarField::getOriginAvatar($this->avatar) : $this->avatar;
             }),
             Text::make('Title')->displayUsing(function ($title) {
                 $params = \Route::current()->parameters;
@@ -83,13 +99,55 @@ class Listing extends Resource
 
             Text::make('Product Type Name', 'product_type_name'),
 
+            Number::make('FBA Stock', function () {
+                return $this->model()->fba_stock;
+            }),
+
+            HasOne::make('Inventory'),
+
+            BelongsTo::make('Relation Variant', 'localVariant', ProductVariant::class)->searchable()->hideFromIndex(),
+
+            new Panel('Business Price', $this->businessPrice()),
+
+            new Panel('Listing Props', $this->listingPropsFields()),
+        ];
+    }
+
+    private function listingPropsFields()
+    {
+        return [
             Code::make('Props')->json(),
 
             Code::make('Variation Parent', 'variation_parent')->json(),
 
             Code::make('Sales Rank', 'sales_rank')->json(),
+        ];
+    }
 
-            HasOne::make('Inventory'),
+    private function businessPrice()
+    {
+        return [
+            Currency::make('Business Price', 'business_price')->displayUsing(function ($value) {
+                return $value ?? 0;
+            })->format('%.2n')->hideFromIndex(),
+            JSON::make('Business Price Options', [
+                Text::make('Quantity Price Type', 'quantity_price_type'),
+                Text::make('Quantity Price 1', 'quantity_price1'),
+                Text::make('Quantity Lower Bound 1', 'quantity_lower_bound1'),
+
+                Text::make('Quantity Price 2', 'quantity_price2'),
+                Text::make('Quantity Lower Bound 2', 'quantity_lower_bound2'),
+
+                Text::make('Quantity Price 3', 'quantity_price3'),
+                Text::make('Quantity Lower Bound 3', 'quantity_lower_bound3'),
+
+                Text::make('Quantity Price 4', 'quantity_price4'),
+                Text::make('Quantity Lower Bound 4', 'quantity_lower_bound4'),
+
+                Text::make('Quantity Price 5', 'quantity_price5'),
+                Text::make('Quantity Lower Bound 5', 'quantity_lower_bound5'),
+
+            ], 'business_options')->hideFromIndex(),
         ];
     }
 

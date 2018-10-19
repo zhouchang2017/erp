@@ -8,6 +8,11 @@ use App\Modules\Scaffold\BaseModel as Model;
 use App\Modules\Scaffold\Contracts\AssetRelation;
 use App\Modules\Scaffold\Traits\AssetTrait;
 use Illuminate\Support\Collection;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
+
 use Log;
 
 /**
@@ -15,9 +20,9 @@ use Log;
  * @property mixed variants
  * @package App\Models
  */
-class Product extends Model implements AssetRelation
+class Product extends Model implements AssetRelation, HasMedia
 {
-    use AssetTrait;
+    use AssetTrait, HasMediaTrait;
     /**
      * @var array
      */
@@ -31,7 +36,6 @@ class Product extends Model implements AssetRelation
         'body',
         'brand_id',
     ];
-
 
 
     protected $fieldSearchable = ['name', 'code', 'name_cn', 'name_en'];
@@ -56,6 +60,24 @@ class Product extends Model implements AssetRelation
         parent::boot();
 
         self::observe(ProductObserver::class);
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        try {
+            $this->addMediaConversion('thumb')
+                ->width(80)
+                ->height(80);
+        } catch (InvalidManipulation $e) {
+            dd($e->getMessage());
+        }
+
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('main')->singleFile();
+        $this->addMediaCollection('product_image');
     }
 
     /**

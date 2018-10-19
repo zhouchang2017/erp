@@ -2,13 +2,19 @@
 
 namespace App\Nova;
 
+use Chang\AmazonMws\Nova\Listing;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class ProductVariant extends Resource
 {
@@ -34,6 +40,8 @@ class ProductVariant extends Resource
      */
     public static $search = [
         'id',
+        'sku',
+        'attribute_key',
     ];
 
     public static $with = ['product'];
@@ -53,17 +61,41 @@ class ProductVariant extends Resource
     {
         return [
             ID::make()->sortable(),
+            Avatar::make('Avatar', function () {
+                return $this->model()->avatar;
+            })->thumbnail(function (){
+                return $this->model()->avatar;
+            }),
             BelongsTo::make('Product', 'product'),
             Text::make('Sku'),
             Text::make('Attribute Key', 'attribute_key'),
             Currency::make('Price')->format('%.2n'),
+
+            new Panel('Channels', $this->channels()),
 
             BelongsToMany::make('Product Providers', 'providers', ProductProvider::class)
                 ->fields(function () {
                     return [
                         Currency::make('Price'),
                     ];
+                }),
+        ];
+    }
+
+    private function channels()
+    {
+        return [
+            Boolean::make('Amazon Shop', function () {
+                return $this->model()->on_amazon;
             }),
+
+            Boolean::make('Dealpaw Shop', function () {
+                return $this->model()->on_dealpaw;
+            }),
+
+            HasMany::make('Amazon', 'amazonVariants', Listing::class),
+
+            HasMany::make('Dealpaw', 'dealpawVariants', DealpawProduct::class),
         ];
     }
 

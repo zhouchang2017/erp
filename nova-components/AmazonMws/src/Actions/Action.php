@@ -29,6 +29,18 @@ abstract class Action implements Arrayable
 
     protected $isAsync = false;
 
+    protected $_response;
+
+    protected $isNext = false;
+
+    /**
+     * @return bool
+     */
+    public function isNext(): bool
+    {
+        return $this->isNext;
+    }
+
     /**
      * @return bool
      */
@@ -65,6 +77,7 @@ abstract class Action implements Arrayable
 
     public function next(string $nextToken, string $action = null)
     {
+        $this->isNext = true;
         $this->params = [
             'NextToken' => $nextToken,
         ];
@@ -116,6 +129,11 @@ abstract class Action implements Arrayable
     protected function callCustomResponse($data)
     {
         return call_user_func($this->customResponse, $data);
+    }
+
+    public function isAssocArray(array $var)
+    {
+        return array_diff_assoc(array_keys($var), range(0, sizeof($var))) ? true : false;
     }
 
 }

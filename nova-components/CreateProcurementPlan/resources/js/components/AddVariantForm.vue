@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <modal @modal-close="value = false" class="z-501" ref="modal" v-show="value">
+        <modal @modal-close="value = false" class="z-501" ref="modal" v-if="value">
             <div
                     ref="modelContext"
                     class="bg-white rounded-lg shadow-lg overflow-hidden"
