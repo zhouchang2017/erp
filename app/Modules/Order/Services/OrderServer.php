@@ -65,7 +65,8 @@ class OrderServer
         }
     }
 
-    public function updateForDealpaw($number, array $attribute)
+    public function
+    updateForDealpaw($number, array $attribute)
     {
         $dealpawOrder = $this->getDealpawOrderByNumber($number);
         $this->createAddress($dealpawOrder, $attribute);
@@ -73,14 +74,14 @@ class OrderServer
         // has shipment
         $shipment = array_get($attribute, 'shipment.tracking_number', false);
         if ($shipment) {
-            (new DealpawService($dealpawOrder->dealpaw))->shipment($dealpawOrder, $shipment);
+            (new DealpawService($dealpawOrder->dealpaw))->shipment($dealpawOrder, $shipment, false);
         }
         return $dealpawOrder->update(array_only($attribute, DealpawOrder::$updateFillable));
     }
 
     public function getDealpawOrderByNumber($number)
     {
-        return DealpawOrder::whereNumber($number)->first();
+        return DealpawOrder::whereNumber($number)->firstOrFail();
     }
 
     private function createAddress($order, array $attribute)

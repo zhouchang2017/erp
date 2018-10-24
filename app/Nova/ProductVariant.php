@@ -61,11 +61,11 @@ class ProductVariant extends Resource
     {
         return [
             ID::make()->sortable(),
-            Avatar::make('Avatar', function () {
-                return $this->model()->avatar;
-            })->thumbnail(function (){
-                return $this->model()->avatar;
-            }),
+//            Avatar::make('Avatar', function () {
+//                return $this->model()->avatar;
+//            })->thumbnail(function () {
+//                return $this->model()->avatar;
+//            }),
             BelongsTo::make('Product', 'product'),
             Text::make('Sku'),
             Text::make('Attribute Key', 'attribute_key'),
@@ -142,4 +142,16 @@ class ProductVariant extends Resource
     {
         return [];
     }
+
+    public static function label()
+    {
+        return __('ProductVariants');
+    }
+
+    public static function singularLabel()
+    {
+        return __('ProductVariant');
+    }
+
+
 }

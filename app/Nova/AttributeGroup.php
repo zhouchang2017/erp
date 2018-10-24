@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
 class AttributeGroup extends Resource
 {
@@ -41,6 +42,7 @@ class AttributeGroup extends Resource
     public static $with = [
         'values',
         'types',
+        'translations'
     ];
 
     /**
@@ -54,11 +56,10 @@ class AttributeGroup extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
-                ->sortable()
+            Translatable::make('Name')
                 ->rules('required', 'max:255')
-                ->creationRules('unique:attribute_groups,name')
-                ->updateRules('unique:attribute_groups,name,{{resourceId}}'),
+                ->creationRules('unique:attribute_group_translations,name')
+                ->updateRules('unique:attribute_group_translations,name'),
 
             Boolean::make('Variant'),
 
@@ -73,23 +74,21 @@ class AttributeGroup extends Resource
             ]),
 
             Boolean::make('Required'),
-
-            HasMany::make('Attribute', 'values'),
-
-            BelongsToMany::make('Product Types', 'productTypes', ProductType::class),
-
-
+            $this->addAttributeRelationField(),
+            BelongsToMany::make(__('ProductTypes'), 'productTypes', ProductType::class),
         ];
 //        'text','textarea','file','select','radio','richtext','checkbox','date','time','checkbox_group','radio_group','toggle'
     }
 
-
-    protected function createOrUpdateAttributes()
+    protected function addAttributeRelationField()
     {
-        return [
-            AttributeGroupAttributes::make('Attributes'),
-        ];
+        $canAttribute = array_key_exists('resourceId',
+                \Route::current()->parameters) && $this->model()->canOptions;
+        return $this->mergeWhen($canAttribute, [
+            HasMany::make(__('Attribute'), 'values', Attribute::class),
+        ]);
     }
+
 
     /**
      * Get the cards available for the request.
@@ -134,4 +133,16 @@ class AttributeGroup extends Resource
     {
         return [];
     }
+
+    public static function singularLabel()
+    {
+        return __('AttributeGroup');
+    }
+
+    public static function label()
+    {
+        return __('AttributeGroups');
+    }
+
+
 }

@@ -236,3 +236,5 @@ Route::get('/test7', function (\App\Modules\Channel\Dealpaw\Models\Dealpaw $deal
     $service = new \App\Modules\Channel\Dealpaw\Services\DealpawService($m);
     $service->syncProducts();
 });
+
+Route::get('test/products', 'Api\ProductController@list');

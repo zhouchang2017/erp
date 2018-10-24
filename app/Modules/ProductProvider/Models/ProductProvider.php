@@ -21,7 +21,7 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class ProductProvider extends Model implements AssetRelation, HasMedia
 {
-    use AddressTrait,AssetTrait, HasMediaTrait;
+    use AddressTrait, AssetTrait, HasMediaTrait;
 
     protected $fillable = [
         'name',
@@ -46,8 +46,10 @@ class ProductProvider extends Model implements AssetRelation, HasMedia
         try {
             $this->addMediaConversion('thumb_product_provider_image')
                 ->width(80)
-                ->height(80);
+                ->height(80)
+                ->nonQueued();
         } catch (InvalidManipulation $e) {
+            \Log::error('处理缩略图错误:' . $e->getMessage());
             dd($e->getMessage());
         }
 

@@ -35,6 +35,7 @@ class Product extends Model implements AssetRelation, HasMedia
         'type_id',
         'body',
         'brand_id',
+        'image'
     ];
 
 
@@ -60,18 +61,6 @@ class Product extends Model implements AssetRelation, HasMedia
         parent::boot();
 
         self::observe(ProductObserver::class);
-    }
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        try {
-            $this->addMediaConversion('thumb')
-                ->width(80)
-                ->height(80);
-        } catch (InvalidManipulation $e) {
-            dd($e->getMessage());
-        }
-
     }
 
     public function registerMediaCollections()
@@ -123,6 +112,11 @@ class Product extends Model implements AssetRelation, HasMedia
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_categories');
+    }
+
+    public function getAvatarAttribute()
+    {
+        return $this->getFirstMediaUrl('product_image');
     }
 
     /**

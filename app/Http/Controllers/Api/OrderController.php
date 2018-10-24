@@ -35,7 +35,10 @@ class OrderController extends Controller
 
     public function updateForDealpaw($number, Request $request)
     {
-        return $this->service->updateForDealpaw($number, $request->all());
+        return response()->json([
+            'status' =>
+                $this->service->updateForDealpaw($number, $request->all()),
+        ]);
     }
 
 

@@ -179,13 +179,24 @@ class DealpawService
         $this->client->setParams([
             'tracking_number' => $number,
         ]);
-        $this->client->fetch();
+        return $this->client->fetch();
     }
 
-    public function shipment(DealpawOrder $order, $number)
+    public function shipment(DealpawOrder $order, $number, $isHttp = true)
     {
-        $order->items()->each(function ($item) use ($order, $number) {
-            $this->syncShipmentToDealpaw($order, $number);
+        $order->items()->each(function ($item) use ($order, $number, $isHttp) {
+            if ($isHttp) {
+                $response = array_get($this->syncShipmentToDealpaw($order, $number), 'data');
+                \Log::info('response=>', $response);
+                if ($response) {
+                    $order->update(
+                        array_only(
+                            $response
+                            , DealpawOrder::$updateFillable)
+                    );
+                }
+
+            }
             /** @var DealpawOrderItem $item */
             $item->shipment()->updateOrCreate([
                 'order_item_id' => $item->id,
@@ -197,4 +208,5 @@ class DealpawService
             ]);
         });
     }
+
 }

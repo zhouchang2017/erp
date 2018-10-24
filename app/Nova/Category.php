@@ -99,4 +99,16 @@ class Category extends Resource
     {
         return [];
     }
+
+    public static function singularLabel()
+    {
+        return __('Category');
+    }
+
+    public static function label()
+    {
+        return __('Categories');
+    }
+
+
 }

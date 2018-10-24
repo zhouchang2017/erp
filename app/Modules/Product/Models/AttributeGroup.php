@@ -4,9 +4,16 @@ namespace App\Modules\Product\Models;
 
 use App\Modules\Product\Observers\AttributeGroupObserver;
 use App\Modules\Scaffold\BaseModel as Model;
+use Dimsav\Translatable\Translatable;
 
 class AttributeGroup extends Model
 {
+    use Translatable;
+
+    public $translationModel = AttributeGroupTranslation::class;
+
+    public $translatedAttributes = ['name'];
+
     protected $fillable = [
         'name',
         'variant',
@@ -69,6 +76,15 @@ class AttributeGroup extends Model
     public function values()
     {
         return $this->hasMany(Attribute::class, 'group_id');
+    }
+
+    public function getCanOptionsAttribute()
+    {
+        return in_array($this->type, [
+            'select',
+            'checkbox_group',
+            'radio_group',
+        ]);
     }
 
 }

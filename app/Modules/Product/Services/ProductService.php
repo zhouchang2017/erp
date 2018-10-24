@@ -179,6 +179,6 @@ class ProductService extends BaseService
     public function query()
     {
         return QueryBuilder::for(Product::class)
-            ->allowedIncludes($this->allowedInclude);
+            ->allowedIncludes($this->allowedInclude)->allowedAppends('avatar');
     }
 }

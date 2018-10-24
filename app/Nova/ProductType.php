@@ -100,4 +100,16 @@ class ProductType extends Resource
     {
         return [];
     }
+
+    public static function label()
+    {
+        return __('ProductTypes');
+    }
+
+    public static function singularLabel()
+    {
+        return __('ProductType');
+    }
+
+
 }

@@ -6,7 +6,7 @@ return [
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
      */
-    'disk_name' => 'public',
+    'disk_name' => 'qiniu',
 
     /*
      * The maximum file size of an item in bytes.
@@ -23,7 +23,7 @@ return [
     /*
      * The fully qualified class name of the media model.
      */
-    'media_model' => Spatie\MediaLibrary\Models\Media::class,
+    'media_model' => \App\Modules\Scaffold\Models\Media::class,
 
     's3' => [
         /*
@@ -79,7 +79,7 @@ return [
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'path_generator' => null,
+    'path_generator' => \App\Modules\Scaffold\Models\PathGenerator::class,
 
     /*
      * Medialibrary will try to optimize all converted images by removing

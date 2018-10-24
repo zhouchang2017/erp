@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YesWeDev\Nova\Translatable\Translatable;
 
 class Brand extends Resource
 {
@@ -15,7 +16,7 @@ class Brand extends Resource
      *
      * @var string
      */
-    public static $model = 'App\\Modules\\Product\\Models\\Brand';
+    public static $model = \App\Modules\Product\Models\Brand::class;
 
     public static $category = "Product";
     /**
@@ -23,7 +24,7 @@ class Brand extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,12 +33,29 @@ class Brand extends Resource
      */
     public static $search = [
         'id',
+//        't.name',
     ];
+
+    public static $with = ['translations'];
+
+    public function title()
+    {
+        return $this->model()->name;
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+//        $query->select('brands.*', 't.name');
+//        $query->join('brand_translations as t', 'brands.id', '=', 't.brand_id')
+//        ->where('t.locale','zh_CN');
+        return $query;
+    }
+
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -45,25 +63,18 @@ class Brand extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
-                ->sortable()
+            Translatable::make('Name')
                 ->rules('required', 'max:255'),
 
             Textarea::make('Description')->hideFromIndex(),
 
-//            MorphToMany::make('Avatars')
-//                ->fields(function () {
-//                    return [
-//                        Image::make('Assets'),
-//                    ];
-//                })
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -74,7 +85,7 @@ class Brand extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -85,7 +96,7 @@ class Brand extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -96,11 +107,23 @@ class Brand extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)
     {
         return [];
     }
+
+    public static function label()
+    {
+        return __('Brands');
+    }
+
+    public static function singularLabel()
+    {
+        return __('Brand');
+    }
+
+
 }

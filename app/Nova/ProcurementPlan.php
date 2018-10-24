@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\ApprovalProcurementPlans;
 use App\Nova\Lenses\PendingProcurementPlans;
+use Chang\StorageSelectProduct\StorageSelectProduct;
 use Inspheric\Fields\Indicator;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -59,6 +60,8 @@ class ProcurementPlan extends Resource
             Textarea::make('Description'),
 
             Textarea::make('Comment'),
+
+            StorageSelectProduct::make('Products'),
 
             HasMany::make('InFo', 'planInfo', ProcurementPlanProductVariant::class),
 
@@ -136,4 +139,16 @@ class ProcurementPlan extends Resource
             }),
         ];
     }
+
+    public static function label()
+    {
+        return __('ProcurementPlans');
+    }
+
+    public static function singularLabel()
+    {
+        return __('ProcurementPlan');
+    }
+
+
 }

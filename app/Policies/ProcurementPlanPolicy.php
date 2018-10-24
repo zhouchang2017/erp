@@ -28,7 +28,7 @@ class ProcurementPlanPolicy
 
     public function create()
     {
-        return false;
+        return true;
     }
 
     public function update(User $user, ProcurementPlan $plan)

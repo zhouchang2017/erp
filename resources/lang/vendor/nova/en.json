@@ -403,5 +403,22 @@
   "Completed Date":"Completed Date",
   "Submit":"Submit",
   "Report Options":"Report Options",
-  "Refresh":"Refresh"
+  "Refresh":"Refresh",
+  "Amazon": "Amazon",
+  "Listing": "Listing",
+  "Listings":"Listings",
+  "AttributeGroups":"Attribute Groups",
+  "AttributeGroup":"Attribute Group",
+  "Attributes":"Attributes",
+  "ProductType":"Product Type",
+  "ProductTypes":"Product Types",
+  "Brand":"Brand",
+  "Brands":"Brands",
+  "Category":"Category",
+  "Categories":"Categories",
+  "Products":"Products",
+  "ProductVariants":"Product Variants",
+  "ProductVariant":"Product Variant",
+  "ProcurementPlan":"Procurement Plan",
+  "ProcurementPlans":"Procurement Plan"
 }

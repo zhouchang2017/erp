@@ -35,7 +35,6 @@ class ToolServiceProvider extends ServiceProvider
             __DIR__ . '/../config/amazon.php' => config_path('amazon.php'),
         ], 'config');
 
-//        $this->publishMigrations();
 
         Nova::serving(function (ServingNova $event) {
             //

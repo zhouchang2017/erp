@@ -404,5 +404,22 @@
   "Completed Date":"完成处理日期",
   "Submit":"提交",
   "Report Options":"传递给报告的其他信息",
-  "Refresh":"刷新"
+  "Refresh":"刷新",
+  "Amazon": "亚马逊",
+  "Listing": "刊登",
+  "Listings":"刊登",
+  "AttributeGroups":"属性组",
+  "AttributeGroup":"属性组",
+  "Attributes":"属性",
+  "ProductType":"产品类型",
+  "ProductTypes":"产品类型",
+  "Brand":"品牌",
+  "Brands":"品牌",
+  "Category":"分类",
+  "Categories":"分类",
+  "Products":"产品",
+  "ProductVariants":"变体",
+  "ProductVariant":"变体",
+  "ProcurementPlan":"采购计划",
+  "ProcurementPlans":"采购计划"
 }

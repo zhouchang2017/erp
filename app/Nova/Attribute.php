@@ -101,4 +101,15 @@ class Attribute extends Resource
     {
         return [];
     }
+
+    public static function singularLabel()
+    {
+        return __('Attribute');
+    }
+
+    public static function label()
+    {
+        return __('Attributes');
+    }
+
 }

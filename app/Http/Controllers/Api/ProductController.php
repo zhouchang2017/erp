@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\ProductResource;
+use App\Modules\Product\Models\Product;
 use App\Modules\Product\Services\ProductService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\MediaLibrary\Models\Media;
 
 class ProductController extends Controller
 {
@@ -23,6 +25,11 @@ class ProductController extends Controller
     }
 
     public function index()
+    {
+        return ProductResource::collection($this->service->query()->paginate());
+    }
+
+    public function list()
     {
         return ProductResource::collection($this->service->query()->paginate());
     }

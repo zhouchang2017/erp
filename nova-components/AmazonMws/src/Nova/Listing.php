@@ -194,4 +194,16 @@ class Listing extends Resource
     {
         return [];
     }
+
+    public static function label()
+    {
+        return __('Listings');
+    }
+
+    public static function singularLabel()
+    {
+        return __('Listing');
+    }
+
+
 }

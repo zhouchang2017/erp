@@ -4,15 +4,17 @@ namespace App\Nova;
 
 use Chang\CreateProduct\CreateProduct;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use R64\NovaImageCropper\ImageCropper;
+use Storage;
 
 class Product extends Resource
 {
@@ -64,12 +66,20 @@ class Product extends Resource
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
-
-            Images::make('Images', 'product_image')// second parameter is the media collection name
+            // 缩略图
+//            ImageCropper::make('Image', 'image')->disk('qiniu')->delete(new DeleteAvatar)->hideFromIndex(),
+            // 用户select左侧小图显示
+            Avatar::make('Thumb', function () {
+                return null;
+            })->thumbnail(function () {
+                return $this->avatar;
+            })->hideFromDetail()->hideWhenUpdating(),
+            // 产品图集
+            Images::make('Media', 'product_image')// second parameter is the media collection name
 //                ->thumbnail()// conversion used to display the image
-                ->multiple()// enable upload of multiple images - also ordering
-                ->fullSize(),// full size column
-                // validation rules for the collection of images
+            ->multiple()// enable upload of multiple images - also ordering
+            ->fullSize()->hideFromIndex()->help('第一张图片为缩略图'),// full size column
+            // validation rules for the collection of images
 
             Text::make('Code')
                 ->sortable()
@@ -77,9 +87,9 @@ class Product extends Resource
                 ->creationRules('unique:products,code')
                 ->updateRules('unique:products,code,{{resourceId}}'),
 
-            BelongsTo::make('ProductType', 'type'),
+            BelongsTo::make(__('ProductType'), 'type', ProductType::class),
 
-            BelongsTo::make('Brand', 'brand')->searchable(),
+            BelongsTo::make(__('Brand'), 'brand', Brand::class)->searchable(),
 
             Markdown::make('Body'),
 
@@ -90,11 +100,11 @@ class Product extends Resource
             CreateProduct::make()
                 ->withMeta(['typeId' => $this->model()->type_id, 'origin' => $this->getProductAttributes()]),
 
-            HasOne::make('ProductType', 'type'),
+//            HasOne::make('ProductType', 'type'),
 
-            HasMany::make('ProductVariant', 'variants'),
+            HasMany::make(__('ProductVariant'), 'variants', ProductVariant::class),
 
-            HasOne::make('Brand', 'brand'),
+//            HasOne::make('Brand', 'brand'),
 
         ];
     }
@@ -151,4 +161,16 @@ class Product extends Resource
     {
         return [];
     }
+
+    public static function label()
+    {
+        return __('Products');
+    }
+
+    public static function singularLabel()
+    {
+        return __('Product');
+    }
+
+
 }
