@@ -11,7 +11,8 @@ return [
     |
     */
     'locales' => [
-        'en' => 'English',
+//        'en' => 'English',
+        'en-US' => 'English',
         'zh_CN' => 'China',
     ],
 
@@ -39,7 +40,7 @@ return [
     | and never fallback to the translator one.
     |
     */
-    'locale' => 'zh_CN',
+    'locale' => 'en-US',
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +77,7 @@ return [
     | set it to false.
     |
     */
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'en-US',
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +112,7 @@ return [
     | translation model.
     |
     */
-    'locale_key' => 'locale',
+    'locale_key' => 'locale_code',
 
     /*
     |--------------------------------------------------------------------------

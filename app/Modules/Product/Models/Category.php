@@ -9,6 +9,8 @@ class Category extends Model
 {
     use NodeTrait;
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'parent_id',
         'name',

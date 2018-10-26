@@ -12,12 +12,17 @@ abstract class BaseModel extends Model
 
     protected $observables = [
         'beforeUpdate',
-        'afterUpdate'
+        'afterUpdate',
     ];
 
     public static function getFieldsSearchable()
     {
         return (new static)->fieldSearchable;
+    }
+
+    public function setPositionAttribute($value)
+    {
+        $this->position = $value ?? 0;
     }
 
     public function update(array $attributes = [], array $options = [])

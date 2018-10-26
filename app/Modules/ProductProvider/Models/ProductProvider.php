@@ -23,6 +23,8 @@ class ProductProvider extends Model implements AssetRelation, HasMedia
 {
     use AddressTrait, AssetTrait, HasMediaTrait;
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'name',
         'code',

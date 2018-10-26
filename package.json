@@ -23,7 +23,13 @@
         "build-amazon-mws": "cd nova-components/AmazonMws && npm run dev",
         "build-amazon-mws-prod": "cd nova-components/AmazonMws && npm run prod",
         "build-storage-select-product": "cd nova-components/StorageSelectProduct && npm run dev",
-        "build-storage-select-product-prod": "cd nova-components/StorageSelectProduct && npm run prod"
+        "build-storage-select-product-prod": "cd nova-components/StorageSelectProduct && npm run prod",
+        "build-belongs-to-many-attribute": "cd nova-components/BelongsToManyAttribute && npm run dev",
+        "build-belongs-to-many-attribute-prod": "cd nova-components/BelongsToManyAttribute && npm run prod",
+        "build-belongs-to-many-Option": "cd nova-components/BelongsToManyOption && npm run dev",
+        "build-belongs-to-many-Option-prod": "cd nova-components/BelongsToManyOption && npm run prod",
+        "build-belongs-to-many-option": "cd nova-components/BelongsToManyOption && npm run dev",
+        "build-belongs-to-many-option-prod": "cd nova-components/BelongsToManyOption && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.18",

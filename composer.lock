@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a327cd98577ac5546418db77362ac079",
+    "content-hash": "9f1c6a2c714d6f38e6c26851104a5e36",
     "packages": [
         {
             "name": "64robots/nova-fields",
-            "version": "0.3.6",
+            "version": "0.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/64robots/nova-fields.git",
-                "reference": "b796ea2a36ab24f5f708d0f6eb5c8180de87092f"
+                "reference": "3a859c910cec85ca6adf9d3c8a26a6ce86784e01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/64robots/nova-fields/zipball/b796ea2a36ab24f5f708d0f6eb5c8180de87092f",
-                "reference": "b796ea2a36ab24f5f708d0f6eb5c8180de87092f",
+                "url": "https://api.github.com/repos/64robots/nova-fields/zipball/3a859c910cec85ca6adf9d3c8a26a6ce86784e01",
+                "reference": "3a859c910cec85ca6adf9d3c8a26a6ce86784e01",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -51,7 +51,7 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2018-10-22T06:46:58+00:00"
+            "time": "2018-10-25T07:31:39+00:00"
         },
         {
             "name": "alexbowers/nova-categorise-resources",
@@ -460,6 +460,74 @@
                 "MIT"
             ],
             "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/belongs-to-many-attribute",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/BelongsToManyAttribute",
+                "reference": "6db017fa7175d878600c7a4113abb9561423c9dc",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\BelongsToManyAttribute\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\BelongsToManyAttribute\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/belongs-to-many-option",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/BelongsToManyOption",
+                "reference": "a230f93896ce2c2c260283f08b45fcae43d97ed8",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\BelongsToManyOption\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\BelongsToManyOption\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
             "keywords": [
                 "laravel",
                 "nova"
@@ -2345,7 +2413,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://ubuntu@119.29.214.232/home/ubuntu/repository/nova.git",
-                "reference": "1e96ece90c1b3e74b1666b9f11d81e3bb514c67d"
+                "reference": "be2bff9d4e6f63af3e351f047c1aab9b10d29021"
             },
             "require": {
                 "cakephp/chronos": "~1.0",
@@ -2400,7 +2468,7 @@
                 "admin",
                 "laravel"
             ],
-            "time": "2018-10-24T03:25:14+00:00"
+            "time": "2018-10-26T01:15:21+00:00"
         },
         {
             "name": "laravel/tinker",

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\ProductResource;
+use App\Modules\DealpawProduct\Models\ProductOption;
+use App\Modules\DealpawProduct\ProductAttribute;
 use App\Modules\Product\Models\Product;
 use App\Modules\Product\Services\ProductService;
 use Illuminate\Http\Request;
@@ -31,6 +33,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        return ProductResource::collection($this->service->query()->paginate());
+//        return \App\Modules\DealpawProduct\Models\Product::find(6)->options()->with('values')->get();
+        return ProductOption::with('values')->get();
     }
 }

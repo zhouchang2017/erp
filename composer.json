@@ -36,7 +36,10 @@
         "spatie/array-to-xml": "^2.7",
         "spatie/laravel-query-builder": "^1.10",
         "yeswedev/nova-translatable": "^0.5.0",
-        "zgldh/qiniu-laravel-storage": "^0.10.0"
+        "zgldh/qiniu-laravel-storage": "^0.10.0",
+        "chang/belongs-to-many-attribute": "*",
+        "chang/belongs-to-many-Option": "*",
+        "chang/belongs-to-many-option": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -70,6 +73,18 @@
         {
             "type": "path",
             "url": "./nova-components/StorageSelectProduct"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/BelongsToManyAttribute"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/BelongsToManyOption"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/BelongsToManyOption"
         }
     ],
     "autoload": {
