@@ -18,9 +18,10 @@ class Product extends Model implements MediaAble
 
     public $translationModel = ProductTranslation::class;
 
-    public $translatedAttributes = ['name'];
+    public $translatedAttributes = ['name','short_description','description','slug','meta_title','meta_keywords','meta_description'];
 
     protected $fillable = ['code', 'taxon_id', 'enabled'];
+
 
     public function relatedProducts()
     {
@@ -46,7 +47,7 @@ class Product extends Model implements MediaAble
     {
         return $this->attributeValues->groupBy('attribute_id')
             ->map(function ($attr) {
-                return $attr->groupBy('locale_code')->map(function($prop){
+                return $attr->groupBy('locale_code')->map(function ($prop) {
                     return $prop->first();
                 });
             });

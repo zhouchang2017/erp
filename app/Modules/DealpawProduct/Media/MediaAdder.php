@@ -60,12 +60,16 @@ class MediaAdder
     /** @var array */
     protected $customHeaders = [];
 
+    protected $disk;
+
     /**
      * @param Filesystem $fileSystem
      */
     public function __construct(Filesystem $fileSystem)
     {
         $this->filesystem = $fileSystem;
+
+        $this->disk = \Storage::disk('qiniu');
 
         $this->fileNameSanitizer = function ($fileName) {
             return $this->defaultSanitizer($fileName);
@@ -99,7 +103,7 @@ class MediaAdder
         }
 
         if ($file instanceof UploadedFile) {
-            $this->pathToFile = $file->getPath().'/'.$file->getFilename();
+            $this->pathToFile = $file->getPath() . '/' . $file->getFilename();
             $this->setFileName($file->getClientOriginalName());
             $this->mediaName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
@@ -107,7 +111,7 @@ class MediaAdder
         }
 
         if ($file instanceof SymfonyFile) {
-            $this->pathToFile = $file->getPath().'/'.$file->getFilename();
+            $this->pathToFile = $file->getPath() . '/' . $file->getFilename();
             $this->setFileName(pathinfo($file->getFilename(), PATHINFO_BASENAME));
             $this->mediaName = pathinfo($file->getFilename(), PATHINFO_FILENAME);
 
@@ -193,7 +197,7 @@ class MediaAdder
 
     public function toMediaCollection($field = 'image')
     {
-        if (! is_file($this->pathToFile)) {
+        if ( !is_file($this->pathToFile)) {
             throw FileDoesNotExist::create($this->pathToFile);
         }
 
@@ -201,33 +205,20 @@ class MediaAdder
             throw FileIsTooBig::create($this->pathToFile);
         }
 
-        $media = $this->subject->media()->create([$field=>$this->fileName]);
-
-        $this->attachMedia($media);
-
+        $url = $this->processMediaItem($this->file);
+        $media = $this->subject->media()->create([$field=>$url]);
         return $media;
     }
 
-    protected function determineDiskName(string $diskName, string $collectionName): string
+    protected function processMediaItem($file)
     {
-        if ($diskName !== '') {
-            return $diskName;
-        }
-
-        if ($collection = $this->getMediaCollection($collectionName)) {
-            $collectionDiskName = $collection->diskName;
-
-            if ($collectionDiskName !== '') {
-                return $collectionDiskName;
-            }
-        }
-
-        return config('medialibrary.disk_name');
+        $filename = $this->defaultSanitizer();
+        return $this->disk->url($this->disk->put($filename, $file));
     }
 
-    public function defaultSanitizer(string $fileName): string
+    public function defaultSanitizer(): string
     {
-        return str_replace(['#', '/', '\\', ' '], '-', $fileName);
+        return date('Ymd') . str_random(20);
     }
 
     public function sanitizingFileName(callable $fileNameSanitizer): self

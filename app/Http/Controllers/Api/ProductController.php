@@ -34,6 +34,6 @@ class ProductController extends Controller
     public function list()
     {
 //        return \App\Modules\DealpawProduct\Models\Product::find(6)->options()->with('values')->get();
-        return ProductOption::with('values')->get();
+        return \App\Modules\DealpawProduct\Models\Product::with(['variants.optionValues','variants.price'])->where('id',11)->get();
     }
 }

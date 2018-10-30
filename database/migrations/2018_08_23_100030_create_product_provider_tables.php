@@ -77,20 +77,11 @@ class CreateProductProviderTables extends Migration
         });
 
         Schema::create('variant_provider', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('product_variant_id');
             $table->unsignedInteger('product_provider_id');
             $table->unsignedInteger('price')->default(0)->comment('报价');
             $table->timestamps();
-
-            $table->foreign('product_variant_id')
-                ->references('id')
-                ->on('product_variants')
-                ->onDelete('cascade');
-
-            $table->foreign('product_provider_id')
-                ->references('id')
-                ->on('product_providers')
-                ->onDelete('cascade');
 
             $table->primary(['product_variant_id', 'product_provider_id']);
         });

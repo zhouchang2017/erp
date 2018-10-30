@@ -22,7 +22,7 @@ abstract class BaseModel extends Model
 
     public function setPositionAttribute($value)
     {
-        $this->position = $value ?? 0;
+        $this->attributes['position'] = $value ?? 0;
     }
 
     public function update(array $attributes = [], array $options = [])

@@ -42,7 +42,7 @@ class Locale extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Code'),
+            Text::make('Code')->rules('required', 'max:255','unique:dealpaw.locales,code,{{resourceId}}'),
         ];
     }
 

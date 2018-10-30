@@ -3,12 +3,19 @@
 namespace App\Modules\DealpawProduct\Models;
 
 use App\Modules\Scaffold\BaseModel as Model;
+use Spatie\MediaLibrary\Models\Concerns\IsSorted;
 
 class ProductImage extends Model
 {
+    use IsSorted;
+
     protected $connection = 'dealpaw';
 
-    public $fillable = ['product_id', 'image'];
+    public $fillable = ['product_id', 'image', 'position'];
+
+    public $sortable = [
+        'order_column_name' => 'position',
+    ];
 
     public function getFullUrl($field = 'image')
     {

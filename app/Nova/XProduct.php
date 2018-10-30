@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 use R64\NovaFields\BelongsTo;
 use R64\NovaFields\Text;
 
@@ -61,8 +62,13 @@ class XProduct extends Resource
                 ->fullSize(),
 
             BelongsToMany::make('Category', 'taxons', Taxon::class),
-            BelongsToManyAttribute::make('Attributes')->singleLine()->hideFromIndex(),
-            BelongsToManyOption::make('Options')->hideFromIndex()
+
+            new Panel('Attributes',[
+                BelongsToManyAttribute::make('Attributes')->singleLine()->hideFromIndex(),
+            ]),
+            new Panel('Options',[
+                BelongsToManyOption::make('Options')->hideFromIndex()
+            ])
         ];
     }
 

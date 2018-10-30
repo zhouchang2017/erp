@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f1c6a2c714d6f38e6c26851104a5e36",
+    "content-hash": "04bd4f86685410a9e1bb9106fff9cec7",
     "packages": [
         {
             "name": "64robots/nova-fields",
@@ -624,6 +624,40 @@
             "autoload": {
                 "psr-4": {
                     "Chang\\StorageSelectProduct\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "chang/variant-provider",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/VariantProvider",
+                "reference": "f0946ccadd64c22124c275133aaf06ad9a2c68fe",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chang\\VariantProvider\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chang\\VariantProvider\\": "src/"
                 }
             },
             "license": [
@@ -3559,16 +3593,16 @@
         },
         {
             "name": "r64/nova-image-cropper",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/64robots/nova-image-cropper.git",
-                "reference": "d34226579f091afc04c7c56b6bde0d35d36566a0"
+                "reference": "0ea90c61b445c49a40a37139a1a46a5460709a92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/64robots/nova-image-cropper/zipball/d34226579f091afc04c7c56b6bde0d35d36566a0",
-                "reference": "d34226579f091afc04c7c56b6bde0d35d36566a0",
+                "url": "https://api.github.com/repos/64robots/nova-image-cropper/zipball/0ea90c61b445c49a40a37139a1a46a5460709a92",
+                "reference": "0ea90c61b445c49a40a37139a1a46a5460709a92",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3602,7 +3636,7 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2018-10-19T07:26:02+00:00"
+            "time": "2018-10-29T07:25:04+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -3799,16 +3833,16 @@
         },
         {
             "name": "spatie/array-to-xml",
-            "version": "2.7.2",
+            "version": "2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/array-to-xml.git",
-                "reference": "2b01cb1a04b4b65f0db03cd8a78df4b978fe5cd7"
+                "reference": "bb5b3548ae7871750285a3f623c28ec50a14c227"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/2b01cb1a04b4b65f0db03cd8a78df4b978fe5cd7",
-                "reference": "2b01cb1a04b4b65f0db03cd8a78df4b978fe5cd7",
+                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/bb5b3548ae7871750285a3f623c28ec50a14c227",
+                "reference": "bb5b3548ae7871750285a3f623c28ec50a14c227",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3850,7 +3884,7 @@
                 "convert",
                 "xml"
             ],
-            "time": "2018-09-17T11:45:05+00:00"
+            "time": "2018-10-29T10:28:24+00:00"
         },
         {
             "name": "spatie/image",
@@ -6728,16 +6762,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "21ad88bbba7c3d93530d93994e0a33cd45f02ace"
+                "reference": "c99e3be9d3e85f60646f152f9002d46ed7770d18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/21ad88bbba7c3d93530d93994e0a33cd45f02ace",
-                "reference": "21ad88bbba7c3d93530d93994e0a33cd45f02ace",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c99e3be9d3e85f60646f152f9002d46ed7770d18",
+                "reference": "c99e3be9d3e85f60646f152f9002d46ed7770d18",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6779,7 +6813,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2018-02-01T13:16:43+00:00"
+            "time": "2018-10-30T05:52:18+00:00"
         },
         {
             "name": "phpunit/phpunit",

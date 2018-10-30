@@ -43,20 +43,6 @@ class ProductProvider extends Model implements AssetRelation, HasMedia
         self::observe(ProductProviderObserver::class);
     }
 
-    public function registerMediaConversions(Media $media = null)
-    {
-        try {
-            $this->addMediaConversion('thumb_product_provider_image')
-                ->width(80)
-                ->height(80)
-                ->nonQueued();
-        } catch (InvalidManipulation $e) {
-            \Log::error('处理缩略图错误:' . $e->getMessage());
-            dd($e->getMessage());
-        }
-
-    }
-
     public function registerMediaCollections()
     {
         $this->addMediaCollection('main')->singleFile();

@@ -32,43 +32,22 @@
 <script>
   import { FormField, HandlesValidationErrors } from 'laravel-nova'
   import TranslationFormField from './TranslationFormField'
+  import Helper from '../helper'
 
   export default {
-    mixins: [FormField, HandlesValidationErrors],
+    mixins: [FormField, HandlesValidationErrors, Helper],
 
     props: ['resourceName', 'resourceId', 'field'],
     components: {
       TranslationFormField
     },
-    data () {
-      return {
-        attributes: []
-      }
-    },
-
     methods: {
       /*
        * Set the initial, internal value for the field.
        */
       setInitialValue () {
         this.value = this.field.value || ''
-        this.attributes = this.field.attributes.map(attribute => {
-          // const isChecked = this.value.find(related => related.id === attribute.id)
-          const isChecked = _.get(this.value, attribute.id, null)
-          const value = Object.keys(this.field.locales).reduce((res, locale) => {
-            res[locale] = _.get(isChecked, `${locale}.text_value`, null)
-            return res
-          }, {})
-          const {locales, indexLocale, singleLine} = this.field
-          return {
-            'name': attribute.name,
-            'origin': attribute,
-            'related': isChecked || null,
-            'value': value,
-            'checked': !!isChecked,
-            locales, indexLocale, singleLine
-          }
-        })
+        this.setAttributes()
       },
 
       /**
@@ -115,11 +94,6 @@
         }
 
         return fd
-      }
-    },
-    computed: {
-      checkedAttribute () {
-        return this.attributes.filter(attr => attr.checked)
       }
     }
   }

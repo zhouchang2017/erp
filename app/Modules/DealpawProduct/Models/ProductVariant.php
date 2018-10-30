@@ -27,7 +27,7 @@ class ProductVariant extends Model
         'length',
         'weight',
         'stock',
-        'shipping_category_id'
+        'shipping_category_id',
     ];
 
 
@@ -51,9 +51,24 @@ class ProductVariant extends Model
         return $this->hasMany(ProductVariantPrice::class, 'variant_id');
     }
 
+    public function price()
+    {
+        return $this->hasOne(ProductPrice::class, 'variant_id', 'id');
+    }
+
     public function providers()
     {
         return $this->belongsToMany(ProductProvider::class, 'variant_provider')->withPivot('price')->withTimestamps();
+    }
+
+    public function provider()
+    {
+        return $this->providers()->first();
+    }
+
+    public function hasPrice()
+    {
+        return $this->price()->count() > 0;
     }
 
 }

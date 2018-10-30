@@ -13,7 +13,7 @@ return [
     'locales' => [
 //        'en' => 'English',
         'en-US' => 'English',
-        'zh_CN' => 'China',
+        'zh_CN' => 'Chinese',
     ],
 
     /*

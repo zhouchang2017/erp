@@ -29,7 +29,9 @@
         "build-belongs-to-many-Option": "cd nova-components/BelongsToManyOption && npm run dev",
         "build-belongs-to-many-Option-prod": "cd nova-components/BelongsToManyOption && npm run prod",
         "build-belongs-to-many-option": "cd nova-components/BelongsToManyOption && npm run dev",
-        "build-belongs-to-many-option-prod": "cd nova-components/BelongsToManyOption && npm run prod"
+        "build-belongs-to-many-option-prod": "cd nova-components/BelongsToManyOption && npm run prod",
+        "build-variant-provider": "cd nova-components/VariantProvider && npm run dev",
+        "build-variant-provider-prod": "cd nova-components/VariantProvider && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.18",

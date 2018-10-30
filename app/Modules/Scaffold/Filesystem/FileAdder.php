@@ -15,7 +15,6 @@ class FileAdder extends BaseFileAdder
 
     public function defaultSanitizer(string $fileName): string
     {
-//        return str_replace(['#', '/', '\\', ' '], '-', $fileName);
         return date('Ymd') . str_random(20);
     }
 

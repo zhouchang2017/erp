@@ -8,10 +8,12 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use R64\NovaFields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use R64\NovaFields\Boolean;
 use R64\NovaFields\JSON;
+use R64\NovaFields\Select;
 
 class Dealpaw extends Resource
 {
@@ -53,29 +55,36 @@ class Dealpaw extends Resource
         return [
             ID::make()->sortable(),
 
+            Text::make('Code')->rules('required', 'max:255',
+                'unique:dealpaw.channels,code,{{resourceId}}')->hideFromIndex(),
+
             Text::make('Name')->rules('required', 'max:255'),
 
             Textarea::make('Description'),
 
-            Text::make('Code')->rules('required', 'max:255')->hideFromIndex(),
+            Text::make('Email')->rules('email'),
 
-            Text::make('Api Url')->rules('required', 'url')->hideFromIndex(),
+            Select::make('Locale Code')->options(
+                $this->genSelectOptions(\App\Modules\Scaffold\Models\Locale::class)
+            ),
 
-            Text::make('Api Prefix'),
+            Select::make('Currency Code')->options(
+                $this->genSelectOptions(\App\Modules\Channel\Dealpaw\Models\Currency::class)
+            ),
 
-            Repeater::make('Header')
-                ->addField([
-                    'label' => 'KEY',
-                    'placeholder' => 'enter header key',
-                    'name' => 'key',
-                ])->addField([
-                    'label' => 'VALUE',
-                    'placeholder' => 'enter header value',
-                    'name' => 'value',
-                ])->hideFromIndex(),
+            Boolean::make('Enabled'),
 
-            BelongsToMany::make('Products', 'products', DealpawProduct::class),
+            BelongsToMany::make('Locales', 'locales', Locale::class),
+
+            BelongsToMany::make('Currencies', 'currencies', Currency::class),
         ];
+    }
+
+    protected function genSelectOptions($model, $field = 'code')
+    {
+        return $model::pluck($field)->mapWithKeys(function ($value) {
+            return [$value => mb_strtoupper($value)];
+        });
     }
 
     /**
@@ -120,7 +129,7 @@ class Dealpaw extends Resource
     public function actions(Request $request)
     {
         return [
-            new SyncDealpawProducts(),
+//            new SyncDealpawProducts(),
         ];
     }
 }

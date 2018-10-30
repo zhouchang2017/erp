@@ -74,7 +74,7 @@ trait ProductImageTrait
      */
     public function getMedia()
     {
-        return $this->media()->get();
+        return $this->media()->get()->sortBy('position');
     }
 
     /**

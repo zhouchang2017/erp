@@ -39,7 +39,8 @@
         "zgldh/qiniu-laravel-storage": "^0.10.0",
         "chang/belongs-to-many-attribute": "*",
         "chang/belongs-to-many-Option": "*",
-        "chang/belongs-to-many-option": "*"
+        "chang/belongs-to-many-option": "*",
+        "chang/variant-provider": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -85,6 +86,10 @@
         {
             "type": "path",
             "url": "./nova-components/BelongsToManyOption"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/VariantProvider"
         }
     ],
     "autoload": {

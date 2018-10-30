@@ -7,4 +7,5 @@ use App\Modules\Scaffold\BaseModel as Model;
 class ProductVariantPrice extends Model
 {
     protected $connection = 'dealpaw';
+
 }
