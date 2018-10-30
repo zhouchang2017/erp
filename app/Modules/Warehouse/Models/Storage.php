@@ -2,8 +2,8 @@
 
 namespace App\Modules\Warehouse\Models;
 
-use App\Modules\Product\Models\Product;
-use App\Modules\Product\Models\ProductVariant;
+use App\Modules\DealpawProduct\Models\Product;
+use App\Modules\DealpawProduct\Models\ProductVariant;
 use App\Modules\Scaffold\BaseModel as Model;
 
 

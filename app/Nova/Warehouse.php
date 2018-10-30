@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\MorphOne;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -56,7 +58,7 @@ class Warehouse extends Resource
 
             HasMany::make(__('Warehouse Storage'), 'storage', Storage::class),
 
-            MorphMany::make('Addresses'),
+            MorphOne::make('Addresses'),
         ];
     }
 

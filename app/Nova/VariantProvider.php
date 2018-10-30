@@ -4,21 +4,18 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use YesWeDev\Nova\Translatable\Translatable;
+use R64\NovaFields\BelongsTo;
 
-class Brand extends Resource
+class VariantProvider extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Modules\Product\Models\Brand::class;
+    public static $model = \App\Modules\ProductProvider\Models\VariantProvider::class;
 
-    public static $category = "Product";
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -33,24 +30,7 @@ class Brand extends Resource
      */
     public static $search = [
         'id',
-//        't.name',
     ];
-
-    public static $with = ['translations'];
-
-    public function title()
-    {
-        return $this->model()->name;
-    }
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-//        $query->select('brands.*', 't.name');
-//        $query->join('brand_translations as t', 'brands.id', '=', 't.brand_id')
-//        ->where('t.locale','zh_CN');
-        return $query;
-    }
-
 
     /**
      * Get the fields displayed by the resource.
@@ -62,12 +42,9 @@ class Brand extends Resource
     {
         return [
             ID::make()->sortable(),
-
-            Translatable::make('Name')
-                ->rules('required', 'max:255'),
-
-            Textarea::make('Description')->hideFromIndex(),
-
+            BelongsTo::make('Variant', 'variant', XProductVariant::class),
+            BelongsTo::make('Provider', 'provider', ProductProvider::class),
+            \Laravel\Nova\Fields\Currency::make('Price'),
         ];
     }
 
@@ -114,16 +91,4 @@ class Brand extends Resource
     {
         return [];
     }
-
-    public static function label()
-    {
-        return __('Brands');
-    }
-
-    public static function singularLabel()
-    {
-        return __('Brand');
-    }
-
-
 }

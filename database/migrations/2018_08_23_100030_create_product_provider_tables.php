@@ -31,11 +31,6 @@ class CreateProductProviderTables extends Migration
             $table->string('wechat')->nullable()->comment('微信');
             $table->unsignedInteger('product_provider_id')->comment('供应商id');
             $table->timestamps();
-
-            $table->foreign('product_provider_id')
-                ->references('id')
-                ->on('product_providers')
-                ->onDelete('cascade');
         });
 
         Schema::create('payments', function (Blueprint $table) {
@@ -59,32 +54,8 @@ class CreateProductProviderTables extends Migration
             $table->json('options')->nullable()->comment('支付配置');
             $table->unsignedInteger('product_provider_id')->comment('供应商id');
             $table->timestamps();
-
-            $table->foreign('product_provider_id')
-                ->references('id')
-                ->on('product_providers')
-                ->onDelete('cascade');
-
-            $table->foreign('balance_id')
-                ->references('id')
-                ->on('balances')
-                ->onDelete('cascade');
-
-            $table->foreign('payment_id')
-                ->references('id')
-                ->on('payments')
-                ->onDelete('cascade');
         });
 
-        Schema::create('variant_provider', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('product_variant_id');
-            $table->unsignedInteger('product_provider_id');
-            $table->unsignedInteger('price')->default(0)->comment('报价');
-            $table->timestamps();
-
-            $table->primary(['product_variant_id', 'product_provider_id']);
-        });
     }
 
     /**
@@ -99,6 +70,5 @@ class CreateProductProviderTables extends Migration
         Schema::drop('balances');
         Schema::drop('payments');
         Schema::drop('product_provider_info');
-        Schema::drop('product_providers');
     }
 }

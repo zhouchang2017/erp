@@ -3,6 +3,7 @@
 namespace App\Modules\DealpawProduct\Models;
 
 use App\Modules\ProductProvider\Models\ProductProvider;
+use App\Modules\ProductProvider\Models\VariantProvider;
 use App\Modules\Scaffold\BaseModel as Model;
 use Dimsav\Translatable\Translatable;
 
@@ -56,14 +57,10 @@ class ProductVariant extends Model
         return $this->hasOne(ProductPrice::class, 'variant_id', 'id');
     }
 
-    public function providers()
-    {
-        return $this->belongsToMany(ProductProvider::class, 'variant_provider')->withPivot('price')->withTimestamps();
-    }
 
     public function provider()
     {
-        return $this->providers()->first();
+        return $this->hasOne(VariantProvider::class);
     }
 
     public function hasPrice()

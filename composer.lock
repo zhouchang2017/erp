@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "04bd4f86685410a9e1bb9106fff9cec7",
+    "content-hash": "8dfe3cff45c00bc5177b0f96ef80e8be",
     "packages": [
         {
             "name": "64robots/nova-fields",
@@ -624,40 +624,6 @@
             "autoload": {
                 "psr-4": {
                     "Chang\\StorageSelectProduct\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ]
-        },
-        {
-            "name": "chang/variant-provider",
-            "version": "9999999-dev",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/VariantProvider",
-                "reference": "f0946ccadd64c22124c275133aaf06ad9a2c68fe",
-                "shasum": null
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Chang\\VariantProvider\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Chang\\VariantProvider\\": "src/"
                 }
             },
             "license": [

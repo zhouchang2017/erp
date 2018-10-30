@@ -7,7 +7,6 @@ use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use R64\NovaFields\BelongsTo;
 use R64\NovaFields\Number;
 use R64\NovaFields\Text;
 
@@ -54,7 +53,8 @@ class XProductVariant extends Resource
             Number::make('Length')->hideFromIndex(),
             Number::make('Weight')->hideFromIndex(),
 
-            BelongsTo::make('Provider', 'providers', ProductProvider::class)
+            HasOne::make('Provider', 'provider', VariantProvider::class)
+//            BelongsTo::make('Provider', 'providers', ProductProvider::class)
 //            \Laravel\Nova\Fields\Currency::make('Price')
         ];
     }

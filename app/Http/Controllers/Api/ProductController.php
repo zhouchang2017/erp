@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\ProductResource;
 use App\Modules\DealpawProduct\Models\ProductOption;
+use App\Modules\DealpawProduct\Models\ProductVariant;
 use App\Modules\DealpawProduct\ProductAttribute;
 use App\Modules\Product\Models\Product;
 use App\Modules\Product\Services\ProductService;
@@ -34,6 +35,8 @@ class ProductController extends Controller
     public function list()
     {
 //        return \App\Modules\DealpawProduct\Models\Product::find(6)->options()->with('values')->get();
-        return \App\Modules\DealpawProduct\Models\Product::with(['variants.optionValues','variants.price'])->where('id',11)->get();
+//        return \App\Modules\DealpawProduct\Models\Product::with(['variants.optionValues','variants.price'])->where('id',11)->get();
+        $p =  ProductVariant::find(80)->provider->load('provider');
+        return $p;
     }
 }

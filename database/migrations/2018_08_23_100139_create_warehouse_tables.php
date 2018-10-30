@@ -26,8 +26,6 @@ class CreateWarehouseTables extends Migration
             $table->string('name')->comment('仓库名称');
             $table->unsignedInteger('type_id')->comment('仓库类型');
             $table->timestamps();
-
-            $table->foreign('type_id')->references('id')->on('warehouse_types');
         });
 
         Schema::create('storages', function (Blueprint $table) {
@@ -40,20 +38,6 @@ class CreateWarehouseTables extends Migration
             $table->integer('bad')->default(0)->comment('破损数量');
             $table->timestamps();
 
-            $table->foreign('warehouse_id')
-                ->references('id')
-                ->on('warehouses')
-                ->onDelete('cascade');
-
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
-
-            $table->foreign('product_variant_id')
-                ->references('id')
-                ->on('product_variants')
-                ->onDelete('cascade');
         });
 
         Schema::create('storage_histories', function (Blueprint $table) {
@@ -65,21 +49,6 @@ class CreateWarehouseTables extends Migration
             $table->integer('good')->default(0)->comment('入库良品数量');
             $table->integer('bad')->default(0)->comment('入库不良品数量');
             $table->timestamps();
-
-            $table->foreign('warehouse_id')
-                ->references('id')
-                ->on('warehouses')
-                ->onDelete('cascade');
-
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
-
-            $table->foreign('product_variant_id')
-                ->references('id')
-                ->on('product_variants')
-                ->onDelete('cascade');
         });
 
     }

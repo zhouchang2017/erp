@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShipmentDealpawOrderItemsTable extends Migration
+class CreateVariantProvidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateShipmentDealpawOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shipment_dealpaw_order_items', function (Blueprint $table) {
+        Schema::create('variant_providers', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('order_item_id');
-            $table->unsignedInteger('order_id');
-            $table->string('tracking_number');
+            $table->unsignedInteger('product_variant_id');
+            $table->unsignedInteger('product_provider_id');
+            $table->unsignedInteger('price')->default(0)->comment('报价');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateShipmentDealpawOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipment_dealpaw_order_items');
+        Schema::dropIfExists('variant_providers');
     }
 }

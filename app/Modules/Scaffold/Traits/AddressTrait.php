@@ -21,5 +21,10 @@ trait AddressTrait
         return $this->morphMany(Address::class, 'addressable');
     }
 
+    public function address()
+    {
+        return $this->morphOne(Address::class,'addressable');
+    }
+
 
 }

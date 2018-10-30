@@ -3,8 +3,6 @@
 namespace App\Nova;
 
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
@@ -61,13 +59,10 @@ class ProductProvider extends Resource
             ->multiple()// enable upload of multiple images - also ordering
             ->fullSize(),// full size column
             // validation rules for the collection of images
+
+            HasMany::make('Variants', 'variants', VariantProvider::class),
+
             MorphMany::make('Addresses'),
-            BelongsToMany::make('ProductVariant', 'productVariants')
-                ->fields(function () {
-                    return [
-                        Currency::make('Price'),
-                    ];
-                }),
 
         ];
     }

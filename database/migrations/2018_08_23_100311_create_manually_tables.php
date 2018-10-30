@@ -22,14 +22,6 @@ class CreateManuallyTables extends Migration
             $table->json('history')->default(null)->nullable()->comment('审核记录');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
-
-            $table->foreign('warehouse_id')
-                ->references('id')
-                ->on('warehouses')
-                ->onDelete('cascade');
-
         });
 
         Schema::create('manually_product_variant', function (Blueprint $table) {
@@ -45,23 +37,6 @@ class CreateManuallyTables extends Migration
             $table->integer('good')->default(0)->comment('良品数量');
             $table->integer('bad')->default(0)->comment('不良品数量');
             $table->timestamps();
-
-            $table->foreign('manually_id')
-                ->references('id')
-                ->on('manuallies')
-                ->onDelete('cascade');
-
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
-
-            $table->foreign('product_variant_id')
-                ->references('id')
-                ->on('product_variants')
-                ->onDelete('cascade');
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

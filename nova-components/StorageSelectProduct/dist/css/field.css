@@ -1,1 +1,17 @@
-.h-16{height:4rem}.bg-desable{background-color:#b3b9bf}.z-501{z-index:501}button:disabled{cursor:not-allowed;opacity:.5}
+.h-16 {
+  height: 4rem;
+}
+
+.bg-desable {
+  background-color: #b3b9bf;
+}
+
+.z-501 {
+  z-index: 501;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+

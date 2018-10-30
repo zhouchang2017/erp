@@ -46,9 +46,9 @@ class Storage extends Resource
 
             BelongsTo::make(__('Warehouse'), 'warehouse', Warehouse::class),
 
-            BelongsTo::make(__('Product'), 'product', Product::class),
+            BelongsTo::make(__('Product'), 'product', XProduct::class),
 
-            BelongsTo::make(__('Product Variant'), 'productVariant', ProductVariant::class)
+            BelongsTo::make(__('Product Variant'), 'productVariant', XProductVariant::class)
                 ->display('attribute_key'),
 
             Number::make(__('Pcs'), 'num')->resolveUsing(function ($num) {

@@ -52,25 +52,6 @@ class CreateProcurementTables extends Migration
             $table->integer('lost')->default(0)->comment('丢失数量');
             $table->timestamps();
 
-            $table->foreign('procurement_plan_id','procurement_plan_variant_plan_id')
-                ->references('id')
-                ->on('procurement_plans')
-                ->onDelete('cascade');
-
-            $table->foreign('product_id','procurement_plan_variant_product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
-
-            $table->foreign('product_variant_id','procurement_plan_variant_variant_id')
-                ->references('id')
-                ->on('product_variants')
-                ->onDelete('cascade');
-
-            $table->foreign('product_provider_id','procurement_plan_variant_provider_id')->references('id')->on('product_providers');
-
-            $table->foreign('user_id','procurement_plan_variant_user_id')->references('id')->on('users');
-
 //            $table->primary(['procurement_plan_id', 'product_variant_id'],'plan_product_variant');
         });
 
@@ -93,10 +74,6 @@ class CreateProcurementTables extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('procurement_plan_id')
-                ->references('id')
-                ->on('procurement_plans')
-                ->onDelete('cascade');
         });
     }
 

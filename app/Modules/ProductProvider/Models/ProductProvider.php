@@ -59,9 +59,9 @@ class ProductProvider extends Model implements AssetRelation, HasMedia
         return $this->hasOne(ProductProviderPayment::class);
     }
 
-    public function products()
+    public function variants()
     {
-        return $this->belongsToMany(ProductVariant::class, 'variant_provider')->withPivot('price')->withTimestamps();
+        return $this->hasMany(VariantProvider::class);
     }
 
     public function productVariants()
