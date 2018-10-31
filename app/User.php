@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Nova\Actions\Actionable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Actionable, Notifiable;
+    use Actionable, Notifiable, HasRoles;
+
+    protected $guard_name = 'nova';
 
     /**
      * The attributes that are mass assignable.

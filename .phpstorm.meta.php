@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-10-30 17:52:52.
+    * Generated on 2018-10-31 15:35:09.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -50,6 +50,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -210,6 +212,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -370,6 +374,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -530,6 +536,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -690,6 +698,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -850,6 +860,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -1010,6 +1022,8 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\MediaRepository' => \Spatie\MediaLibrary\MediaRepository::class,
         'Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator' => \Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\Blurred::class,
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
+        'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
+        'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,

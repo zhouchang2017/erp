@@ -14,6 +14,7 @@ use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Chang\CreateProcurementPlan\CreateProcurementPlan;
+use Vyuldashev\NovaPermission\NovaPermissionTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -72,7 +73,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 //            new PendingProcurementPlans(),
             new NewOrders(),
             new OrdersPerDay(),
-            new AllOrders()
+            new AllOrders(),
         ];
     }
 
@@ -87,6 +88,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new CreateProcurementPlan,
             new CreateProcurementPlan('Manually'),
             new AmazonMws,
+            new NovaPermissionTool,
         ];
     }
 
